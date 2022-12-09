@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>Создать продукт</h3>
+<form th:method="POST" th:action="'/clients/' + ${id} + '/product'" th:object="${product}" >
+    Название кассы<input type="text" th:field="*{name}"><br><br>
+    Адрес<input type="text" th:field="*{address}"><br><br>
+<!--    Отчество<input type="number" th:field="*{fn.idEmployee}"><br><br>-->
+
+    <input type="submit" value="Добавить"><br><br>
+
+</form>
+
+</body>
+</html>

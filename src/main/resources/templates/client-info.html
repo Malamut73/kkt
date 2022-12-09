@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+    <td th:text="${user.lastName}"></td>
+    <td th:text="${user.name}"></td>
+    <td th:text="${user.patronymic}"></td>
+    <td th:text="${user.email}"></td>
+    <td th:text="${user.phoneNumber}"></td>
+    <td th:text="${user.requisite.organization.name}"></td>
+    <td th:text="${user.requisite.inn}"></td>
+    <td th:text="${user.requisite.ogrn}"></td>
+    <td th:text="${user.requisite.kpp}"></td>
+    <div th:each="comment : ${user.comments}">
+        <td th:text="${comment.text}"></td>
+    </div>
+</div>
+
+<div th:each="user : ${clients}">
+
+</div>
+<td><a th:href="'/clients/' + ${user.id} + '/product'">Создать кассу</a></td>
+<!--<td><a th:href="@{/clients/product}">Создать кассу</a></td>-->
+
+
+
+</body>
+</html>
