@@ -1,5 +1,6 @@
 package com.tehnology.kkt.services;
 
+import com.tehnology.kkt.models.Product;
 import com.tehnology.kkt.models.User;
 import com.tehnology.kkt.models.enums.Role;
 import com.tehnology.kkt.repositories.UserDAO;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,6 +62,8 @@ public class UserService implements UserDetailsService {
     public User findById(Long id) {
         return userDAO.findById(id).orElseThrow();
     }
+
+
 }
 
 

@@ -3,10 +3,7 @@ package com.tehnology.kkt.models;
 
 import com.tehnology.kkt.models.extraclasses.Comment;
 import com.tehnology.kkt.models.extraclasses.Topic;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,7 +13,9 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Data
+//@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,11 +31,11 @@ public class Request { //заявка
     private Topic topic; //тема
 
 
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn
     private User client;
 
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
 

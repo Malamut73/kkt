@@ -2,15 +2,17 @@ package com.tehnology.kkt.models.extraclasses;
 
 import com.tehnology.kkt.models.Product;
 import javax.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
-@Data
+//@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,17 +22,11 @@ public class FN {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime dateOfCreated;
-    private int days;
-    private int idEmployee;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date days;
+    private String format;
 
-    @OneToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
 
-    @PrePersist
-    private void init(){
-        dateOfCreated = LocalDateTime.now();
-    }
 
 }

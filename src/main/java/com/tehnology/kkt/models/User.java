@@ -4,10 +4,7 @@ import com.tehnology.kkt.models.enums.Role;
 import com.tehnology.kkt.models.enums.Status;
 import com.tehnology.kkt.models.extraclasses.Comment;
 import com.tehnology.kkt.models.extraclasses.Requisite;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,7 +13,9 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
-@Data
+//@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -37,19 +36,19 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "requisite_id")
     private Requisite requisite;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Set<Comment> comments = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+//    @JoinColumn(name = "user_id")
     private Set<Product> products = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "client")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "client")
     private Set<Request> requests = new HashSet<>();
 
 

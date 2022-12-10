@@ -8,8 +8,26 @@
 <h3>Создать продукт</h3>
 <form th:method="POST" th:action="'/clients/' + ${id} + '/product'" th:object="${product}" >
     Название кассы<input type="text" th:field="*{name}"><br><br>
+    Заводской номер<input type="text" th:field="*{number}"><br><br>
     Адрес<input type="text" th:field="*{address}"><br><br>
-<!--    Отчество<input type="number" th:field="*{fn.idEmployee}"><br><br>-->
+    Оператор<input type="text" th:field="*{operator.name}"><br><br>
+    <p>Личный кабинет:</p>
+    Контакты<input type="text" th:field="*{lk.contact}"><br><br>
+    Пароль<input type="text" th:field="*{lk.pass}"><br><br>
+    <p>ОФД:</p>
+    Контакты<input type="text" th:field="*{ofd.contact}"><br><br>
+    Пароль<input type="text" th:field="*{ofd.pass}"><br><br>
+    Срок<input type="date" th:field="*{ofd.days}"><br><br>
+    <p>ФН:</p>
+    Срок<input type="date" th:field="*{fn.days}"><br><br>
+    Формат<input type="text" th:field="*{fn.format}"><br><br>
+
+
+
+
+
+
+    <!--    Отчество<input type="number" th:field="*{fn.idEmployee}"><br><br>-->
 
     <input type="submit" value="Добавить"><br><br>
 

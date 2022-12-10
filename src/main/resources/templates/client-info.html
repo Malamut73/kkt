@@ -2,32 +2,89 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Client-info</title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+
+
 </head>
 <body>
 
-<div>
-    <td th:text="${user.lastName}"></td>
-    <td th:text="${user.name}"></td>
-    <td th:text="${user.patronymic}"></td>
-    <td th:text="${user.email}"></td>
-    <td th:text="${user.phoneNumber}"></td>
-    <td th:text="${user.requisite.organization.name}"></td>
-    <td th:text="${user.requisite.inn}"></td>
-    <td th:text="${user.requisite.ogrn}"></td>
-    <td th:text="${user.requisite.kpp}"></td>
-    <div th:each="comment : ${user.comments}">
-        <td th:text="${comment.text}"></td>
+<div class="container">
+    <div class="header">
+        <div class="head">
+            some text
+<!--            <div>-->
+                <td th:text="${user.requisite.organization.name}"></td>
+                <!--    <td th:text="${user.patronymic}"></td>-->
+                <td th:text="${user.lastName}"></td>
+                <br>
+                <!--    <td th:text="${user.name}"></td>-->
+                <!--    <td th:text="${user.email}"></td>-->
+                <td th:text="${user.phoneNumber}"></td>
+                <br>
+                <!--    <td th:text="${user.requisite.inn}"></td>-->
+                <!--    <td th:text="${user.requisite.ogrn}"></td>-->
+                <!--    <td th:text="${user.requisite.kpp}"></td>-->
+                <div th:each="comment : ${user.comments}">
+                    Комментарий: <td th:text="${comment.text}"></td>
+                </div>
+<!--            </div>-->
+        </div>
+        <div class="head">
+<!--            Дата ОФД:  <td th:text="${ofdDate}"></td>-->
+            <div th:object="${lastOFD}">
+                Касса:  <td th:text="*{name}"></td>
+                Дата ОФД: <td th:text="*{ofd.days}"></td>
+                <!--                    Дата:  <td th:text="${maintenance.limitation}"></td>-->
+            </div>
+        </div>
     </div>
+
+    <div class="body">
+        <div class="content">
+            <h2>Левая панель</h2>
+            <div th:each="product : ${user.products}" >
+                <div class="product">
+                    <span>Касса:  </span><span th:text="${product.name}"></span><br>
+                    <span>Заводской номер:</span><span th:text="${product.number}"></span><br>
+                    <span>Адрес: </span><span th:text="${product.address}"></span>
+                    <p>Личный кабинет:</p>
+                    <span>Почта или телефон: </span><span th:text="${product.lk.contact}"></span><br>
+                    <span>Пароль: </span><span th:text="${product.lk.pass}"></span>
+                    <p>ОФД:</p>
+                    <span>Почта или телефон: </span><span th:text="${product.ofd.contact}"></span><br>
+                    <span>Пароль: </span><span th:text="${product.ofd.pass}"></span><br>
+                    <span>Срок: </span><span th:text="${product.ofd.days}"></span>
+
+                    <p>ФН:</p>
+                    <span>Срок: </span><span th:text="${product.fn.days}"></span><br>
+                    <p>Тех обслуживание:</p>
+                    <div th:each="maintenance : ${product.maintenance}">
+                        Тариф:  <td th:text="${maintenance.name}"></td>
+                        Дата:  <td th:text="${maintenance.limitation}"></td>
+                    </div>
+                    <td><a th:href="'/clients/' + ${user.id} + '/product/' + ${product.id}">
+                        Создать тех обслуживание
+                    </a></td>
+                    <br><br>
+                </div>
+
+            </div>
+            <br><br>
+            <td><a th:href="'/clients/' + ${user.id} + '/product'">Создать кассу</a></td>
+        </div>
+        <div class="content">
+<!--            <div th:object="${lastOFD}">-->
+<!--                Касса:  <td th:text="*{name}"></td>-->
+<!--                &lt;!&ndash;                Дата ОФД: <td th:text="*{ofd.days}"></td>&ndash;&gt;-->
+<!--                &lt;!&ndash;                    Дата:  <td th:text="${maintenance.limitation}"></td>&ndash;&gt;-->
+<!--            </div>-->
+
+        </div>
+    </div>
+
 </div>
-
-<div th:each="user : ${clients}">
-
-</div>
-<td><a th:href="'/clients/' + ${user.id} + '/product'">Создать кассу</a></td>
-<!--<td><a th:href="@{/clients/product}">Создать кассу</a></td>-->
-
-
 
 </body>
 </html>

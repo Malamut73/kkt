@@ -2,13 +2,13 @@ package com.tehnology.kkt.models.extraclasses;
 
 import com.tehnology.kkt.models.Product;
 import javax.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 
 @Entity
-@Data
+//@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,9 +22,5 @@ public class LK {
     private String contact;
     private String pass;
     private int codeAdministrator;
-
-    @OneToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
 
 }

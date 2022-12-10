@@ -1,23 +1,18 @@
 package com.tehnology.kkt.models;
 
-import com.tehnology.kkt.models.extraclasses.FN;
-import com.tehnology.kkt.models.extraclasses.LK;
-import com.tehnology.kkt.models.extraclasses.Maintenance;
-import com.tehnology.kkt.models.extraclasses.OFD;
-import javax.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.tehnology.kkt.models.extraclasses.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import javax.persistence.*;
+
+import lombok.*;
+
+import java.util.*;
 
 
 @Entity
-@Data
+//@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,29 +22,36 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-     private String name;
-     private String address;
+    private String name;
+    private String address;
+    private int number;
 
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "operator_id")
+    private Operator operator;
 
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "product")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
     private Set<Request> request = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "product")
-    private List<Maintenance> maintenance = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
+    private Set<Maintenance> maintenance = new HashSet<>();
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "fn_id")
      private FN fn;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE)
-     private LK lk;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "lk_id")
+    private LK lk;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE)
-     private OFD ofd;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "ofd_id")
+    private OFD ofd;
 
 
 }

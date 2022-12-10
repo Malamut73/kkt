@@ -1,6 +1,5 @@
 package com.tehnology.kkt.models.extraclasses;
 
-import com.tehnology.kkt.models.Product;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -16,7 +15,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Maintenance { //тех обслуживание
+public class Tariff {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,15 +27,11 @@ public class Maintenance { //тех обслуживание
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date limitation;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "maintenance")
-    private Set<DateTrip> trips = new HashSet<>();
-
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "maintenance")
-//    private Set<Tariff> tariff = new HashSet<>();
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn
-    private Product product;
-
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "tariff")
+//    private Set<DateTrip> trips = new HashSet<>();
+//
+//    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "maintenance_id")
+//    private Maintenance maintenance;
 
 }
