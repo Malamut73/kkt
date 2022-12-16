@@ -25,7 +25,7 @@ public class Requisite { //реквезиты
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "organization_id")
     private Organization organization;
-    private int inn;
-    private int ogrn;
-    private int kpp;
+    private String inn;
+    private String ogrn;
+    private String kpp;
 }

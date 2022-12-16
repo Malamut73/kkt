@@ -21,6 +21,6 @@ public class LK {
     private String factoryNumber;
     private String contact;
     private String pass;
-    private int codeAdministrator;
+    private String codeAdministrator;
 
 }

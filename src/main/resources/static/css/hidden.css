@@ -1,0 +1,9 @@
+.trigger{
+    border: 2px dashed #ccc;
+    padding:20px;
+}
+
+.product{
+    max-height: 0;
+    overFlow: hidden;
+}

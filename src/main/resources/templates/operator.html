@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-
 </head>
 <body>
-<h1>Привет</h1>
-<a href="/clients">clients</a>
+
+
+<div th:each="operator : ${operators}">
+    <p>Название: <span th:text="${operator.name}"></span></p>
+
+</div>
 <br>
-<a href="/catalog">catalogs</a>
-
-
-
-
-
+<a href="/operator/create">Создать тариф</a>
 
 </body>
 </html>

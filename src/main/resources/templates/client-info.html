@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Client-info</title>
     <link rel="stylesheet" type="text/css" href="/styles/css/style.css">
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="/styles/css/hidden.css">
 
 
 </head>
@@ -13,7 +13,7 @@
 <div class="container">
     <div class="header">
         <div class="head">
-            some text
+
 <!--            <div>-->
                 <td th:text="${user.requisite.organization.name}"></td>
                 <!--    <td th:text="${user.patronymic}"></td>-->
@@ -32,59 +32,66 @@
 <!--            </div>-->
         </div>
         <div class="head">
+            some text
 <!--            Дата ОФД:  <td th:text="${ofdDate}"></td>-->
-            <div th:object="${lastOFD}">
-                Касса:  <td th:text="*{name}"></td>
-                Дата ОФД: <td th:text="*{ofd.days}"></td>
-                <!--                    Дата:  <td th:text="${maintenance.limitation}"></td>-->
-            </div>
-        </div>
-    </div>
-
-    <div class="body">
-        <div class="content">
-            <h2>Левая панель</h2>
-            <div th:each="product : ${user.products}" >
-                <div class="product">
-                    <span>Касса:  </span><span th:text="${product.name}"></span><br>
-                    <span>Заводской номер:</span><span th:text="${product.number}"></span><br>
-                    <span>Адрес: </span><span th:text="${product.address}"></span>
-                    <p>Личный кабинет:</p>
-                    <span>Почта или телефон: </span><span th:text="${product.lk.contact}"></span><br>
-                    <span>Пароль: </span><span th:text="${product.lk.pass}"></span>
-                    <p>ОФД:</p>
-                    <span>Почта или телефон: </span><span th:text="${product.ofd.contact}"></span><br>
-                    <span>Пароль: </span><span th:text="${product.ofd.pass}"></span><br>
-                    <span>Срок: </span><span th:text="${product.ofd.days}"></span>
-
-                    <p>ФН:</p>
-                    <span>Срок: </span><span th:text="${product.fn.days}"></span><br>
-                    <p>Тех обслуживание:</p>
-                    <div th:each="maintenance : ${product.maintenance}">
-                        Тариф:  <td th:text="${maintenance.name}"></td>
-                        Дата:  <td th:text="${maintenance.limitation}"></td>
-                    </div>
-                    <td><a th:href="'/clients/' + ${user.id} + '/product/' + ${product.id}">
-                        Создать тех обслуживание
-                    </a></td>
-                    <br><br>
-                </div>
-
-            </div>
-            <br><br>
-            <td><a th:href="'/clients/' + ${user.id} + '/product'">Создать кассу</a></td>
-        </div>
-        <div class="content">
 <!--            <div th:object="${lastOFD}">-->
 <!--                Касса:  <td th:text="*{name}"></td>-->
-<!--                &lt;!&ndash;                Дата ОФД: <td th:text="*{ofd.days}"></td>&ndash;&gt;-->
+<!--                Дата ОФД: <td th:text="*{ofd.days}"></td>-->
 <!--                &lt;!&ndash;                    Дата:  <td th:text="${maintenance.limitation}"></td>&ndash;&gt;-->
 <!--            </div>-->
+        </div>
+    </div>
+    <div class="body">
+        <div class="content">
+                    <div class="content-hide" th:each="product : ${user.products}" >
+                        <button type="button" class="trigger" th:text="${product.description.name}">Show/Hide content</button>
+                        <div class="product">
+<!--                            <p>Название: <span th:text="${product.description.name}"></span></p>-->
+                            <p>Описание:  <span th:text="${product.description.someDescription}"></span></p>
+                            <p>Заводской номер:<span th:text="${product.number}"></span></p>
+                            <p>Адрес: <span th:text="${product.address}"></span></p>
+                            <p>Личный кабинет:</p>
+                            <p>Почта или телефон: <span th:text="${product.lk.contact}"></span></p>
+                            <p>Пароль: <span th:text="${product.lk.pass}"></span></p>
+                            <p>ОФД:</p>
+                            <p>Почта или телефон: <span th:text="${product.ofd.contact}"></span></p>
+                            <p>Пароль: <span th:text="${product.ofd.pass}"></span></p>
+                            <p>Тарифа: <span th:text="${product.ofd.tariff.days}"></span> мес.</p>
+                            <p>Начало тарифа: <span th:text="${product.ofd.dateStart}"></span></p>
+                            <p>Конец тарифа: <span th:text="${product.ofd.dayEnd}"></span></p>
+                            <p>Оператор: <span th:text="${product.ofd.operator.name}"></span></p>
+                            <p>ФН:</p>
+                            <p>Срок: <span th:text="${product.fn.days}"></span></p>
+                            <p>Тех обслуживание:</p>
+                            <div th:each="maintenance : ${product.maintenance}">
+                                Тариф:  <td th:text="${maintenance.name}"></td>
+                                Дата:  <td th:text="${maintenance.limitation}"></td>
+                            </div>
+                            <td><a th:href="'/clients/' + ${user.id} + '/product/' + ${product.id}">
+                                Создать тех обслуживание
+                            </a></td>
+                            <br><br>
+                        </div>
+
+                    </div>
+                    <br>
+
+                <br><br>
+                <td><a th:href="'/clients/' + ${user.id} + '/product'">Создать кассу</a></td>
+
+        </div>
+        <div class="content">
+            Some text
+            <td><a th:href="'/clients/' + ${user.id} + '/request'">Создать заявку</a></td>
+
 
         </div>
     </div>
 
 </div>
+
+
+<script type="text/javascript" src="/javascript/js/hidden.js"></script>
 
 </body>
 </html>

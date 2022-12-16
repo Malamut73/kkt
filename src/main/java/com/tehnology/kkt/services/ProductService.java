@@ -40,9 +40,9 @@ public class ProductService {
         for (Product product :
                 user.getProducts()) {
             if(ofdResult == null){
-                ofdResult = product.getOfd().getDays();
+                ofdResult = product.getOfd().getDateStart();
             }
-            ofdCurrent = product.getOfd().getDays();
+            ofdCurrent = product.getOfd().getDateStart();
             if(ofdResult.before(ofdCurrent)){
                 ofdResult = ofdCurrent;
                 lastOfdProduct = product;
@@ -51,5 +51,9 @@ public class ProductService {
         }
 
         return lastOfdProduct;
+    }
+
+    public List<Product> findAll() {
+        return productDAO.findAll();
     }
 }

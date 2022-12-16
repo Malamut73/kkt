@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h3>Создать оператора</h3>
+
+
+
+<form th:method="POST" th:action="'/operator'" th:object="${operator}" >
+    Название <input type="text" th:field="*{name}"><br><br>
+
+    <input type="submit" value="Добавить"><br><br>
+</form>
+
+</body>
+</html>

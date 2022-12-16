@@ -22,5 +22,8 @@ public class MainController {
         return "index";
     }
 
-
+    @GetMapping("/catalog")
+    public String catalog(Model model) {
+        return "catalog";
+    }
 }

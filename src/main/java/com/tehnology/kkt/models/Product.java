@@ -24,12 +24,12 @@ public class Product {
 
     private String name;
     private String address;
-    private int number;
+    private String number;
 
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "operator_id")
-    private Operator operator;
+    @JoinColumn(name = "description_id")
+    private Description description;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

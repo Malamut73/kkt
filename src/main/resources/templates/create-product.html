@@ -1,33 +1,41 @@
+
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:form="http://www.springframework.org/tags/form">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <h3>Создать продукт</h3>
+
+
+
+
 <form th:method="POST" th:action="'/clients/' + ${id} + '/product'" th:object="${product}" >
-    Название кассы<input type="text" th:field="*{name}"><br><br>
+<!--    Название кассы<input type="text" th:field="*{name}"><br><br>-->
+    <select  th:field="*{description.id}">
+       Касса: <option th:each="des : ${descriptions}" th:value="${des.id}" th:text="${des.name}"></option>
+    </select><br>
     Заводской номер<input type="text" th:field="*{number}"><br><br>
     Адрес<input type="text" th:field="*{address}"><br><br>
-    Оператор<input type="text" th:field="*{operator.name}"><br><br>
     <p>Личный кабинет:</p>
     Контакты<input type="text" th:field="*{lk.contact}"><br><br>
     Пароль<input type="text" th:field="*{lk.pass}"><br><br>
     <p>ОФД:</p>
     Контакты<input type="text" th:field="*{ofd.contact}"><br><br>
     Пароль<input type="text" th:field="*{ofd.pass}"><br><br>
-    Срок<input type="date" th:field="*{ofd.days}"><br><br>
+    Дата начала: <input type="date" th:field="*{ofd.dateStart}"><br><br>
+    <select  th:field="*{ofd.tariff.id}">
+        Тариф: <option th:each="tar : ${tariffs}" th:value="${tar.id}" th:text="${tar.days}"></option>
+    </select>
+    <select  th:field="*{ofd.operator.id}">
+        Оператор: <option th:each="oper : ${operators}" th:value="${oper.id}" th:text="${oper.name}"></option>
+    </select>
+
     <p>ФН:</p>
     Срок<input type="date" th:field="*{fn.days}"><br><br>
     Формат<input type="text" th:field="*{fn.format}"><br><br>
 
-
-
-
-
-
-    <!--    Отчество<input type="number" th:field="*{fn.idEmployee}"><br><br>-->
 
     <input type="submit" value="Добавить"><br><br>
 

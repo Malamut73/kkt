@@ -32,7 +32,7 @@ public class Request { //заявка
 
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn
+    @JoinColumn(name = "client_id")
     private User client;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
