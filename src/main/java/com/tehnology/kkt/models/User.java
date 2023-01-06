@@ -36,6 +36,8 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "requisite_id")
     private Requisite requisite;

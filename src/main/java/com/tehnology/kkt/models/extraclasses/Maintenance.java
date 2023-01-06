@@ -1,6 +1,8 @@
 package com.tehnology.kkt.models.extraclasses;
 
 import com.tehnology.kkt.models.Product;
+import com.tehnology.kkt.models.extraclasses.firdirectory.MaintenanceTariff;
+import com.tehnology.kkt.models.extraclasses.firdirectory.Trip;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,19 +25,25 @@ public class Maintenance { //тех обслуживание
     private Long id;
 
     private String name;
+    private int days;
+    private String comment;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date limitation;
+    private Date dateStart;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "maintenance")
-    private Set<DateTrip> trips = new HashSet<>();
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dayEnd;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "maintenance")
-//    private Set<Tariff> tariff = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Trip> trips = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Comment> comments = new HashSet<>();
+
+    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
     private Product product;
 
 

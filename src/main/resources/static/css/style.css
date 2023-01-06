@@ -5,13 +5,16 @@
     padding: 1em;
     /* grid-column-gap: 1em; */
 }
+    /*
 .body{
     display: grid;
     grid-template-columns:70% 30%;
     background-color: #e1e6f2;
     padding: 1em;
-    /* grid-column-gap: 1em; */
+grid-column-gap: 1em;
 }
+*/
+
 .product{
   border:
     3px       /* width */

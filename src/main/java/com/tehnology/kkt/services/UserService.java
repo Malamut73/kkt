@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,32 +27,18 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userDAO.findByEmail(email);
-        return user;
+        return userDAO.findByEmail(email);
     }
 
-    public boolean create(User user) {
+    public void create(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);
         user.getRoles().add(Role.Administrator);
         userDAO.save(user);
-        return true;
     }
 
-    public List<User> findAll() {
-        List<User> clients = new ArrayList<>();
-        List<User> allUsers = userDAO.findAll();
-        for (User user :
-                allUsers) {
-            for (Role role :
-                    user.getRoles()) {
-                if (role.name().equals("Client")) {
-                    clients.add(user);
-                }
-            }
-        }
-
-        return clients;
+    public List<User> findAllClients() {
+        return userDAO.findUserByRoles(Role.Client);
     }
 
     public void saveClient(User user) {
@@ -60,7 +47,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User findById(Long id) {
-        return userDAO.findById(id).orElseThrow();
+        return userDAO.getReferenceById(id);
     }
 
 

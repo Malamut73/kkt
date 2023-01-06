@@ -5,16 +5,45 @@
     <title>Title</title>
 </head>
 <body>
-
-<h3>Создать техобслуживание</h3>
-<form th:method="POST" th:action="'/clients/' + ${userId} + '/product/' + ${productId}" th:object="${maintenance}" >
-    <p>Личный кабинет:</p>
-    Тариф<input type="text" th:field="*{name}"><br><br>
-    Дата окончания<input type="date" th:field="*{limitation}"><br><br>
-
-    <input type="submit" value="Добавить"><br><br>
-
-</form>
+    <h3>Создать техобслуживание</h3>
+    <div th:if="!${#lists.isEmpty(maintenancetariffs)}">
+        <div th:if="${maintenanceid} != null">
+            <form th:method="POST" th:action="'/clients/' + ${clientid} + '/product/' + ${productId} + '/maintenance/' + ${maintenanceid} + '/edit'" th:object="${maintenance}" >
+                Дата начала: <input type="date" th:field="*{dateStart}" th:value="*{dateStart}"><br><br>
+                Дата окончания: <input type="date" th:field="*{dayEnd}" th:value="*{dayEnd}"><br><br>
+                <div th:if="!${#lists.isEmpty(maintenancetariffs)}">
+                    <label for="maintenancetariff-edit-select">Тариф: </label>
+                    <select id="maintenancetariff-edit-select"  th:field="*{maintenanceTariff.id}">
+                        <option th:each="main : ${maintenancetariffs}" th:value="${main.id}" th:select="*{maintenanceTariff.name}" th:text="${main.name}"></option>
+                    </select>
+                </div>
+                <label for="edit-comment" >Коментарий:</label>
+                <textarea id="edit-comment" th:field="*{comment}"></textarea>
+                <input type="submit" value="Добавить"><br><br>
+            </form>
+        </div>
+        <div th:if="${maintenanceid} == null">
+            <form th:object="${maintenance}" th:method="POST" th:action="'/clients/' + ${clientid} + '/product/' + ${productId} + '/maintenance'"  >
+                Дата начала: <input type="date" th:field="*{dateStart}"><br><br>
+                Дата окончания: <input type="date" th:field="*{dayEnd}"><br><br>
+                <div th:if="!${#lists.isEmpty(maintenancetariffs)}">
+                    <label for="maintenancetariff-select">Тариф: </label>
+                    <select id="maintenancetariff-select"  th:field="*{name}">
+                        <option th:each="main : ${maintenancetariffs}" th:value="${main.name}" th:text="${main.name}"></option>
+                    </select>
+                </div>
+                <label for="comment" >Коментарий:</label>
+                <textarea id="comment" th:field="*{comment}"></textarea>
+                <input type="submit" value="Добавить"><br><br>
+            </form>
+        </div>
+    </div>
+    <div th:if="${#lists.isEmpty(maintenancetariffs)}">
+        <p>Нету ни одного тарифа, необходимо создать</p>
+        <form th:action="'/maintenanceTariff/create'">
+            <input type="submit" value="Создать тариф">
+        </form>
+    </div>
 
 </body>
 </html>

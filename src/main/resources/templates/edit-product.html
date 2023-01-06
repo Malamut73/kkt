@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:form="http://www.springframework.org/tags/form">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:method="POST" th:action="'/clients/' + ${clientid} + '/product/' + ${productid} + '/edit'" th:object="${product}" >
+    <div th:if="!${#lists.isEmpty(descriptions)}">
+        <label for="kassa-select">Касса: </label>
+        <select id="kassa-select"  th:field="*{description.id}">
+            <option th:each="des : ${descriptions}" th:value="${des.id}" th:selected="*{description.name}" th:text="${des.name}"></option>
+        </select>
+    </div>
+    Заводской номер: <input type="text" th:field="*{number}" th:value="*{number}"><br><br>
+    Адрес: <input type="text" th:field="*{address}" th:value="*{address}"><br><br>
+
+    <input type="submit" value="Добавить"><br><br>
+
+</form>
+</body>
+</html>

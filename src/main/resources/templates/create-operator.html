@@ -8,13 +8,22 @@
 
 <h3>Создать оператора</h3>
 
+<div th:if="${productid} != null">
+    <form th:method="POST" th:action="'/operator/create/' + ${clientid} + '/product/' + ${productid} + '/ofd'" th:object="${operator}" >
+        Название <input type="text" th:field="*{name}" th:value="*{name}"><br><br>
+
+        <input type="submit" value="Добавить"><br><br>
+    </form>
+</div>
+<div th:if="${productid} == null">
+    <form th:method="POST" th:action="'/operator'" th:object="${operator}" >
+        Название <input type="text" th:field="*{name}" th:value="*{name}"><br><br>
+
+        <input type="submit" value="Добавить"><br><br>
+    </form>
+</div>
 
 
-<form th:method="POST" th:action="'/operator'" th:object="${operator}" >
-    Название <input type="text" th:field="*{name}"><br><br>
-
-    <input type="submit" value="Добавить"><br><br>
-</form>
 
 </body>
 </html>

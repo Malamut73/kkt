@@ -1,4 +1,4 @@
-package com.tehnology.kkt.models.extraclasses;
+package com.tehnology.kkt.models.extraclasses.firdirectory;
 
 import com.tehnology.kkt.models.User;
 import lombok.*;

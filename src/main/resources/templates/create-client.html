@@ -13,7 +13,16 @@
     Отчество<input type="text" th:field="*{patronymic}"><br><br>
     Почта<input type="email" th:field="*{email}"><br><br>
     Телефон<input type="text" th:field="*{phoneNumber}"><br><br>
-    Форма собственности<input type="text" th:field="*{requisite.organization.name}"><br><br>
+
+    <div th:if="!${#lists.isEmpty(organizations)}">
+        <label for="organization-select">Форма собственности: </label>
+        <select id="organization-select" th:field="*{requisite.organization.id}">
+            <option th:each="organ : ${organizations}" th:value="${organ.id}" th:text="${organ.name}"></option>
+        </select>
+    </div>
+    <a th:href="'/organization/create/clients'"> Создать новую форму</a>
+
+    <br><br>
     ИНН<input type="text" th:field="*{requisite.inn}"><br><br>
     ОГРН<input type="text" th:field="*{requisite.ogrn}"><br><br>
     КПП<input type="text" th:field="*{requisite.kpp}"><br><br>

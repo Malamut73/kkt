@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:each="taxation : ${taxations}">
+        <p th:text="${taxation.name}"></p>
+    </div>
+    <form th:action="'/taxations/create'">
+        <input type="submit" value="Создать налогооблажение">
+    </form>
+    <br>
+    <form th:action="'/catalog'">
+        <input type="submit" value="Назад">
+    </form>
+
+</body>
+</html>

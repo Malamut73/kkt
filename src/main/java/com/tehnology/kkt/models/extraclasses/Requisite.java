@@ -1,6 +1,6 @@
 package com.tehnology.kkt.models.extraclasses;
 
-import com.tehnology.kkt.models.User;
+import com.tehnology.kkt.models.extraclasses.firdirectory.Organization;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,8 +22,7 @@ public class Requisite { //реквезиты
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "organization_id")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Organization organization;
     private String inn;
     private String ogrn;

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post" th:object="${trip}" th:action="'/clients/' + ${clientid} + '/product/' + ${productId} + '/maintenanceTariff/' + ${maintenanceTariffid}+ '/trip/' + ${trip.id}">
+    Дата поездки: <input type="date" th:value="${trip.trip}" >
+    <input type="submit" value="Сохранить">
+</form>
+
+</body>
+</html>

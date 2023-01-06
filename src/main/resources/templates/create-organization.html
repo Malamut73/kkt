@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h3>Создать тип организации</h3>
+
+<div th:if="${clients} != null">
+    <form th:method="POST" th:action="'/organization/create/clients'" th:object="${organization}" >
+        Название <input type="text" th:field="*{name}"><br><br>
+
+        <input type="submit" value="Добавить"><br><br>
+    </form>
+</div>
+
+
+<div th:if="${clients} == null">
+    <form th:method="POST" th:action="'/organization/create'" th:object="${organization}" >
+        Название <input type="text" th:field="*{name}"><br><br>
+
+        <input type="submit" value="Добавить"><br><br>
+    </form>
+</div>
+
+
+</body>
+</html>

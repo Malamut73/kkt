@@ -1,4 +1,4 @@
-package com.tehnology.kkt.models.extraclasses;
+package com.tehnology.kkt.models.extraclasses.firdirectory;
 
 import lombok.*;
 
@@ -8,17 +8,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-//@Data
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Operator {
+public class Taxation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
+
 }

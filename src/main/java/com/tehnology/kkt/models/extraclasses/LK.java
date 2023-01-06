@@ -18,9 +18,12 @@ public class LK {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String factoryNumber;
     private String contact;
     private String pass;
     private String codeAdministrator;
+    private String linkAddress;
+    private String codeEmployee;
+
+
 
 }

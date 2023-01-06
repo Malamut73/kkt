@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<h3>Создать заявку</h3>
+
+<form th:method="POST" th:action="'/clients/' + ${userid} + '/request'" th:object="${request}">
+    <select th:field="*{topic.id}">
+        Тема: <option th:each="topic : ${topics}"  th:value="${topic.id}" th:text="${topic.name}"></option>
+    </select>
+    <select th:field="*{product.id}">
+        Касса:
+        <option th:each="prod : ${products}" th:value="${prod.id}" th:text="${prod.description.name}"></option>
+    </select>
+    <select th:field="*{etsp.id}">
+        <option th:each="etsp : ${etsps}" th:value="${etsp.id}" th:text="${etsp.name}"></option>
+    </select>
+    <label for="comment" >Коментарий:</label>
+    <textarea id="comment" th:field="${comment.text}"></textarea>
+
+    <input type="submit" value="Добавить"><br><br>
+
+</form>
 
 </body>
 </html>

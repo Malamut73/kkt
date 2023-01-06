@@ -14,4 +14,12 @@ public class MaintenanceService {
     public void save(Maintenance maintenance) {
         maintenanceDAO.save(maintenance);
     }
+
+    public Maintenance findById(Long maintenanceid) {
+        return maintenanceDAO.getReferenceById(maintenanceid);
+    }
+
+    public void deleteById(Long maintenanceid) {
+        maintenanceDAO.deleteById(maintenanceid);
+    }
 }

@@ -1,12 +1,12 @@
 package com.tehnology.kkt.models.extraclasses;
 
-import com.tehnology.kkt.models.Product;
 import javax.persistence.*;
 
+import com.tehnology.kkt.models.extraclasses.firdirectory.Operator;
+import com.tehnology.kkt.models.extraclasses.firdirectory.Tariff;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -34,11 +34,11 @@ public class OFD {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dayEnd;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinColumn(name = "operator_id")
     private Operator operator;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinColumn(name = "tariff_id")
     private Tariff tariff;
 

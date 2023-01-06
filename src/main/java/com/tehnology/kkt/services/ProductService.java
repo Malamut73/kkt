@@ -6,6 +6,8 @@ import com.tehnology.kkt.repositories.ProductDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -20,40 +22,23 @@ public class ProductService {
         productDAO.save(product);
     }
 
-    public List<Product> findByUser(User user) {
-
-        List<Product> products = productDAO.findAll();
-
-        return null;
-    }
-
     public Product findById(Long id) {
             return productDAO.getReferenceById(id);
     }
 
-    public Product findLastOFD(User user) {
-        Date ofdResult = null;
-        Date ofdCurrent = null;
-
-        Product lastOfdProduct = null;
-
-        for (Product product :
-                user.getProducts()) {
-            if(ofdResult == null){
-                ofdResult = product.getOfd().getDateStart();
-            }
-            ofdCurrent = product.getOfd().getDateStart();
-            if(ofdResult.before(ofdCurrent)){
-                ofdResult = ofdCurrent;
-                lastOfdProduct = product;
-            }
-
-        }
-
-        return lastOfdProduct;
+    public Product findProductByLastOFDDate(User user) {
+         Product product = new ArrayList<>(user.getProducts())
+                 .stream().min(Comparator
+                 .comparing(date -> date.getOfd().getDateStart())).orElse(null);
+        return product;
     }
 
     public List<Product> findAll() {
         return productDAO.findAll();
+    }
+
+
+    public void deleteProduct(Product product) {
+        productDAO.delete(product);
     }
 }

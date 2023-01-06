@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p>Поездки</p>
+    <div th:if="!${#lists.isEmpty(maintenanceTariff.trips)}">
+        <div th:each="trips : ${maintenanceTariff.trips}">
+            <p th:text="${trips.name}"></p>
+        </div>
+    </div>
+
+    <form th:action="'/maintenanceTariff/' + ${maintenanceTariff.id} + '/addtrip'" method="post" th:object="${trip}">
+        <input type="text" th:field="*{name}" placeholder="Название поездки">
+        <input type="submit" value="Добавить поездку" >
+    </form>
+    <a href="/maintenanceTariff">Назад</a>
+</body>
+</html>

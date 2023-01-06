@@ -7,10 +7,23 @@
 <body>
 <h3>Создать тариф</h3>
 
-<form th:method="POST" th:action="'/tariffs'" th:object="${tariff}" >
-    Название <input type="tel" th:field="*{days}"><br><br>
 
-    <input type="submit" value="Добавить"><br><br>
-</form>
+<div th:if="${productid} != null">
+    <p>Создатьтариф</p>
+    <form th:method="POST" th:action="'/tariffs/create/clients/' + ${clientid} + '/product/' + ${productid}" th:object="${tariff}" >
+        Название <input type="text" th:field="*{days}"><br><br>
+        <input type="submit" value="Добавить"><br><br>
+    </form>
+</div>
+
+
+<div th:if="${productid} == null">
+    <form th:method="POST" th:action="'/tariffs'" th:object="${tariff}" >
+        Название <input type="tel" th:field="*{days}"><br><br>
+
+        <input type="submit" value="Добавить"><br><br>
+    </form>
+</div>
+
 </body>
 </html>

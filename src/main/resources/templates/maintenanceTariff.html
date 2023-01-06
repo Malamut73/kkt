@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:each="maintenanceTariff : ${maintenanceTariffs}">
+    Название: <a th:href="'/maintenanceTariff/' + ${maintenanceTariff.id} + '/addtrip'">
+        <span th:text="${maintenanceTariff.name}"></span></a>
+</div>
+<a href="/maintenanceTariff/create">Создать тариф</a>
+<a href="/catalog">Назад</a>
+
+</body>
+</html>

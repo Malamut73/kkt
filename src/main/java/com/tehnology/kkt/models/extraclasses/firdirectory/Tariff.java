@@ -1,4 +1,4 @@
-package com.tehnology.kkt.models.extraclasses;
+package com.tehnology.kkt.models.extraclasses.firdirectory;
 
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;

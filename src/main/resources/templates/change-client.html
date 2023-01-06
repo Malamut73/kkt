@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p>Выбирите нового собственника</p>
+    <form th:object="${product}" method="post" th:action="'/clients/'+ ${product.user.id} + '/product/' + ${product.id} + '/changeclient'">
+        <div th:each="client : ${clients}" >
+            <input type="radio" th:field="*{user.id}" th:value="${client.id}" th:text="${client.name} + ' ' + ${client.lastName}" >
+        </div>
+        <input type="submit" value="Изменить">
+    </form>
+
+
+</body>
+</html>

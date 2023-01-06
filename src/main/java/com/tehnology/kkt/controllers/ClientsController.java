@@ -3,12 +3,13 @@ package com.tehnology.kkt.controllers;
 import com.tehnology.kkt.models.Product;
 import com.tehnology.kkt.models.User;
 import com.tehnology.kkt.models.extraclasses.Comment;
-import com.tehnology.kkt.models.extraclasses.Maintenance;
+import com.tehnology.kkt.models.extraclasses.firdirectory.Organization;
+import com.tehnology.kkt.services.OrganizationService;
 import com.tehnology.kkt.services.ProductService;
 import com.tehnology.kkt.services.UserService;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Controller
@@ -25,12 +25,11 @@ public class ClientsController {
 
     private final UserService userService;
     private final ProductService productService;
+    private final OrganizationService organizationService;
 
     @GetMapping("/clients")
     public String clients(Model model) {
-
-        model.addAttribute("clients", userService.findAll());
-
+        model.addAttribute("clients", userService.findAllClients());
         return "clients";
     }
 
@@ -42,6 +41,7 @@ public class ClientsController {
     @GetMapping("/clients/create")
     public String createClient(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("organizations", organizationService.findAll());
         return "create-client";
     }
 
@@ -53,21 +53,16 @@ public class ClientsController {
                 .text(formater.format(today) + " " + principal.getName() + " создал клиента.")
                 .build();
         user.getComments().add(comment);
+        user.getRequisite().setOrganization(organizationService.findById(user.getRequisite().getOrganization().getId()));
         userService.saveClient(user);
         return "redirect:/clients";
     }
 
-    @GetMapping("/clients/{id}")
-    public String userInfo(@PathVariable("id") Long id, Model model) {
-
-        User user = userService.findById(id);
-        Product lastOFD = productService.findLastOFD(user);
-
-
-        model.addAttribute("lastOFD", lastOFD);
+    @GetMapping("/clients/{clientid}")
+    public String userInfo(@PathVariable Long clientid, Model model) {
+        User user = userService.findById(clientid);
         model.addAttribute("user", user);
 
-//        model.addAttribute("products", productService.findByUser());
         return "client-info";
     }
 }

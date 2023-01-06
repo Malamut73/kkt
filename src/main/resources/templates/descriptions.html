@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:each="description : ${descriptions}">
+    <p>Название: <span th:text="${description.name}"></span></p>
+    <p>Описание:  <span th:text="${description.someDescription}"></span></p>
+</div>
+<br>
+<form th:action="'/descriptions/create'" method="get">
+    <button type="submit">Создать товар</button>
+</form>
+<a href="/catalog">Назад</a>
+
+</body>
+</html>

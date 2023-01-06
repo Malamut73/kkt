@@ -1,4 +1,4 @@
-package com.tehnology.kkt.models.extraclasses;
+package com.tehnology.kkt.models.extraclasses.firdirectory;
 
 import com.tehnology.kkt.models.Request;
 import lombok.*;
@@ -18,8 +18,6 @@ public class Topic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "request_id")
-    private Request request;
+    private String name;
 
 }

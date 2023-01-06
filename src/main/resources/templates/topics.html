@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:each="topic : ${topics}">
+        <p>Название: <span th:text="${topic.name}"></span></p>
+
+    </div>
+    <a href="/topics/create">Создать тему</a>
+    <a href="/catalog">Назад</a>
+
+</body>
+</html>

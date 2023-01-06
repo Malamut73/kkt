@@ -29,64 +29,170 @@
                 <div th:each="comment : ${user.comments}">
                     Комментарий: <td th:text="${comment.text}"></td>
                 </div>
-<!--            </div>-->
+            <br>
+            <a th:href="'/clients'">Назад к списку клиентов</a>
+
+            <!--            </div>-->
         </div>
         <div class="head">
-            some text
-<!--            Дата ОФД:  <td th:text="${ofdDate}"></td>-->
-<!--            <div th:object="${lastOFD}">-->
-<!--                Касса:  <td th:text="*{name}"></td>-->
-<!--                Дата ОФД: <td th:text="*{ofd.days}"></td>-->
-<!--                &lt;!&ndash;                    Дата:  <td th:text="${maintenance.limitation}"></td>&ndash;&gt;-->
+<!--            <div th:if="${lastOFD.description.name} != null">-->
+<!--                <p> ОФД: <span th:text="${lastOFD.description.name}">Касса: </span> , <span th:text="${lastOFD.ofd.dateStart}"> дата.</span></p>-->
 <!--            </div>-->
+            <p>ОФД: Касса, дата</p>
+            <p>ФН: Касса, дата</p>
+            <p>Тариф: дата</p>
         </div>
     </div>
     <div class="body">
-        <div class="content">
-                    <div class="content-hide" th:each="product : ${user.products}" >
-                        <button type="button" class="trigger" th:text="${product.description.name}">Show/Hide content</button>
-                        <div class="product">
-<!--                            <p>Название: <span th:text="${product.description.name}"></span></p>-->
-                            <p>Описание:  <span th:text="${product.description.someDescription}"></span></p>
-                            <p>Заводской номер:<span th:text="${product.number}"></span></p>
-                            <p>Адрес: <span th:text="${product.address}"></span></p>
-                            <p>Личный кабинет:</p>
-                            <p>Почта или телефон: <span th:text="${product.lk.contact}"></span></p>
-                            <p>Пароль: <span th:text="${product.lk.pass}"></span></p>
-                            <p>ОФД:</p>
-                            <p>Почта или телефон: <span th:text="${product.ofd.contact}"></span></p>
-                            <p>Пароль: <span th:text="${product.ofd.pass}"></span></p>
-                            <p>Тарифа: <span th:text="${product.ofd.tariff.days}"></span> мес.</p>
-                            <p>Начало тарифа: <span th:text="${product.ofd.dateStart}"></span></p>
-                            <p>Конец тарифа: <span th:text="${product.ofd.dayEnd}"></span></p>
-                            <p>Оператор: <span th:text="${product.ofd.operator.name}"></span></p>
-                            <p>ФН:</p>
-                            <p>Срок: <span th:text="${product.fn.days}"></span></p>
-                            <p>Тех обслуживание:</p>
-                            <div th:each="maintenance : ${product.maintenance}">
-                                Тариф:  <td th:text="${maintenance.name}"></td>
-                                Дата:  <td th:text="${maintenance.limitation}"></td>
-                            </div>
-                            <td><a th:href="'/clients/' + ${user.id} + '/product/' + ${product.id}">
-                                Создать тех обслуживание
-                            </a></td>
-                            <br><br>
-                        </div>
+        <table border="1">
+            <tr>
+                <td>Какое-то название</td>
+                <td>Личный кабинет</td>
+                <td>ОФД</td>
+                <td>ФН</td>
+                <td>Техобслуживание</td>
 
+
+            </tr>
+            <tr th:each="product : ${user.products}">
+                <td >
+                    <div>
+                       <p>Название: <a th:href="'/clients/' + ${user.id} + '/product/' + ${product.id}"><span th:text="${product.description.name}"></span></a> </p>
+                        <p>Описание:  <span th:text="${product.description.someDescription}"></span></p>
+                        <p>Заводской номер:<span th:text="${product.number}"></span></p>
+                        <p>Адрес: <span th:text="${product.address}"></span></p>
+                        <form th:action="'/clients/' + ${user.id} + '/product/' + ${product.id} + '/delete'" method="post">
+                            <button type="submit">Удалить кассу</button>
+                        </form>
                     </div>
-                    <br>
+                </td>
+                <td>
+                    <div th:if="${product.lk} != null">
+                        <p>Контакты: <span th:text="${product.lk.contact}">Контакты</span></p>
+                        <p>Пароль: <span th:text="${product.lk.pass}"></span></p>
+                        <p>Код администратора: <span th:text="${product.lk.codeAdministrator}"></span></p>
+                        <p>Ссылка на кабинет: <span th:text="${product.lk.linkAddress}"></span></p>
+                    </div>
 
-                <br><br>
-                <td><a th:href="'/clients/' + ${user.id} + '/product'">Создать кассу</a></td>
+                </td>
+                <td>
+                    <div th:if="${product.ofd} != null">
+                        <div>
+                            <p>Тариф: <span th:text="${product.ofd.tariff.days}"></span></p>
+                            <p>Датаначала: <span th:text="${product.ofd.dateStart}">Контакты</span></p>
+                            <p>Датаокончания: <span th:text="${product.ofd.dayEnd}"></span></p>
+                            <p th:if="${product.ofd.tariff} != null">Тариф: <span th:text="${product.ofd.tariff.days}"></span></p>
+                            <p th:if="${product.ofd.operator} != null">Оператор: <span th:text="${product.ofd.operator.name}"></span></p>
+                        </div>
+                    </div>
 
-        </div>
-        <div class="content">
-            Some text
-            <td><a th:href="'/clients/' + ${user.id} + '/request'">Создать заявку</a></td>
+
+                </td>
+                <td>
+                    <!--                    <div th:if="${product.lk} != null">-->
+                    <!--                        <p>Контакты: <span th:text="${product.lk.contact}">Контакты</span></p>-->
+                    <!--                        <p>Пароль: <span th:text="${product.lk.pass}"></span></p>-->
+                    <!--                        <p>Код администратора: <span th:text="${product.lk.codeAdministrator}"></span></p>-->
+                    <!--                        <p>Ссылка на кабинет: <span th:text="${product.lk.linkAddress}"></span></p>-->
+                    <!--                    </div>-->
+                </td>
+                <td>
+                    <!--                    <div th:if="${product.lk} != null">-->
+                    <!--                        <p>Контакты: <span th:text="${product.lk.contact}">Контакты</span></p>-->
+                    <!--                        <p>Пароль: <span th:text="${product.lk.pass}"></span></p>-->
+                    <!--                        <p>Код администратора: <span th:text="${product.lk.codeAdministrator}"></span></p>-->
+                    <!--                        <p>Ссылка на кабинет: <span th:text="${product.lk.linkAddress}"></span></p>-->
+                    <!--                    </div>-->
+                    <div>
+                        <form th:action="'/client'" method="get">
+                            <button type="submit">Добавить Техобслуживание</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </table>
+<a th:href="'/clients/' + ${user.id} + '/product'">Добавить кассу</a>
 
 
-        </div>
+        <!--        <div class="content">-->
+<!--                    <div class="content-hide" th:each="product : ${user.products}" >-->
+<!--&lt;!&ndash;                                    <button type="button" class="trigger" >Show/Hide content</button>&ndash;&gt;-->
+<!--                                    <button type="button" class="trigger" th:text="${product.description.name}">Show/Hide content</button>-->
+<!--                        <div class="product">-->
+<!--                            <p>Название: <span th:text="${product.description.name}"></span></p>-->
+<!--                            <p>Описание:  <span th:text="${product.description.someDescription}"></span></p>-->
+<!--                            <p>Заводской номер:<span th:text="${product.number}"></span></p>-->
+<!--                            <p>Адрес: <span th:text="${product.address}"></span></p>-->
+
+<!--                            <button type="button" class="trigger" >Личный кабинет</button>-->
+<!--                            <div class="product">-->
+<!--                                <p>Контакты: <span th:text="${product.lk.contact}"></span></p>-->
+<!--                                <p>Пароль: <span th:text="${product.lk.pass}"></span></p>-->
+<!--                                <p>Код администратора: <span th:text="${product.lk.codeAdministrator}"></span></p>-->
+<!--                                <p>Ссылка на кабинет: <span th:text="${product.lk.linkAddress}"></span></p>-->
+<!--                            </div>-->
+<!--&lt;!&ndash;                            <p>Личный кабинет:</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <p>Почта или телефон: <span th:text="${product.lk.contact}"></span></p>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <p>Пароль: <span th:text="${product.lk.pass}"></span></p>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <p>Код администратора: <span th:text="${product.lk.pass}"></span></p>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <a th:href="${product.lk.linkAddress}" target="_blank">Ссылка на личный кабинет</a>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                            <p>ОФД:</p>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                                <p>Почта или телефон: <span th:text="${product.ofd.contact}"></span></p>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                                <p>Пароль: <span th:text="${product.ofd.pass}"></span></p>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                                <p>Тарифа: <span th:text="${product.ofd.tariff.days}"></span> мес.</p>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                                <p>Начало тарифа: <span th:text="${product.ofd.dateStart}"></span></p>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                                <p>Конец тарифа: <span th:text="${product.ofd.dayEnd}"></span></p>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                                <p>Оператор: <span th:text="${product.ofd.operator.name}"></span></p>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                            <p>ФН:</p>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                                <p>Тарифа: <span th:text="${product.fn.tariff.days}"></span> мес.</p>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                                <p>Начало тарифа: <span th:text="${product.fn.dateStart}"></span></p>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                                <p>Конец тарифа: <span th:text="${product.fn.dayEnd}"></span></p>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                            <p>Тех обслуживание:</p>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                            <div th:each="maintenance : ${product.maintenance}">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                                Тариф:  <td th:text="${maintenance.name}"></td>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                                Дата:  <td th:text="${maintenance.limitation}"></td>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                            </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                            <td><a th:href="'/clients/' + ${user.id} + '/product/' + ${product.id}"> Создать тех обслуживание:&ndash;&gt;-->
+<!--&lt;!&ndash;                            </a></td>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <br><br>&ndash;&gt;-->
+<!--                            <form th:action="'/client/' + ${user.id} + '/addlk/product/' + ${product.id}" method="get">-->
+<!--                                <button type="submit">Добавить личный кабинет</button>-->
+<!--                            </form>-->
+<!--                            <form th:action="'/client/' + ${user.id} + '/delete/product/' + ${product.id}" method="post">-->
+<!--                                <button type="submit">Удалить кассу</button>-->
+<!--                            </form>-->
+
+<!--                        </div>-->
+
+<!--                    </div>-->
+<!--&lt;!&ndash;                    <br>&ndash;&gt;-->
+
+<!--                <br><br>-->
+
+<!--                <td><a th:href="'/clients/' + ${user.id} + '/product'">Добавить кассу</a></td>-->
+
+<!--        </div>-->
+<!--        <div class="content">-->
+<!--&lt;!&ndash;           <div class="content-hide" th:each="request : ${user.requests}">&ndash;&gt;-->
+<!--&lt;!&ndash;               <button type="button" class="trigger" th:text="${request.topic.name}">Show/Hide content</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="product">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <p>Касса: <span th:text="${request.product.description.name}"></span></p>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <p> Заводской номер: <span th:text="${request.product.number}"></span></p>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <p> ОФД: <span th:text="${request.product.ofd.tariff.days}"></span></p>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <p> Оператор: <span th:text="${request.product.ofd.operator.name}"></span></p>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <p> ЭЦП: <span th:text="${request.etsp.name}"></span></p>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <p> Задача: <span th:text="${request.topic.name}"></span></p>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div th:each="comment : ${request.comments}">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <p> Коментарий: <span th:text="${comment.text}"></span></p>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;           </div>&ndash;&gt;-->
+<!--            <td><a th:href="'/clients/' + ${user.id} + '/request'">Создать заявку</a></td>-->
+
+
+<!--        </div>-->
     </div>
+
 
 </div>
 

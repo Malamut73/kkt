@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:each="typeofactivitiy : ${typeofactivities}">
+    <p>Название: <span th:text="${typeofactivitiy.name}"></span></p>
+</div>
+
+<form th:action="'/typeofactivity/create'">
+    <input type="submit" value="Создать вид деятельности">
+</form>
+<br>
+<form th:action="'/catalog'">
+    <input type="submit" value="Назад">
+</form>
+
+</body>
+</html>

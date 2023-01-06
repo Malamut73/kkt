@@ -1,4 +1,4 @@
-package com.tehnology.kkt.models.extraclasses;
+package com.tehnology.kkt.models.extraclasses.firdirectory;
 
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -7,28 +7,19 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-//@Data
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DateTrip {
-
+public class Trip {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date trip;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "maintenance_id")
-    private Maintenance maintenance;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "tariff_id")
-    private Tariff tariff;
 }
