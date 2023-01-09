@@ -8,26 +8,30 @@
 <body>
 <h3>Создать продукт</h3>
 
-<div></div>
-<div></div>
-
-<form th:method="POST" th:action="'/clients/' + ${clientid} + '/product'" th:object="${product}" >
-
-    <div th:if="!${#lists.isEmpty(descriptions)}">
-        <label for="kassa-select">Касса: </label>
-        <select id="kassa-select"  th:field="*{description.id}">
-            <option th:each="des : ${descriptions}" th:value="${des.id}" th:text="${des.name}"></option>
-        </select>
-    </div>
+<div th:if="${#lists.isEmpty(descriptions)}">
+    <p>Нету ни одного товара необходимо созадть</p>
     <a th:href="'/descriptions/create/clients/' + ${clientid}"> Создать новый товар.</a><br><br>
+</div>
+<div th:if="!${#lists.isEmpty(descriptions)}">
+    <form th:method="POST" th:action="'/clients/' + ${clientid} + '/product'" th:object="${product}" >
 
-    Заводской номер<input type="text" th:field="*{number}"><br><br>
-    Адрес<input type="text" th:field="*{address}"><br><br>
+        <div>
+            <label for="kassa-select">Касса: </label>
+            <select id="kassa-select"  th:field="*{description.id}">
+                <option th:each="des : ${descriptions}" th:value="${des.id}" th:text="${des.name}"></option>
+            </select>
+        </div>
 
-    <input type="submit" value="Добавить"><br><br>
-    <a th:href="'/clients/' + ${id}">Назад</a>
+        Заводской номер<input type="text" th:field="*{number}"><br><br>
+        Адрес<input type="text" th:field="*{address}"><br><br>
 
-</form>
+        <input type="submit" value="Добавить"><br><br>
+        <a th:href="'/clients/' + ${id}">Назад</a>
+
+    </form>
+</div>
+
+
 
 </body>
 </html>

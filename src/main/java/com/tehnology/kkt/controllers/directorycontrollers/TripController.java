@@ -18,24 +18,22 @@ public class TripController {
     private final TripService tripService;
     private final ProductService productService;
 
-    @GetMapping("/clients/{clientid}/product/{productId}/maintenanceTariff/{maintenanceTariffid}/trip/{tripid}")
+    @GetMapping("/clients/{clientid}/product/{productId}/maintenance/{maintenanceid}/trip/{tripid}")
     public String editTrip(@PathVariable Long tripid,
                            @PathVariable Long productId,
                            @PathVariable Long clientid,
-                           @PathVariable Long maintenanceTariffid, Model model){
+                           @PathVariable Long maintenanceid, Model model){
         model.addAttribute("trip", tripService.findById(tripid));
         model.addAttribute("clientid", clientid);
         model.addAttribute("productId", productId);
-        model.addAttribute("maintenanceTariffid", maintenanceTariffid);
+        model.addAttribute("maintenanceid", maintenanceid);
         return "edit-trip";
     }
 
-    @PostMapping("/clients/{clientid}/product/{productId}/maintenanceTariff/{maintenanceTariffid}/trip/{tripid}")
-    public String editTrip(
-                           @PathVariable Long tripid, Trip trip, Model model){
-        trip.setId(tripid);
+    @PostMapping("/clients/{clientid}/product/{productid}/maintenance/{maintenanceid}/trip/{tripid}")
+    public String editTrip(Trip trip){
         tripService.save(trip);
-        return "redirect:/clients/{clientid}/product/{productid}";
+        return "redirect:/clients/{clientid}/product/{productid}/";
     }
 
 

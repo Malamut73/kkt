@@ -30,26 +30,26 @@ public class Request { //заявка
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfCreated;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private boolean active;
+
+    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private Etsp etsp; //электронно цифровая подпись
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private Topic topic; //тема
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private Set<Comment> comments = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private User client;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 
     private LocalDateTime dateOfEnd;
-
-
 
     @PrePersist
     private void init(){

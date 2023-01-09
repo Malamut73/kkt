@@ -6,16 +6,15 @@ import com.tehnology.kkt.models.extraclasses.Comment;
 import com.tehnology.kkt.models.extraclasses.Maintenance;
 import com.tehnology.kkt.models.extraclasses.firdirectory.MaintenanceTariff;
 import com.tehnology.kkt.models.extraclasses.firdirectory.Trip;
-import com.tehnology.kkt.services.MaintenanceService;
-import com.tehnology.kkt.services.MaintenanceTariffService;
-import com.tehnology.kkt.services.ProductService;
-import com.tehnology.kkt.services.UserService;
+import com.tehnology.kkt.services.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.HashSet;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,6 +24,7 @@ public class MaintenanceController {
     private final ProductService productService;
     private final MaintenanceService maintenanceService;
     private final MaintenanceTariffService maintenanceTariffService;
+    private final TripService tripService;
 
     @GetMapping("/clients/{clientid}/product/{productId}/maintenance")
     public String maintenance(@PathVariable Long productId,
@@ -44,21 +44,15 @@ public class MaintenanceController {
                                     @PathVariable Long productId, Maintenance maintenance) {
         Product product = productService.findById(productId);
         MaintenanceTariff maintenanceTariff = maintenanceTariffService.findByName(maintenance.getName());
-        for (Trip trip : maintenanceTariff.getTrips()) {
-            product.getMaintenance().getTrips().add(new Trip)
+        for (int i = 1; i < maintenanceTariff.getMountTrip() + 1; i++) {
+            maintenance.getTrips().add(Trip.builder()
+                    .name(i)
+                    .build());
         }
-
+        maintenance.getComments().add(Comment.builder()
+                .text(maintenance.getComment())
+                .build());
         product.setMaintenance(maintenance);
-        Comment comment = Comment.builder()
-                .text(product.getMaintenance().getComment())
-                .build();
-        if(maintenance.getMaintenanceTariff().getId() != null){
-            product.getMaintenance().setMaintenanceTariff(
-                    maintenanceTariffService.findById(
-                            product.getMaintenance().getMaintenanceTariff().getId()));
-        }
-        product.getMaintenance().getComments().add(
-                comment);
         productService.saveProduct(product);
 
         return "redirect:/clients/{clientid}/product/{productId}";
@@ -72,18 +66,12 @@ public class MaintenanceController {
         model.addAttribute("productId", productId);
         model.addAttribute("maintenanceid", maintenanceid);
         model.addAttribute("maintenance", maintenanceService.findById(maintenanceid));
-        model.addAttribute("maintenancetariffs", maintenanceTariffService.findAll());
-
-        return "create-maintenance";
+        return "edit-maintenance";
     }
 
     @PostMapping("/clients/{clientid}/product/{productId}/maintenance/{maintenanceid}/edit")
-    public String editMaintenance(@PathVariable Long clientid,
-                                  @PathVariable Long productId,
-                                  @PathVariable Long maintenanceid, Maintenance maintenance){
-        maintenance.setId(maintenanceid);
+    public String editMaintenance(Maintenance maintenance){
         maintenanceService.save(maintenance);
-
         return "redirect:/clients/{clientid}/product/{productId}/";
     }
 
@@ -96,6 +84,44 @@ public class MaintenanceController {
         productService.saveProduct(product);
         maintenanceService.deleteById(maintenanceid);
         model.addAttribute("product", productService.findById(productId));
+        return "redirect:/clients/{clientid}/product/{productId}/";
+    }
+
+    @GetMapping("/clients/{clientid}/product/{productId}/maintenance/{maintenanceid}/edit/tariff")
+    public String editTariff(@PathVariable Long clientid,
+                             @PathVariable Long productId,
+                             @PathVariable Long maintenanceid, Model model){
+        model.addAttribute("maintenancetariffs", maintenanceTariffService.findAll());
+        model.addAttribute("clientid", clientid);
+        model.addAttribute("productId", productId);
+        model.addAttribute("maintenanceid", maintenanceid);
+        model.addAttribute("MaintenanceTariff", new MaintenanceTariff());
+
+        return "edit-maintenance-tariff";
+    }
+
+    @PostMapping("/clients/{clientid}/product/{productId}/maintenance/{maintenanceid}/edit/tariff")
+    public String editTariff(@PathVariable("maintenanceid") Maintenance maintenance,
+                             MaintenanceTariff maintenanceTariff){
+        MaintenanceTariff maintenanceTariffFromDB = maintenanceTariffService.findById(maintenanceTariff.getId());
+        tripService.deleteAll(maintenance.getTrips());
+        maintenance.setTrips(new HashSet<>());
+
+        for (int i = 1; i < maintenanceTariffFromDB.getMountTrip() + 1; i++) {
+            maintenance.getTrips().
+                    add(Trip.builder()
+                    .name(i)
+                    .build());
+        }
+        maintenance.setName(maintenanceTariffFromDB.getName());
+        maintenanceService.save(maintenance);
+        return "redirect:/clients/{clientid}/product/{productId}/";
+    }
+
+    @PostMapping("/clients/{clientid}/product/{productId}/maintenance/{maintenanceid}/trip/{tripid}/delete")
+    public String editTrip(@PathVariable("tripid") Trip trip){
+        trip.setDateTrip(null);
+        tripService.save(trip);
         return "redirect:/clients/{clientid}/product/{productId}/";
     }
 

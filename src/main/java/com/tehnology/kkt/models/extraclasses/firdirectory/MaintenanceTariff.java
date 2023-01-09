@@ -21,10 +21,10 @@ public class MaintenanceTariff {
     private Long id;
 
     private String name;
+    private int mountTrip;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Trip> trips = new HashSet<>();
 
-//    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "maintenanceTariff")
-//    private Maintenance maintenance;
+
 }

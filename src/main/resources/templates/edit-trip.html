@@ -5,10 +5,19 @@
     <title>Title</title>
 </head>
 <body>
-<form method="post" th:object="${trip}" th:action="'/clients/' + ${clientid} + '/product/' + ${productId} + '/maintenanceTariff/' + ${maintenanceTariffid}+ '/trip/' + ${trip.id}">
-    Дата поездки: <input type="date" th:value="${trip.trip}" >
+<form th:method="post" th:object="${trip}" th:action="'/clients/' + ${clientid} + '/product/' + ${productId} + '/maintenance/' + ${maintenanceid}+ '/trip/' + ${trip.id}">
+    Идентификационный номер: <input type="tel" th:field="*{id}" th:value="*{id}" readonly>
+    <br>
+    Имя поездки: <input type="tel" th:field="*{name}" th:value="*{name}" readonly>
+    <br>
+    Дата поездки: <input type="date" th:field="*{dateTrip}" >
     <input type="submit" value="Сохранить">
 </form>
+<div th:if="${trip.dateTrip} != null">
+    <form method="post" th:action="'/clients/' + ${clientid} + '/product/' + ${productId} + '/maintenance/' + ${maintenanceid}+ '/trip/' + ${trip.id} + '/delete'">
+        <input type="submit" value="Удалить">
+    </form>
+</div>
 
 </body>
 </html>

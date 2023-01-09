@@ -25,16 +25,19 @@
             <p>Тех обслуживание</p>
             <p>Дата начала: <span th:text="${product.maintenance.dateStart}"></span></p>
             <p>Дата окончания: <span th:text="${product.maintenance.dayEnd}"></span></p>
-            <p>Тариф: <span th:text="${product.maintenance.maintenanceTariff.name}"></span></p>
-            <div th:if="${product.maintenance.maintenanceTariff} != null">
-                <div th:each="trip : ${product.maintenance.maintenanceTariff.trips}">
-                    <a th:href="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/maintenanceTariff/' + ${product.maintenance.maintenanceTariff.id}+ '/trip/' + ${trip.id}"><span th:text="${trip.name}"></span></a>
-                    <p th:if="${trip.trip} != null"><span th:text="${trip.trip}"></span></p>
+            <p>Тариф: <span th:text="${product.maintenance.name}"></span></p>
+
+                <div th:each="trip : ${product.maintenance.trips}">
+                    <span>Поездка номер: </span>
+                    <a th:href="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/maintenance/' + ${product.maintenance.id}+ '/trip/' + ${trip.id}"><span th:text="${trip.name}"></span></a>
+                    <span th:if="${trip.dateTrip} != null">Дата: <span th:text="${trip.dateTrip}"></span></span>
                 </div>
-            </div>
             <br>
             <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/maintenance/' + ${product.maintenance.id} + '/edit'">
-                <button type="submit">Редактировать</button>
+                <button type="submit">Редактировать техобслуживание</button>
+            </form>
+            <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/maintenance/' + ${product.maintenance.id} + '/edit/tariff'">
+                <button type="submit">Изменить тариф тех обслуживания</button>
             </form>
             <form method="post" th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/maintenance/' + ${product.maintenance.id} + '/delete'">
                 <button type="submit">Удалить</button>
@@ -219,13 +222,13 @@
             <p>Егаис</p>
             <div th:if="${product.egais} == null">
                 <form method="post" th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/addegais'">
-                    <input type="submit" value="Добавить акцизы">
+                    <input type="submit" value="Добавить егаис">
                 </form>
             </div>
             <div th:if="${product.egais} != null">
                 <p th:text="${product.egais}"></p>
                 <form method="post" th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/deleteegais'">
-                    <input type="submit" value="Удалить акцизы">
+                    <input type="submit" value="Удалить егаис">
                 </form>
             </div>
         </div>

@@ -7,8 +7,7 @@
 <body>
 
 <div th:each="maintenanceTariff : ${maintenanceTariffs}">
-    Название: <a th:href="'/maintenanceTariff/' + ${maintenanceTariff.id} + '/addtrip'">
-        <span th:text="${maintenanceTariff.name}"></span></a>
+    Название: <span th:text="${maintenanceTariff.name}"></span>
 </div>
 <a href="/maintenanceTariff/create">Создать тариф</a>
 <a href="/catalog">Назад</a>

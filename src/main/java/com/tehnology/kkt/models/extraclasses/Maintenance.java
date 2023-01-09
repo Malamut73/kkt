@@ -1,7 +1,6 @@
 package com.tehnology.kkt.models.extraclasses;
 
 import com.tehnology.kkt.models.Product;
-import com.tehnology.kkt.models.extraclasses.firdirectory.MaintenanceTariff;
 import com.tehnology.kkt.models.extraclasses.firdirectory.Trip;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;

@@ -11,10 +11,13 @@
             <form th:method="POST" th:action="'/clients/' + ${clientid} + '/product/' + ${productId} + '/maintenance/' + ${maintenanceid} + '/edit'" th:object="${maintenance}" >
                 Дата начала: <input type="date" th:field="*{dateStart}" th:value="*{dateStart}"><br><br>
                 Дата окончания: <input type="date" th:field="*{dayEnd}" th:value="*{dayEnd}"><br><br>
+
+                //TODO
+
                 <div th:if="!${#lists.isEmpty(maintenancetariffs)}">
                     <label for="maintenancetariff-edit-select">Тариф: </label>
-                    <select id="maintenancetariff-edit-select"  th:field="*{maintenanceTariff.id}">
-                        <option th:each="main : ${maintenancetariffs}" th:value="${main.id}" th:select="*{maintenanceTariff.name}" th:text="${main.name}"></option>
+                    <select id="maintenancetariff-edit-select"  th:field="*{name}">
+                        <option th:each="main : ${maintenancetariffs}" th:value="${main.id}" th:select="*{name}" th:text="${main.name}"></option>
                     </select>
                 </div>
                 <label for="edit-comment" >Коментарий:</label>
