@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="nav-menu" class="header">
+
+        <div class="header__section">
+            <div class="header__item" headerlogo>
+                <a class="menu__link" href="/">KKT CRM</a>
+            </div>
+            <div class="header__item headerButton">
+                <a class="menu__link" href="/clients">Клиенты</a>
+            </div>
+            <div class="header__item headerButton">
+                <a class="menu__link" href="/requests">Заявки</a>
+            </div>
+            <div class="header__item headerButton">
+                <a class="menu__link" href="/controls">Продукты</a>
+            </div>
+            <div class="header__item headerButton">
+                <a class="menu__link" href="/tasks">Задачи</a>
+            </div>
+            <div class="header__item headerButton dropdown">
+                <a class="header__item headerButton" >Справочник</a>
+                <div class="dropdown-content">
+                    <a class="menu__link" href="/descriptions">Кассы</a>
+                    <a class="menu__link" href="/operator">Операторы</a>
+                    <a class="menu__link" href="/tariffs">Тарифы</a>
+                    <a class="menu__link" href="/topics">Задачи</a>
+                    <a class="menu__link" href="/etsp">ЕЦП</a>
+                    <a class="menu__link" href="/organization">Тип организации</a>
+                    <a class="menu__link" href="/internets">Интернет</a>
+                    <a class="menu__link" href="/maintenanceTariff">Тарифы тех обслуживания</a>
+                    <a class="menu__link" href="/typeofactivity">Виды деятельности</a>
+                    <a class="menu__link" href="/taxations">Налогооблажение</a>
+                    <a class="menu__link" href="/topics">Темы заявок</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="header__section" sec:authorize="!isAuthenticated()">
+            <div class="header__item headerButton">
+                <a class="menu__link" href="/login">Войти</a>
+            </div>
+        </div>
+
+        <div class="header__section" sec:authorize="isAuthenticated()">
+            <div class="header__item headerButton">
+                <a class="menu__link" th:href="@{/profile}">
+                    <span sec:authentication="principal.username"></span>
+                </a>
+            </div>
+            <div class="header__item headerButton">
+                <a class="menu__link" href="/logout">Выйти</a>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

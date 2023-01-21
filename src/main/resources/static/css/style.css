@@ -1,4 +1,4 @@
-.header{
+.header__client{
     display: grid;
     grid-template-columns:70% 30%;
     background-color: #8ec8d4;

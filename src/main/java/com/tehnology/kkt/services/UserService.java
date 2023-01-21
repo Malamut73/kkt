@@ -51,6 +51,9 @@ public class UserService implements UserDetailsService {
     }
 
 
+    public User findByEmail(String email) {
+        return userDAO.findByEmail(email);
+    }
 }
 
 

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post" th:action="'/clients/' + ${clientid} + '/request/' + ${requestid} + '/kassa'">
+    <div>
+        <label for="kassa"> Касса: </label>
+        <select name="id" id="kassa">
+            <option  th:each="kassa : ${kassas}" th:value="${kassa.id}" th:text="${kassa.description.name}">Что тут писать</option>
+        </select>
+    </div>
+    <input type="submit" value="Добавить кассу">
+</form>
+
+</body>
+</html>

@@ -1,15 +1,12 @@
 package com.tehnology.kkt.controllers;
 
-import com.tehnology.kkt.models.Product;
 import com.tehnology.kkt.models.User;
-import com.tehnology.kkt.models.extraclasses.Comment;
-import com.tehnology.kkt.models.extraclasses.firdirectory.Organization;
+import com.tehnology.kkt.models.Comment;
 import com.tehnology.kkt.services.OrganizationService;
 import com.tehnology.kkt.services.ProductService;
 import com.tehnology.kkt.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,6 +1,6 @@
 package com.tehnology.kkt.services;
 
-import com.tehnology.kkt.models.extraclasses.firdirectory.Taxation;
+import com.tehnology.kkt.models.Taxation;
 import com.tehnology.kkt.repositories.TaxationDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

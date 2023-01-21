@@ -2,10 +2,16 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Касса</title>
     <link rel="stylesheet" type="text/css" href="/styles/css/product.css">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+
+<a th:href="'/clients/' + ${product.user.id}">Назад</a>
 <div class="wrapper">
     <div class="one">
         <p>Собственник: <span th:text="${product.user.name} + ' ' + ${product.user.lastName}"></span></p>

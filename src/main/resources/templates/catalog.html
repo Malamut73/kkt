@@ -2,9 +2,12 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+    <title>Справочник</title>
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
 <a href="/descriptions">Кассы</a><br>
 <a href="/operator">Операторы</a><br>
 <a href="/tariffs">Тарифы</a><br>
@@ -15,13 +18,7 @@
 <a href="/maintenanceTariff">Тарифы тех обслуживания</a><br>
 <a href="/typeofactivity">Виды деятельности</a><br>
 <a href="/taxations">Налогооблажение</a><br>
-
-
-
-
-
-<a href="/">На главную страницу</a>
-
+<a href="/topics">Темы заявок</a><br>
 
 </body>
 </html>

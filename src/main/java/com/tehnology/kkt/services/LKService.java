@@ -1,6 +1,6 @@
 package com.tehnology.kkt.services;
 
-import com.tehnology.kkt.models.extraclasses.LK;
+import com.tehnology.kkt.models.LK;
 import com.tehnology.kkt.repositories.LKDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

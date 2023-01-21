@@ -7,23 +7,30 @@
 <body>
 <h3>Создать заявку</h3>
 
-<form th:method="POST" th:action="'/clients/' + ${userid} + '/request'" th:object="${request}">
-    <select th:field="*{topic.id}">
-        Тема: <option th:each="topic : ${topics}"  th:value="${topic.id}" th:text="${topic.name}"></option>
-    </select>
-    <select th:field="*{product.id}">
-        Касса:
-        <option th:each="prod : ${products}" th:value="${prod.id}" th:text="${prod.description.name}"></option>
-    </select>
-    <select th:field="*{etsp.id}">
-        <option th:each="etsp : ${etsps}" th:value="${etsp.id}" th:text="${etsp.name}"></option>
-    </select>
-    <label for="comment" >Коментарий:</label>
-    <textarea id="comment" th:field="${comment.text}"></textarea>
+<div th:if="${#lists.isEmpty(topics)}">
+    <p>Нету ни одной темы для заявки, необходимо создать</p>
+    <form action="/topics/create" method="get">
+        <input type="submit" value="Создать">
+    </form>
+</div>
+<div th:if="!${#lists.isEmpty(topics)}">
+    <form th:method="POST" th:action="'/clients/' + ${clientid} + '/request'" th:object="${request}">
+        <label for="topic">Тема: </label>
+        <select id="topic" th:field="*{topic.id}">
+             <option th:each="topic : ${topics}"   th:value="${topic.id}" th:text="${topic.name}"></option>
+        </select>
 
-    <input type="submit" value="Добавить"><br><br>
+        <div th:each="etsp : ${etsps}">
+            <input type="radio"  th:value="${etsp}" th:text="${etsp}" th:field="*{etsp}" >
+        </div>
 
-</form>
+        <textarea th:field="*{comment}"></textarea>
+        <input type="submit" value="Добавить"><br><br>
+    </form>
+
+</div>
+
+
 
 </body>
 </html>

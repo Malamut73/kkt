@@ -1,6 +1,6 @@
 package com.tehnology.kkt.services;
 
-import com.tehnology.kkt.models.extraclasses.firdirectory.Tariff;
+import com.tehnology.kkt.models.Tariff;
 import com.tehnology.kkt.repositories.TariffDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

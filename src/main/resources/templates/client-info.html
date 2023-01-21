@@ -2,16 +2,19 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Client-info</title>
+    <title>Клиент</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
     <link rel="stylesheet" type="text/css" href="/styles/css/style.css">
     <link rel="stylesheet" type="text/css" href="/styles/css/hidden.css">
 
 
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
+<a th:href="'/clients'">Назад к списку клиентов</a>
 <div class="container">
-    <div class="header">
+    <div class="header__client">
         <div class="head">
 
             <td th:text="${user.requisite.organization.name}"></td>
@@ -23,7 +26,7 @@
                 Комментарий: <td th:text="${comment.text}"></td>
             </div>
             <br>
-            <a th:href="'/clients'">Назад к списку клиентов</a>
+
         </div>
         <div class="head">
 <!--            <div th:if="${lastOFD.description.name} != null">-->
@@ -43,8 +46,6 @@
                     <td>ОФД</td>
                     <td>ФН</td>
                     <td>Техобслуживание</td>
-
-
                 </tr>
                 <tr th:each="product : ${user.products}">
                     <td >
@@ -106,7 +107,41 @@
             <a th:href="'/clients/' + ${user.id} + '/product'">Добавить кассу</a>
         </div>
         <div>
-            <form method="get" th:action="'/clients/' + ${user.id} + '/requests'">
+            <table border="1">
+                <tr>
+                    <td>Дата создания заявки:</td>
+                    <td>Тема:</td>
+                    <td>Электронно цифрова подпись:</td>
+                    <td>Коментарии:</td>
+                    <td>Касса</td>
+                    <td>Дата закрытия заявки</td>
+                </tr>
+                <tr th:each="request : ${user.requests}">
+                    <td>
+                        <p th:text="${request.dateOfCreated}"></p>
+                        <form method="post" th:action="'/clients/' + ${clientid} + '/request/' + ${request.id} + '/delete/'">
+                            <input type="submit" value="Удалть заявку">
+                        </form>
+                    </td>
+                    <td>
+                        <a th:href="'/clients/' + ${user.id} + '/request/' + ${request.id}"><span th:text="${request.topic.name}"></span></a>
+                    </td>
+                    <td th:text="${request.etsp}"></td>
+                    <td th:each="comment : ${request.comments}">
+                        <span th:text="${comment.text}"></span>
+                    </td>
+                    <td>
+                        <div th:if="${request.product} != null">
+                            <p th:text="${request.product.description.name}"></p>
+                        </div>
+                        <div th:if="${request.product} == null">
+                            <a th:href="'/clients/' + ${user.id} + '/request/' + ${request.id}"><span>Добавить кассу</span></a>
+                        </div>
+                    </td>
+
+                </tr>
+            </table>
+            <form method="get" th:action="'/clients/' + ${user.id} + '/request'">
                 <input type="submit" value="Создать заявку">
             </form>
         </div>

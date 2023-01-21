@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+    <title>Новая задача</title>
+</head>
+<body>
+    <div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+    <form method="post" action="/tasks/create">
+        Тема: <input type="text" name="name"><br>
+        Описание: <textarea name="description"></textarea><br>
+        Коментарий: <textarea name="comment"></textarea><br>
+        <input type="submit" value="Создать"><br>
+    </form>
+
+</body>
+</html>

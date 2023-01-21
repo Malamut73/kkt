@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+    <title>Заявка</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+
+<a th:href="'/clients/' + ${clientid}">Назад</a>
+<table border="1">
+    <tr>
+        <td>Дата создания заявки:</td>
+        <td>Тема:</td>
+        <td>Электронно цифрова подпись:</td>
+        <td>Коментарии:</td>
+        <td>Касса</td>
+        <td>Дата закрытия заявки</td>
+    </tr>
+    <tr>
+        <td>
+            <p th:text="${request.dateOfCreated}"></p>
+        </td>
+        <td>
+            <p th:text="${request.topic.name}"></p>
+            <form th:action="'/clients/' + ${clientid} + '/request/' + ${request.id} + '/topic/' + ${request.topic.id}">
+                <input type="submit" value="Изменить тему заявки">
+            </form>
+        </td>
+        <td>
+
+            <div th:if="${request.etsp} != null">
+                <p th:text="${request.etsp}"></p>
+                <form method="get" th:action="'/clients/' + ${clientid} + '/request/' + ${request.id} + '/addetsp'">
+                    <input type="submit" value="Изменить ЕЦП">
+                </form>
+            </div>
+            <div th:if="${request.etsp} == null">
+                <form method="get" th:action="'/clients/' + ${clientid} + '/request/' + ${request.id} + '/addetsp'">
+                    <input type="submit" value="Добавить ЭЦП">
+                </form>
+            </div>
+        </td>
+        <td>
+            <div th:each="comment : ${request.comments}">
+                <span th:text="${comment.text}"></span>
+            </div>
+            <div>
+                <form method="post" th:action="'/clients/' + ${clientid} + '/request/' + ${request.id} + '/addcomment'">
+                    <textarea name="text"></textarea>
+                    <br>
+                    <input type="submit" value="Добавить новый коментарий">
+                </form>
+            </div>
+        </td>
+        <td>
+            <div th:if="${request.product} != null">
+                <p th:text="${request.product.description.name}"></p>
+                <div>
+                    <form th:action="'/clients/' + ${clientid} + '/request/' + ${request.id} + '/kassa/' + ${request.product.id}">
+                        <input type="submit" value="Изменить">
+                    </form>
+                </div>
+            </div>
+            <div th:if="${request.product} == null">
+                <form method="get" th:action="'/clients/' + ${clientid} + '/request/' + ${request.id} + '/kassa'">
+                    <input type="submit" value="Добавить кассу">
+                </form>
+            </div>
+        </td>
+        <td>
+            <div th:if="${request.active} == false">
+                <p>Дата закрытия: <span th:text="${request.dateOfEnd}"></span></p>
+            </div>
+            <div th:if="${request.active} == true">
+                <form method="post" th:action="'/clients/' + ${clientid} + '/request/' + ${request.id} + '/closerequest'">
+                    <input type="submit" value="Закрыть заявку">
+                </form>
+            </div>
+        </td>
+
+    </tr>
+</table>
+</body>
+</html>

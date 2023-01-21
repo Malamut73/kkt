@@ -2,9 +2,12 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+    <title>Клиенты</title>
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
 
 <div th:each="user : ${clients}">
     <td th:text="${user.lastName}"></td>

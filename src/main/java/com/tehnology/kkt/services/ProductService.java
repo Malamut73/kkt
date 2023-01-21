@@ -41,4 +41,5 @@ public class ProductService {
     public void deleteProduct(Product product) {
         productDAO.delete(product);
     }
+
 }

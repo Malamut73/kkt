@@ -1,11 +1,10 @@
 package com.tehnology.kkt.controllers;
 
 import com.tehnology.kkt.models.Product;
-import com.tehnology.kkt.models.User;
-import com.tehnology.kkt.models.extraclasses.Comment;
-import com.tehnology.kkt.models.extraclasses.Maintenance;
-import com.tehnology.kkt.models.extraclasses.firdirectory.MaintenanceTariff;
-import com.tehnology.kkt.models.extraclasses.firdirectory.Trip;
+import com.tehnology.kkt.models.Comment;
+import com.tehnology.kkt.models.Maintenance;
+import com.tehnology.kkt.models.MaintenanceTariff;
+import com.tehnology.kkt.models.Trip;
 import com.tehnology.kkt.services.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

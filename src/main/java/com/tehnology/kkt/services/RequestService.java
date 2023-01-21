@@ -5,6 +5,8 @@ import com.tehnology.kkt.repositories.RequestDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class RequestService {
@@ -13,5 +15,17 @@ public class RequestService {
 
     public void saveRequest(Request request) {
         requestDAO.save(request);
+    }
+
+    public Request findById(Long requestid) {
+        return requestDAO.getReferenceById(requestid);
+    }
+
+    public void deleteRequest(Request request) {
+        requestDAO.delete(request);
+    }
+
+    public List<Request> findAll() {
+        return requestDAO.findAll();
     }
 }

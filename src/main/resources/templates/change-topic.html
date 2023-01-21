@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form  method="post" th:action="'/clients/' + ${clientid} + '/request/' + ${requestid} + '/topic/' + ${top.id}">
+    <label for="topic">Тема заявки: </label>
+    <select id="topic"  th:name="id">
+        Тема: <option th:each="topic : ${topics}" th:selected="${topic.name} == ${top.name}"  th:value="${topic.id}"  th:text="${topic.name}"></option>
+    </select>
+    <input type="submit" value="Изменить">
+</form>
+
+</body>
+</html>

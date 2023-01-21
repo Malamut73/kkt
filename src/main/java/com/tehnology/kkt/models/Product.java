@@ -1,20 +1,15 @@
 package com.tehnology.kkt.models;
 
 import com.tehnology.kkt.models.enums.*;
-import com.tehnology.kkt.models.extraclasses.*;
 
 import javax.persistence.*;
 
-import com.tehnology.kkt.models.extraclasses.firdirectory.Internet;
-import com.tehnology.kkt.models.extraclasses.firdirectory.Taxation;
-import com.tehnology.kkt.models.extraclasses.firdirectory.TypeOfActivity;
 import lombok.*;
 
 import java.util.*;
 
 
 @Entity
-//@Data
 @Getter
 @Setter
 @Builder

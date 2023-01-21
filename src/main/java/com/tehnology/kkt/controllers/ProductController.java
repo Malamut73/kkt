@@ -1,11 +1,8 @@
 package com.tehnology.kkt.controllers;
 
-import com.tehnology.kkt.models.Description;
 import com.tehnology.kkt.models.Product;
+import com.tehnology.kkt.models.Request;
 import com.tehnology.kkt.models.User;
-import com.tehnology.kkt.models.extraclasses.LK;
-import com.tehnology.kkt.models.extraclasses.OFD;
-import com.tehnology.kkt.models.extraclasses.firdirectory.Tariff;
 import com.tehnology.kkt.services.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -13,11 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,6 +19,10 @@ public class ProductController {
     private final DescriptionService descriptionService;
     private final ProductService productService;
     private final UserService userService;
+    private final RequestService requestService;
+    private final OFDService ofdService;
+    private final FNService fnService;
+    private final MaintenanceService maintenanceService;
 
     @GetMapping("/clients/{clientid}/product")
     public String crateProduct(@PathVariable Long clientid, Product product, Model model) {
@@ -96,8 +93,36 @@ public class ProductController {
 
     }
 
+    @GetMapping("/clients/{clientid}/request/{requestid}/kassa")
+    public String addKassa(@PathVariable("clientid") User user,
+                           @PathVariable("requestid") Long requestid, Model model){
+        model.addAttribute("requestid,", requestid);
+        model.addAttribute("kassas", user.getProducts());
+        return "choose-kassa";
+    }
 
+    @PostMapping("/clients/{clientid}/request/{requestid}/kassa")
+    public String addKassa(@RequestParam("id") Product product,
+                           @PathVariable("requestid") Request request ){
+        request.setProduct(product);
+        requestService.saveRequest(request);
+        return "redirect:/clients/{clientid}/request/{requestid}";
+    }
 
+    @GetMapping("/clients/{clientid}/request/{requestid}/kassa/{kassaid}")
+    public String changeKassa(@PathVariable("requestid") Request request,
+                              @PathVariable("clientid") User user, Model model){
+        model.addAttribute("request", request);
+        model.addAttribute("kassas", user.getProducts());
+        return "change-kassa";
+    }
 
+    @GetMapping("/controls")
+    public String ofdList(Model model){
+        model.addAttribute("ofds", ofdService.findAllByOrderByDayEndDesc());
+        model.addAttribute("fns", fnService.findAllByOrderByDayEndDesc());
+        model.addAttribute("maintenances", maintenanceService.findAllByOrderByDayEndDesc());
+        return "list-controls";
+    }
 
 }

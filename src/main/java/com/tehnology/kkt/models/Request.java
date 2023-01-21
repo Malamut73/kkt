@@ -1,14 +1,11 @@
 package com.tehnology.kkt.models;
 
 
-import com.tehnology.kkt.models.extraclasses.Comment;
-import com.tehnology.kkt.models.extraclasses.firdirectory.Topic;
-import com.tehnology.kkt.models.extraclasses.firdirectory.Etsp;
+import com.tehnology.kkt.models.enums.Etsp;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
@@ -29,16 +26,16 @@ public class Request { //заявка
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfCreated;
-
+    private String comment;
     private boolean active;
 
-    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @Enumerated(EnumType.STRING)
     private Etsp etsp; //электронно цифровая подпись
 
     @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private Topic topic; //тема
 
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Comment> comments = new HashSet<>();
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
@@ -49,7 +46,9 @@ public class Request { //заявка
     @JoinColumn(name = "product_id")
     private Product product;
 
-    private LocalDateTime dateOfEnd;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dateOfEnd;
 
     @PrePersist
     private void init(){

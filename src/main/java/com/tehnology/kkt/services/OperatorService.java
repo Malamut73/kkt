@@ -1,6 +1,6 @@
 package com.tehnology.kkt.services;
 
-import com.tehnology.kkt.models.extraclasses.firdirectory.Operator;
+import com.tehnology.kkt.models.Operator;
 import com.tehnology.kkt.repositories.OperatorDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

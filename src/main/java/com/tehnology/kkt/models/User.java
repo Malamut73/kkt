@@ -2,14 +2,11 @@ package com.tehnology.kkt.models;
 
 import com.tehnology.kkt.models.enums.Role;
 import com.tehnology.kkt.models.enums.Status;
-import com.tehnology.kkt.models.extraclasses.Comment;
-import com.tehnology.kkt.models.extraclasses.Requisite;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
@@ -36,8 +33,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-
-
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "requisite_id")
     private Requisite requisite;
@@ -47,6 +42,9 @@ public class User implements UserDetails {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Product> products = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Task> tasks = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "client")
     private Set<Request> requests = new HashSet<>();

@@ -1,7 +1,6 @@
 package com.tehnology.kkt.services;
 
-import com.tehnology.kkt.models.User;
-import com.tehnology.kkt.models.extraclasses.OFD;
+import com.tehnology.kkt.models.OFD;
 import com.tehnology.kkt.repositories.OFDDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,5 +32,9 @@ public class OFDService {
 
     public void deletOFD(OFD ofd) {
         ofddao.delete(ofd);
+    }
+
+    public List<OFD> findAllByOrderByDayEndDesc() {
+        return ofddao.findAllByOrderByDayEndDesc();
     }
 }

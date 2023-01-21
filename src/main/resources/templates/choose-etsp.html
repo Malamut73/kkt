@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:object="${request}" th:method="POST" th:action="'/clients/' + ${clientid} + '/request/' + ${requestid} + '/addetsp'" >
+
+    <div th:each="etsp : ${etsps}">
+        <input type="radio"  th:value="${etsp}" th:checked="${etsp} == *{etsp}" th:text="${etsp}" name="etsp">
+    </div>
+
+    <input type="submit" value="Добавить"><br><br>
+</form>
+
+</body>
+</html>

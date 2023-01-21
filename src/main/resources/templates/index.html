@@ -2,11 +2,13 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+    <title>Галвная страница</title>
 
 </head>
 <body>
-<h1>Привет</h1>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
 <a href="/clients">clients</a>
 <br>
 <a href="/catalog">catalogs</a>

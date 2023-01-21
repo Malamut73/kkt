@@ -2,8 +2,7 @@ package com.tehnology.kkt.controllers;
 
 import com.tehnology.kkt.models.Product;
 import com.tehnology.kkt.models.User;
-import com.tehnology.kkt.models.extraclasses.OFD;
-import com.tehnology.kkt.models.extraclasses.firdirectory.Tariff;
+import com.tehnology.kkt.models.OFD;
 import com.tehnology.kkt.services.OFDService;
 import com.tehnology.kkt.services.OperatorService;
 import com.tehnology.kkt.services.ProductService;
@@ -35,20 +34,23 @@ public class OFDController {
         model.addAttribute("operators", operatorService.findAll());
         model.addAttribute("clientid", clientid);
         model.addAttribute("productid", productid);
-        return "creaters/create-ofd";
+        return "create-ofd";
     }
 
     @PostMapping("/clients/{clientid}/product/{productid}/ofd")
-    public String addOFD(@PathVariable Long clientid,
-                         @PathVariable Long productid, Model model, OFD ofd){
-        Product product = productService.findById(productid);
-        ofd.setTariff(tariffService.findById(ofd.getTariff().getId()));
+    public String addOFD(@PathVariable("clientid") User user,
+                         @PathVariable("productid") Product product, Model model, OFD ofd){
+//        Product product = productService.findById(productid);
+            ofd.setTariff(tariffService.findById(ofd.getTariff().getId()));
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(ofd.getDateStart());
             calendar.add(Calendar.MONTH, ofd.getTariff().getDays());
-        ofd.setDayEnd(calendar.getTime());
+            ofd.setDayEnd(calendar.getTime());
         product.setOfd(ofd);
         productService.saveProduct(product);
+//        ofd.setProduct(product);
+//        ofdService.saveOFD(ofd);
+
 
 
         return "redirect:/clients/{clientid}/product/{productid}";
@@ -80,7 +82,7 @@ public class OFDController {
         model.addAttribute("ofdid", productid);
 
 
-        return "creaters/create-ofd";
+        return "create-ofd";
     }
 
     @PostMapping("/clients/{clientid}/product/{productid}/ofd/{ofdid}/edit")
@@ -96,5 +98,7 @@ public class OFDController {
 
         return "redirect:/clients/{clientid}/product/{productid}";
     }
+
+
 
 }
