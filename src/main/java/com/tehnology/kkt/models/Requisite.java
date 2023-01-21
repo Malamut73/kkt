@@ -1,6 +1,6 @@
 package com.tehnology.kkt.models;
 
-import com.tehnology.kkt.models.Organization;
+import com.tehnology.kkt.models.catalog.Organization;
 import lombok.*;
 
 import javax.persistence.*;

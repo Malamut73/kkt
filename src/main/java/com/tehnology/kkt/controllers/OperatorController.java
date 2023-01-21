@@ -1,7 +1,7 @@
 package com.tehnology.kkt.controllers;
 
 import com.tehnology.kkt.models.User;
-import com.tehnology.kkt.models.Operator;
+import com.tehnology.kkt.models.catalog.Operator;
 import com.tehnology.kkt.services.OperatorService;
 import com.tehnology.kkt.services.UserService;
 import lombok.RequiredArgsConstructor;

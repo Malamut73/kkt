@@ -1,7 +1,7 @@
 package com.tehnology.kkt.controllers;
 
 import com.tehnology.kkt.models.Request;
-import com.tehnology.kkt.models.Topic;
+import com.tehnology.kkt.models.catalog.Topic;
 import com.tehnology.kkt.services.RequestService;
 import com.tehnology.kkt.services.TopicService;
 import lombok.RequiredArgsConstructor;

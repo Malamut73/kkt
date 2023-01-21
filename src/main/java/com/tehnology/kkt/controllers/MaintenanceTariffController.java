@@ -1,6 +1,6 @@
 package com.tehnology.kkt.controllers;
 
-import com.tehnology.kkt.models.MaintenanceTariff;
+import com.tehnology.kkt.models.catalog.MaintenanceTariff;
 import com.tehnology.kkt.services.MaintenanceService;
 import com.tehnology.kkt.services.MaintenanceTariffService;
 import lombok.RequiredArgsConstructor;

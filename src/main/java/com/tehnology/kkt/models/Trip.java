@@ -20,7 +20,6 @@ public class Trip {
     private Long id;
     private int name;
 
-
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateTrip;

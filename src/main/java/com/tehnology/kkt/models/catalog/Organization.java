@@ -1,28 +1,23 @@
-package com.tehnology.kkt.models;
+package com.tehnology.kkt.models.catalog;
 
+import com.tehnology.kkt.models.User;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
+//@Data
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Description {
+public class Organization {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-
-    @Column(columnDefinition = "TEXT")
-    private String someDescription;
-
-
 
 }

@@ -1,8 +1,6 @@
 package com.tehnology.kkt.controllers;
 
-import com.tehnology.kkt.models.Description;
-import com.tehnology.kkt.models.Product;
-import com.tehnology.kkt.models.User;
+import com.tehnology.kkt.models.catalog.Description;
 import com.tehnology.kkt.services.DescriptionService;
 import com.tehnology.kkt.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor

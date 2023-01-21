@@ -3,7 +3,7 @@ package com.tehnology.kkt.controllers;
 import com.tehnology.kkt.models.Product;
 import com.tehnology.kkt.models.Comment;
 import com.tehnology.kkt.models.Maintenance;
-import com.tehnology.kkt.models.MaintenanceTariff;
+import com.tehnology.kkt.models.catalog.MaintenanceTariff;
 import com.tehnology.kkt.models.Trip;
 import com.tehnology.kkt.services.*;
 import lombok.RequiredArgsConstructor;

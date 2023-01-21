@@ -1,11 +1,9 @@
-package com.tehnology.kkt.models;
+package com.tehnology.kkt.models.catalog;
 
+import com.tehnology.kkt.models.Request;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 //@Data
@@ -14,11 +12,12 @@ import javax.persistence.Id;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Operator {
+public class Topic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
+
 }

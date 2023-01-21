@@ -1,6 +1,7 @@
 package com.tehnology.kkt.models;
 
 
+import com.tehnology.kkt.models.catalog.Topic;
 import com.tehnology.kkt.models.enums.Etsp;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;

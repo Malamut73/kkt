@@ -1,7 +1,7 @@
 package com.tehnology.kkt.controllers;
 
 import com.tehnology.kkt.models.User;
-import com.tehnology.kkt.models.Organization;
+import com.tehnology.kkt.models.catalog.Organization;
 import com.tehnology.kkt.services.OrganizationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

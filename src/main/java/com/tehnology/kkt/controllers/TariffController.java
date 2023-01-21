@@ -1,7 +1,7 @@
 package com.tehnology.kkt.controllers;
 
 import com.tehnology.kkt.models.User;
-import com.tehnology.kkt.models.Tariff;
+import com.tehnology.kkt.models.catalog.Tariff;
 import com.tehnology.kkt.services.ProductService;
 import com.tehnology.kkt.services.TariffService;
 import com.tehnology.kkt.services.UserService;

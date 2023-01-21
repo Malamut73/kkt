@@ -26,15 +26,14 @@ public class Task {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfCreated;
-    private boolean active;
 
+    private boolean active;
+    private String description;
+    private String comment;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
-    private String description;
-    private String comment;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Comment> comments = new HashSet<>();

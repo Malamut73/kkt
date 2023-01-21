@@ -1,4 +1,4 @@
-package com.tehnology.kkt.models;
+package com.tehnology.kkt.models.catalog;
 
 import lombok.*;
 

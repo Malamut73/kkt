@@ -1,7 +1,7 @@
 package com.tehnology.kkt.controllers;
 
 import com.tehnology.kkt.models.Product;
-import com.tehnology.kkt.models.Taxation;
+import com.tehnology.kkt.models.catalog.Taxation;
 import com.tehnology.kkt.services.ProductService;
 import com.tehnology.kkt.services.TaxationService;
 import lombok.RequiredArgsConstructor;

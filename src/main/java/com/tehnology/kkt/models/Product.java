@@ -1,5 +1,9 @@
 package com.tehnology.kkt.models;
 
+import com.tehnology.kkt.models.catalog.Description;
+import com.tehnology.kkt.models.catalog.Internet;
+import com.tehnology.kkt.models.catalog.Taxation;
+import com.tehnology.kkt.models.catalog.TypeOfActivity;
 import com.tehnology.kkt.models.enums.*;
 
 import javax.persistence.*;
@@ -63,7 +67,7 @@ public class Product {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "fn_id")
-     private FN fn;
+    private FN fn;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "lk_id")

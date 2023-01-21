@@ -2,9 +2,9 @@ package com.tehnology.kkt.models;
 
 import javax.persistence.*;
 
-import com.tehnology.kkt.models.Product;
-import com.tehnology.kkt.models.Operator;
-import com.tehnology.kkt.models.Tariff;
+
+import com.tehnology.kkt.models.catalog.Operator;
+import com.tehnology.kkt.models.catalog.Tariff;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 

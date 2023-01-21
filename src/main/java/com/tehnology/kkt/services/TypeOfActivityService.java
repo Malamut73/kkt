@@ -1,6 +1,6 @@
 package com.tehnology.kkt.services;
 
-import com.tehnology.kkt.models.TypeOfActivity;
+import com.tehnology.kkt.models.catalog.TypeOfActivity;
 import com.tehnology.kkt.repositories.TypeOfActivityDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

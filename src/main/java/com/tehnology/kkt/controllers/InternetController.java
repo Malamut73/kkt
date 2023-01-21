@@ -1,7 +1,7 @@
 package com.tehnology.kkt.controllers;
 
 import com.tehnology.kkt.models.Product;
-import com.tehnology.kkt.models.Internet;
+import com.tehnology.kkt.models.catalog.Internet;
 import com.tehnology.kkt.services.InternetService;
 import com.tehnology.kkt.services.ProductService;
 import lombok.RequiredArgsConstructor;

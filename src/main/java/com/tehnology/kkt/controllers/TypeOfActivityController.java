@@ -2,7 +2,7 @@ package com.tehnology.kkt.controllers;
 
 
 import com.tehnology.kkt.models.Product;
-import com.tehnology.kkt.models.TypeOfActivity;
+import com.tehnology.kkt.models.catalog.TypeOfActivity;
 import com.tehnology.kkt.services.ProductService;
 import com.tehnology.kkt.services.TypeOfActivityService;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
-package com.tehnology.kkt.models;
+package com.tehnology.kkt.models.catalog;
 
-import com.tehnology.kkt.models.Product;
+import com.tehnology.kkt.models.Trip;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,12 +13,17 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Internet {
+public class MaintenanceTariff {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
+    private int mountTrip;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Trip> trips = new HashSet<>();
+
 
 }

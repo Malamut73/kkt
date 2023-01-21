@@ -1,18 +1,19 @@
-package com.tehnology.kkt.models;
+package com.tehnology.kkt.models.catalog;
 
-import com.tehnology.kkt.models.Request;
+import com.tehnology.kkt.models.Product;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-//@Data
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Topic {
+public class Internet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
