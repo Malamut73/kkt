@@ -29,9 +29,6 @@
 
         </div>
         <div class="head">
-<!--            <div th:if="${lastOFD.description.name} != null">-->
-<!--                <p> ОФД: <span th:text="${lastOFD.description.name}">Касса: </span> , <span th:text="${lastOFD.ofd.dateStart}"> дата.</span></p>-->
-<!--            </div>-->
             <p>ОФД: Касса, дата</p>
             <p>ФН: Касса, дата</p>
             <p>Тариф: дата</p>
@@ -127,16 +124,21 @@
                         <a th:href="'/clients/' + ${user.id} + '/request/' + ${request.id}"><span th:text="${request.topic.name}"></span></a>
                     </td>
                     <td th:text="${request.etsp}"></td>
-                    <td th:each="comment : ${request.comments}">
-                        <span th:text="${comment.text}"></span>
+                    <td >
+                        <div th:each="comment : ${request.comments}">
+                            <span th:text="${comment.text}"></span>
+                        </div>
                     </td>
                     <td>
                         <div th:if="${request.product} != null">
-                            <p th:text="${request.product.description.name}"></p>
+                            <a th:href="'/clients/' + ${request.client.id} + '/product/' + ${request.product.id}">
+                                <span th:text="${request.product.description.name}"></span>
+                            </a>
                         </div>
-                        <div th:if="${request.product} == null">
-                            <a th:href="'/clients/' + ${user.id} + '/request/' + ${request.id}"><span>Добавить кассу</span></a>
-                        </div>
+<!--                        <div th:if="${request.product} == null">-->
+<!--                            <a th:href="'/clients/' + ${user.id} + '/request/' + ${request.id}">-->
+<!--                                <span>Добавить кассу</span></a>-->
+<!--                        </div>-->
                     </td>
 
                 </tr>

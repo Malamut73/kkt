@@ -5,8 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-<form  th:action="'/clients/' + ${clientid} + '/request/' + ${requestid} + '/kassa/' + ${kassaid}">
+<form method="post" th:action="'/clients/' + ${clientid} + '/request/' + ${request.id} + '/kassa'">
     <label for="kassa">Касса: </label>
+    <p th:text="${request.id}"></p>
+    <p th:text="${clientid}"></p>
     <select name="id" id="kassa" >
         <option th:each="kassa : ${kassas}" th:selected="${kassa} == ${request.product}" th:value="${kassa.id}" th:text="${kassa.description.name}"></option>
     </select>

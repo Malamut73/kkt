@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post" th:action="'/tasks/' + ${task.id} + '/user/' + ${task.user.id} + '/product'">
+  <div>
+    <label for="product"> Кассы: </label>
+    <select name="id" id="product">
+      <option  th:each="product : ${task.user.products}" th:value="${product.id}" th:selected="${task.product} == ${product}" th:text="${product.description.name}"></option>
+    </select>
+  </div>
+  <input type="submit" value="Сохранить">
+</form>
+</body>
+</html>

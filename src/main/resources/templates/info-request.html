@@ -57,8 +57,11 @@
         </td>
         <td>
             <div th:if="${request.product} != null">
-                <p th:text="${request.product.description.name}"></p>
-                <div>
+                <a th:href="'/clients/' + ${request.client.id} + '/product/' + ${request.product.id}">
+                    <span th:text="${request.product.description.name}"></span>
+                </a>
+            <div>
+                <br>
                     <form th:action="'/clients/' + ${clientid} + '/request/' + ${request.id} + '/kassa/' + ${request.product.id}">
                         <input type="submit" value="Изменить">
                     </form>

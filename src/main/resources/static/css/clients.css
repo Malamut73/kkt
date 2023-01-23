@@ -1,0 +1,15 @@
+.wrapper{
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+
+}
+
+
+.left-side{
+    background: #689CD2;
+
+}
+
+.right-side{
+
+}

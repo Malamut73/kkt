@@ -60,6 +60,6 @@ public class ClientsController {
         User user = userService.findById(clientid);
         model.addAttribute("user", user);
 
-        return "client-info";
+        return "info-client";
     }
 }

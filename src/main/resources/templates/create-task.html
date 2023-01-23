@@ -7,11 +7,12 @@
 </head>
 <body>
     <div th:insert="~{fragments/menu :: #nav-menu}"></div>
-
+    <br>
     <form method="post" action="/tasks/create">
         Тема: <input type="text" name="name"><br>
         Описание: <textarea name="description"></textarea><br>
         Коментарий: <textarea name="comment"></textarea><br>
+        Дата напоминания: <input type="date" name="dateOfReminder">
         <input type="submit" value="Создать"><br>
     </form>
 

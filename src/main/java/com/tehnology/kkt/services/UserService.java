@@ -1,5 +1,6 @@
 package com.tehnology.kkt.services;
 
+import com.tehnology.kkt.configuration.GeneratePassword;
 import com.tehnology.kkt.models.Product;
 import com.tehnology.kkt.models.User;
 import com.tehnology.kkt.models.enums.Role;
@@ -24,6 +25,8 @@ public class UserService implements UserDetailsService {
 
     private final UserDAO userDAO;
     private final PasswordEncoder passwordEncoder;
+    private final GeneratePassword generatePassword;
+    private final MailService mailService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -53,6 +56,28 @@ public class UserService implements UserDetailsService {
 
     public User findByEmail(String email) {
         return userDAO.findByEmail(email);
+    }
+
+    public List<User> findAllManagers() {
+        return userDAO.findUserByRoles(Role.Manager);
+    }
+
+    public List<User> findAllAdminitrator() {
+        return userDAO.findUserByRoles(Role.Administrator);
+    }
+
+    public void editStaff(User user) {
+        userDAO.save(user);
+    }
+
+    public void createManager(User user) {
+        String pass = generatePassword.generateSecurePassword();
+        user.setPassword(passwordEncoder.encode(pass));
+//        System.out.println(pass);
+//        System.out.println(user.isEnabled());
+//        System.out.println(user.getEmail());
+        userDAO.save(user);
+        mailService.sendPassword(pass, user);
     }
 }
 

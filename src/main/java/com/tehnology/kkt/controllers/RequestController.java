@@ -28,6 +28,12 @@ public class RequestController {
         return "requests";
     }
 
+    @GetMapping("/request")
+    public String createRequest(){
+
+        return "";
+    }
+
     @GetMapping("/clients/{clientid}/request")
     public String createRequest(@PathVariable Long clientid, Model model){
         model.addAttribute("topics", topicService.findAll());
@@ -51,7 +57,7 @@ public class RequestController {
     }
 
     @GetMapping("/clients/{clientid}/request/{requestid}")
-    public String requestInfo(@PathVariable Long clientid,
+    public String requestInfo(@PathVariable("clientid") Long clientid,
                               @PathVariable("requestid") Request request, Model model){
 
         model.addAttribute("topics", topicService.findAll());

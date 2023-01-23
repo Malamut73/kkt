@@ -19,6 +19,7 @@
                 <td>Тема</td>
                 <td>Описание</td>
                 <td>Коментарии</td>
+                <td>Дата напоминания</td>
                 <td>Дата окончания</td>
             </tr>
             <tr th:each="task : ${tasks}">
@@ -26,7 +27,9 @@
                     <p th:text="${task.dateOfCreated}"></p>
                 </td>
                 <td>
-                    <a th:href="'/tasks/' + ${task.id}"><span th:text="${task.name}"></span></a>
+                    <a th:href="'/tasks/' + ${task.id}">
+                        <span th:text="${task.name}"></span>
+                    </a>
                 </td>
                 <td>
                     <p th:text="${task.description}"></p>
@@ -35,6 +38,9 @@
                     <div th:each="comment : ${task.comments}">
                         <p th:text="${comment.text}"></p>
                     </div>
+                </td>
+                <td>
+                    <p th:text="${task.dateOfReminder}"></p>
                 </td>
                 <td>
                     <p th:text="${task.dateOfEnd}"></p>

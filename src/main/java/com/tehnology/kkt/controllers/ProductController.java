@@ -94,9 +94,11 @@ public class ProductController {
     }
 
     @GetMapping("/clients/{clientid}/request/{requestid}/kassa")
-    public String addKassa(@PathVariable("clientid") User user,
+    public String addKassa(@PathVariable("clientid") Long clientid,
                            @PathVariable("requestid") Long requestid, Model model){
+        User user = userService.findById(clientid);
         model.addAttribute("requestid,", requestid);
+        model.addAttribute("clientid", clientid);
         model.addAttribute("kassas", user.getProducts());
         return "choose-kassa";
     }
@@ -111,11 +113,20 @@ public class ProductController {
 
     @GetMapping("/clients/{clientid}/request/{requestid}/kassa/{kassaid}")
     public String changeKassa(@PathVariable("requestid") Request request,
-                              @PathVariable("clientid") User user, Model model){
+                              @PathVariable("clientid") Long clientid, Model model){
+        User user = userService.findById(clientid);
+        model.addAttribute("clientid", clientid);
         model.addAttribute("request", request);
         model.addAttribute("kassas", user.getProducts());
         return "change-kassa";
     }
+//    @PostMapping("/clients/{clientid}/request/{requestid}/kassa/{kassaid}")
+//    public String changeKassa(@RequestParam("id") Product product,
+//                              @PathVariable("requestid") Request request){
+//        request.setProduct(product);
+//        requestService.saveRequest(request);
+//        return "redirect:/clients/{clientid}/request/{requestid}";
+//    }
 
     @GetMapping("/controls")
     public String ofdList(Model model){

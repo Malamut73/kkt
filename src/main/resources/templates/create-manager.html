@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Title</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<form method="post" th:object="${user}" th:action="'/admin/create'">
+
+    <input type="hidden" th:field="*{id}" th:value="*{id}"><br><br>
+    Имя: <input type="text" th:field="*{name}" th:value="*{name}"><br><br>
+    Фамилия: <input type="text" th:field="*{lastName}"  th:value="*{lastName}"><br><br>
+    Отчество: <input type="text" th:field="*{patronymic}"  th:value="*{patronymic}"><br><br>
+    Почта: <input type="email" th:field="*{email}" th:value="*{email}"><br><br>
+    Телефон: <input type="text" th:field="*{phoneNumber}" th:value="*{phoneNumber}"><br><br>
+    <input type="hidden" th:field="*{password}" th:value="*{password}">
+
+    Активный:  <input type="radio" th:field="*{active}" th:checked="true == *{active}" value="true"/> <label>Да</label>
+    <input type="radio" th:field="*{active}" th:checked="false == *{active}" value="false"/> <label>Нет</label>
+    <br><br>
+
+    <div th:each="role : ${roles}">
+        <input th:id="${role}" type="checkbox" th:name="roles[]" th:value="${role}" th:checked="${#lists.contains(user.roles, role)}" />
+        <label th:text="${role}" /></label>
+    </div>
+    <input type="submit" value="Сохранить">
+
+</form>
+
+</body>
+</html>

@@ -21,4 +21,12 @@ public class TaskService {
     public void save(Task task) {
         taskDAO.save(task);
     }
+
+    public List<Task> findAll() {
+        return taskDAO.findAll();
+    }
+
+    public List<Task> findAllByOrderByDateOfReminderDesc() {
+        return taskDAO.findAllByOrderByDateOfReminderAsc();
+    }
 }
