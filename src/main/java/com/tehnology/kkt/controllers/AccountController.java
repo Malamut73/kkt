@@ -44,6 +44,15 @@ public class AccountController {
     @GetMapping("/accounts/{accountid}")
     public String accountInfo(@PathVariable("accountid") Account account, Model model){
         model.addAttribute("account", account);
+        System.out.println(new Date(new java.util.Date().getTime()));
+        for (Account acount :
+                accountService.findByDate(new Date(new java.util.Date().getTime()))) {
+            for (Operation operation :
+                    account.getFeatureOutgoes()) {
+                System.out.println(operation.getDateTransaction());
+
+            }
+        }
         return "info-account";
     }
 

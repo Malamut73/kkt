@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -25,5 +26,9 @@ public class AccountService {
 
     public Account findById(Long accountid) {
         return accountDAO.getReferenceById(accountid);
+    }
+
+    public List<Account> findByDate(Date date) {
+        return accountDAO.findDistinctAccountByFeatureOutgoes_DateTransactionAfter(date);
     }
 }
