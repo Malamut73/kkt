@@ -79,6 +79,10 @@ public class UserService implements UserDetailsService {
         userDAO.save(user);
         mailService.sendPassword(pass, user);
     }
+
+    public List<User> findAllByName(String name) {
+        return userDAO.findAllByName(name);
+    }
 }
 
 

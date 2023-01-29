@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.text.SimpleDateFormat;
@@ -59,7 +60,13 @@ public class ClientsController {
     public String userInfo(@PathVariable Long clientid, Model model) {
         User user = userService.findById(clientid);
         model.addAttribute("user", user);
-
         return "info-client";
     }
+
+    @GetMapping("/clients/sort")
+    public String clientSort(@RequestParam("name") String name, Model model){
+        model.addAttribute("clients", userService.findAllByName(name));
+        return "clients";
+    }
+
 }

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Title</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+
+<table border="1">
+    <tr>
+        <td>Имя счета</td>
+        <td>Сумма счета</td>
+        <td>Поступления</td>
+        <td>Расходы</td>
+        <td>Предстоящие поступления</td>
+        <td>Предстоящие расходы</td>
+    </tr>
+    <tr th:each="account : ${accounts}">
+        <td>
+            <div>
+                <a th:href="'/accounts/' + ${account.id} ">
+                    <span th:text="${account.name}"></span>
+                </a>
+            </div>
+        </td>
+        <td>
+            <div th:text="${account.amount}"></div>
+        </td>
+        <td>
+            <div >
+                <table border="1">
+                    <tr>
+                        <td>Дата поступления</td>
+                        <td>Сумма поступления</td>
+                        <td>Источник поступения</td>
+                    </tr>
+                    <tr th:each="income : ${account.incomes}">
+                        <td>
+                            <div th:text="${income.dateTransaction}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${income.amount}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${income.aimTransaction}"></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+        <td>
+            <div >
+                <table border="1">
+                    <tr>
+                        <td>Дата списания</td>
+                        <td>Сумма списания</td>
+                        <td>Цель списания</td>
+                    </tr>
+                    <tr th:each="outgo : ${account.outgoes}">
+                        <td>
+                            <div th:text="${outgo.dateTransaction}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${outgo.amount}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${outgo.aimTransaction}"></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+        <td>
+            <div >
+                <table border="1">
+                    <tr>
+                        <td>Планируемая дата поступления</td>
+                        <td>Планируемая сумма поступления</td>
+                        <td>Источник поступения</td>
+                    </tr>
+                    <tr th:each="featureIncome : ${account.featureIncomes}">
+                        <td>
+                            <div th:text="${featureIncome.dateTransaction}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${featureIncome.amount}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${featureIncome.aimTransaction}"></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+        <td>
+            <div >
+                <table border="1">
+                    <tr>
+                        <td>Планируемая дата списания</td>
+                        <td>Планируемая сумма списания</td>
+                        <td>Цель списания</td>
+                    </tr>
+                    <tr th:each="featureOutgo : ${account.featureOutgoes}">
+                        <td>
+                            <div th:text="${featureOutgo.dateTransaction}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${featureOutgo.amount}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${featureOutgo.aimTransaction}"></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

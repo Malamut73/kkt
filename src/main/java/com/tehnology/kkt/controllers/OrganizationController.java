@@ -24,14 +24,12 @@ public class OrganizationController {
 
     @GetMapping("/organization/create")
     public String createOrganization(Model model){
-        System.out.println(1);
         model.addAttribute("organization", new Organization());
         return "create-organization";
     }
 
     @PostMapping("/organization/create")
     public String createOrganization(Organization organization, Model model){
-        System.out.println(2);
         organizationService.save(organization);
         model.addAttribute("organization", organizationService.findAll());
         return "redirect:/organization";
