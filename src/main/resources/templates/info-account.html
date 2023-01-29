@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Счет</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<table border="1">
+    <tr>
+        <td>Имя счета</td>
+        <td>Сумма счета</td>
+        <td>Поступления
+            <form method="post" th:action="'/accounts/' + ${account.id} + '/addincome'">
+                Сумма поступления: <input type="number" step="0.01" min="0" name="amount">
+                <br>
+                Источник поступления: <input type="text" name="aimTransaction">
+                <br>
+                <input type="submit" value="Добавить поступление">
+            </form>
+        </td>
+        <td>Расходы
+            <form method="post" th:action="'/accounts/' + ${account.id} + '/addoutgo'">
+                Сумма расходы: <input type="number" step="0.01" min="0" name="amount">
+                <br>
+                Источник расходы: <input type="text" name="aimTransaction">
+                <br>
+                <input type="submit" value="Добавить расход">
+            </form>
+        </td>
+        <td>Предстоящие поступления
+            <form method="post" th:action="'/accounts/' + ${account.id} + '/addFeatureIncome'">
+                Сумма поступления: <input type="number" step="0.01" min="0" name="amount">
+                <br>
+                Источник поступления: <input type="text" name="aimTransaction">
+                <br>
+                <input type="date" name="date">
+                <br>
+                <input type="submit" value="Создать поступление">
+
+            </form>
+        </td>
+        <td>Предстоящие расходы
+            <form method="post" th:action="'/accounts/' + ${account.id} + '/addFeatureOutgo'">
+                Сумма расхода: <input type="number" step="0.01" min="0" name="amount">
+                <br>
+                Цель расхода: <input type="text" name="aimTransaction">
+                <br>
+                <input type="date" name="date">
+                <br>
+                <input type="submit" value="Создать списание">
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div th:text="${account.name}"></div>
+        </td>
+        <td>
+            <div th:text="${account.amount}"></div>
+        </td>
+        <td>
+            <div >
+                <table border="1">
+                    <tr>
+                        <td>Дата поступления</td>
+                        <td>Сумма поступления</td>
+                        <td>Источник поступения</td>
+                    </tr>
+                    <tr th:each="income : ${account.incomes}">
+                        <td>
+                            <div th:text="${income.dateTransaction}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${income.amount}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${income.aimTransaction}"></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+        <td>
+            <div >
+                <table border="1">
+                    <tr>
+                        <td>Дата списания</td>
+                        <td>Сумма списания</td>
+                        <td>Цель списания</td>
+                    </tr>
+                    <tr th:each="outgo : ${account.outgoes}">
+                        <td>
+                            <div th:text="${outgo.dateTransaction}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${outgo.amount}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${outgo.aimTransaction}"></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+        <td>
+            <div>
+                <table border="1">
+                    <tr>
+                        <td>Планируемая дата </td>
+                        <td>Планируемая сумма </td>
+                        <td>Источник поступения</td>
+                    </tr>
+                    <tr th:each="featureIncome : ${account.featureIncomes}">
+                        <td>
+                            <div th:text="${featureIncome.dateTransaction}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${featureIncome.amount}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${featureIncome.aimTransaction}"></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+        <td>
+            <div>
+                <table border="1">
+                    <tr>
+                        <td>Планируемая дата списания</td>
+                        <td>Планируемая сумма списания</td>
+                        <td>Цель списания</td>
+                    </tr>
+                    <tr th:each="featureOutgo : ${account.featureOutgoes}">
+                        <td>
+                            <div th:text="${featureOutgo.dateTransaction}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${featureOutgo.amount}"></div>
+                        </td>
+                        <td>
+                            <div th:text="${featureOutgo.aimTransaction}"></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+</body>
+</html>

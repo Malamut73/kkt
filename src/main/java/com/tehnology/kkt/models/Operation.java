@@ -1,6 +1,5 @@
 package com.tehnology.kkt.models;
 
-import com.tehnology.kkt.models.enums.Aim;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,9 +27,15 @@ public class Operation {
     private BigDecimal amount;
     private String aimTransaction;
 
-    @Enumerated(EnumType.STRING)
-    private Aim aim;
 
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    private Expenses expenses;
+
+
+//    @PrePersist
+//    private void init(){
+//        dateTransaction = new Date();
+//    }
 
 
 }
