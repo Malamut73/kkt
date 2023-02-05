@@ -23,18 +23,17 @@ public class Request { //заявка
     private Long id;
 
 
-    @Column(updatable = false)
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(updatable = false, columnDefinition="DATETIME")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfCreated;
     private String comment;
     private boolean active;
+    private String topic;
+    private String nameOfContact;
+    private String phoneOfContact;
 
     @Enumerated(EnumType.STRING)
     private Etsp etsp; //электронно цифровая подпись
-
-    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    private Topic topic; //тема
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Comment> comments = new HashSet<>();

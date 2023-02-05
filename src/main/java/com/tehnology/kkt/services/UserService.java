@@ -62,7 +62,7 @@ public class UserService implements UserDetailsService {
         return userDAO.findUserByRoles(Role.Manager);
     }
 
-    public List<User> findAllAdminitrator() {
+    public List<User> findAllAdministrator() {
         return userDAO.findUserByRoles(Role.Administrator);
     }
 
@@ -73,15 +73,28 @@ public class UserService implements UserDetailsService {
     public void createManager(User user) {
         String pass = generatePassword.generateSecurePassword();
         user.setPassword(passwordEncoder.encode(pass));
-//        System.out.println(pass);
-//        System.out.println(user.isEnabled());
-//        System.out.println(user.getEmail());
         userDAO.save(user);
         mailService.sendPassword(pass, user);
     }
 
     public List<User> findAllByName(String name) {
         return userDAO.findAllByName(name);
+    }
+
+    public List<User> findAllClientsBy(String text, String search) {
+        if (text.equals("")) return userDAO.findUserByRoles(Role.Client);
+        switch (search){
+            case "lastName" :
+                return userDAO.findAllByRolesAndName(Role.Client, text);
+            default:
+                return userDAO.findAllByRolesAndLastName(Role.Client, text);
+        }
+    }
+
+    public User findClientBy(String lastName, String name, String nameOfOrganization) {
+        return userDAO.findUserByLastNameAndNameAndNameOfOrganization(
+                lastName, name, nameOfOrganization
+        );
     }
 }
 

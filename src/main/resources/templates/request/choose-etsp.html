@@ -5,10 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-<form th:object="${request}" th:method="POST" th:action="'/clients/' + ${clientid} + '/request/' + ${requestid} + '/addetsp'" >
+<form th:object="${request}" th:method="POST" th:action="'/request/' + ${requestid} + '/addetsp'" >
 
     <div th:each="etsp : ${etsps}">
-        <input type="radio"  th:value="${etsp}" th:checked="${etsp} == *{etsp}" th:text="${etsp}" name="etsp">
+        <input type="radio"  th:value="${etsp}" checked th:text="${etsp}" name="etsp">
     </div>
 
     <input type="submit" value="Добавить"><br><br>

@@ -1,5 +1,6 @@
 package com.tehnology.kkt.controllers;
 
+
 import com.tehnology.kkt.models.User;
 import com.tehnology.kkt.models.catalog.Operator;
 import com.tehnology.kkt.services.OperatorService;
@@ -56,7 +57,7 @@ public class OperatorController {
     @PostMapping("/operator/create/{clientid}/product/{productid}/ofd")
     public String returnToOFDCreate(@PathVariable Long clientid,
                                     @PathVariable Long productid,
-                                     Model model, Operator operator) {
+                                    Model model, Operator operator) {
         operatorService.save(operator);
         User user = userService.findById(clientid);
         model.addAttribute("clientid",clientid);

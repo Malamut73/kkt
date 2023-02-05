@@ -3,12 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/styles/css/index.css">
+    <link rel="stylesheet" href="/styles/css/request.css">
     <title>Заявки</title>
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
-<a th:action="'/request'">Создать заявку</a>
+<div class="head">
+    <div class="button">
+        <a class="button__link" href="/request">Создать заявку</a>
+    </div>
+    <div class="button">
+        <a class="button__link" href="/requests/true">Активные заявки</a>
+    </div>
+    <div class="button">
+        <a class="button__link" href="/requests/false">Не активные заявки</a>
+    </div>
+    <div class="button">
+        <a class="button__link" href="/requests/all">Все заявки заявки</a>
+    </div>
+
+</div>
+
 
 <table border="1">
     <tr>
@@ -16,15 +32,18 @@
         <td>Тема:</td>
         <td>Электронно цифрова подпись:</td>
         <td>Коментарии:</td>
-        <td>Касса</td>
+        <td>Клиент</td>
+        <td>Контактное лицо</td>
         <td>Дата закрытия заявки</td>
     </tr>
     <tr th:each="request : ${requests}">
         <td>
-            <p th:text="${request.dateOfCreated}"></p>
+            <a th:href="'/request/' + ${request.id}">
+                <span th:text="${request.dateOfCreated}"></span>
+            </a>
         </td>
         <td>
-            <a th:href="'/clients/' + ${request.client.id} + '/request/' + ${request.id}"><span th:text="${request.topic.name}"></span></a>
+                <p th:text="${request.topic}"></p>
         </td>
         <td>
             <div th:if="${request.etsp} != null">
@@ -37,9 +56,13 @@
             </div>
         </td>
         <td>
-            <div th:if="${request.product} != null">
-                <p th:text="${request.product.description.name}"></p>
+            <div th:if="${request.client} != null">
+                <p th:text="${request.client.lastName}"></p>
             </div>
+        </td>
+        <td>
+            <p th:text="${request.nameOfContact}"></p>
+            <p th:text="${request.phoneOfContact}"></p>
         </td>
         <td>
             <div th:if="${request.active} == false">

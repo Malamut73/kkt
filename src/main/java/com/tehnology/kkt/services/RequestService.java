@@ -28,4 +28,15 @@ public class RequestService {
     public List<Request> findAll() {
         return requestDAO.findAll();
     }
+
+    public List<Request> findAllBy(String value) {
+        switch (value){
+            case "true":
+                return requestDAO.findAllByActiveOrderByDateOfCreatedAsc(true);
+            case "false":
+                return requestDAO.findAllByActiveOrderByDateOfCreatedAsc(false);
+            default:
+                return requestDAO.findAllByOrderByDateOfCreatedAsc();
+        }
+    }
 }

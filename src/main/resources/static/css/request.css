@@ -1,0 +1,33 @@
+.body{
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+}
+
+.body__left{
+    background: #689CD2;
+
+}
+
+.head{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 5px;
+    background: #689CD2;
+    margin-top: 2px;
+}
+
+.button__link{
+    text-decoration: none;
+    color: #fff;
+ }
+
+.button{
+    padding: 5px;
+    margin-left: 20px;
+}
+
+.button:hover{
+    background-color: #FF9900;
+    border-radius: 4px;
+}

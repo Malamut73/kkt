@@ -25,6 +25,7 @@ public class User implements UserDetails {
     private String name;
     private String lastName;
     private String patronymic; //отчество
+    private String nameOfOrganization;
     private String email;
     private String phoneNumber;
     private boolean active;

@@ -5,10 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-<form  method="post" th:action="'/clients/' + ${clientid} + '/request/' + ${requestid} + '/topic/' + ${top.id}">
+<form  method="post" th:action="'/request/' + ${requestid} + '/topic/'">
     <label for="topic">Тема заявки: </label>
-    <select id="topic"  th:name="id">
-        Тема: <option th:each="topic : ${topics}" th:selected="${topic.name} == ${top.name}"  th:value="${topic.id}"  th:text="${topic.name}"></option>
+    <select id="topic"  name="topic">
+        Тема: <option th:each="topic : ${topics}"  th:value="${topic.name}"  th:text="${topic.name}"></option>
     </select>
     <input type="submit" value="Изменить">
 </form>

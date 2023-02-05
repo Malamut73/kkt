@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+    <link rel="stylesheet" href="/styles/css/request.css">
+    <title>Title</title>
+</head>
+<body>
+    <div th:insert="~{fragments/menu :: #nav-menu}"></div>
+    
+    <div class="head">
+
+    </div>
+
+    <div class="body">
+        <div class="body__left">
+            <div class="body__left__inner">
+                <form method="post" th:action="'/request/' + ${requestid} + '/addClient'">
+                    Введите текст: <input type="text" name="text">
+                    <br>
+                    Название организации: <input type="radio" value="nameOfOrganization" name="search">
+                    Фамилия: <input type="radio" checked value="lastName" name="search">
+                    <input type="submit" value="Поиск">
+                </form>
+            </div>
+        </div>
+        <div class="body__right">
+            <div th:each="client : ${clients}">
+                <a th:href="'/request/' + ${requestid} + '/addClient/' + ${client.id}">
+                    <span th:text="${client.lastName} + ' ' + ${client.name}"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

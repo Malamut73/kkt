@@ -39,8 +39,10 @@ public class OFDController {
 
     @PostMapping("/clients/{clientid}/product/{productid}/ofd")
     public String addOFD(@PathVariable("clientid") User user,
-                         @PathVariable("productid") Product product, Model model, OFD ofd){
+                         @PathVariable("productid") Product product,
+                         Model model, OFD ofd){
 //        Product product = productService.findById(productid);
+        System.out.println(ofd.getDateStart());
             ofd.setTariff(tariffService.findById(ofd.getTariff().getId()));
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(ofd.getDateStart());

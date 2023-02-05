@@ -115,13 +115,15 @@
                 </tr>
                 <tr th:each="request : ${user.requests}">
                     <td>
-                        <p th:text="${request.dateOfCreated}"></p>
+                        <a th:href="'/clients/' + ${user.id} + '/request/' + ${request.id}">
+                            <span th:text="${request.dateOfCreated}"></span>
+                        </a>
                         <form method="post" th:action="'/clients/' + ${clientid} + '/request/' + ${request.id} + '/delete/'">
                             <input type="submit" value="Удалть заявку">
                         </form>
                     </td>
                     <td>
-                        <a th:href="'/clients/' + ${user.id} + '/request/' + ${request.id}"><span th:text="${request.topic.name}"></span></a>
+                        <p th:text="${request.topic}"></p>
                     </td>
                     <td th:text="${request.etsp}"></td>
                     <td >

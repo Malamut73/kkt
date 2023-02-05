@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 //@Data
@@ -22,5 +23,14 @@ public class Comment {
     private Long id;
 
     private String text;
+
+    @Column(updatable = false, columnDefinition="DATETIME")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateOfCreated;
+
+    @PrePersist
+    private void init(){
+        dateOfCreated = new Date();
+    }
 
 }

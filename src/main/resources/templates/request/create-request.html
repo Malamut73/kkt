@@ -15,8 +15,9 @@
 </div>
 <div th:if="!${#lists.isEmpty(topics)}">
     <form th:method="POST" th:action="'/clients/' + ${clientid} + '/request'" th:object="${request}">
+
         <label for="topic">Тема: </label>
-        <select id="topic" th:field="*{topic.id}">
+        <select id="topic" th:field="*{topic}">
              <option th:each="topic : ${topics}"   th:value="${topic.id}" th:text="${topic.name}"></option>
         </select>
 
@@ -29,8 +30,6 @@
     </form>
 
 </div>
-
-
 
 </body>
 </html>

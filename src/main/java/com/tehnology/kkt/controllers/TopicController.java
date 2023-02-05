@@ -34,24 +34,5 @@ public class TopicController {
         return"redirect:/topics";
     }
 
-    @GetMapping("/clients/{clientid}/request/{requestid}/topic/{topicid}")
-    public String changeTopic(@PathVariable Long clientid,
-                              @PathVariable Long requestid,
-                              @PathVariable("topicid") Topic topic, Model model){
 
-        model.addAttribute("clientid", clientid);
-        model.addAttribute("requestid", requestid);
-        model.addAttribute("top", topic);
-        model.addAttribute("topics", topicService.findAll());
-        return "change-topic";
-    }
-
-    @PostMapping("/clients/{clientid}/request/{requestid}/topic/{topicid}")
-    public String changeTopic(@RequestParam("id") Topic topic,
-                              @PathVariable("requestid") Request request){
-        request.setTopic(topic);
-        requestService.saveRequest(request);
-        return "redirect:/clients/{clientid}/request/{requestid}";
-
-    }
 }

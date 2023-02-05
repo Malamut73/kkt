@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+    <title>Title</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<form method="post" action="/store/add">
+    <input type="text" name="name" placeholder="Имя">
+    <input type="text" name="link" placeholder="Ссылка">
+    <input type="text" name="login" placeholder="Логин">
+    <input type="text" name="password" placeholder="Пароль">
+    <input type="text" name="description" placeholder="Доп информация">
+    <input type="submit" value="Добавить" >
+</form>
+
+<table border="1">
+    <tr>
+        <td>
+            <p>Имя</p>
+        </td>
+        <td>
+            <p>Ссылка</p>
+        </td>
+        <td>
+            <p>Логин</p>
+        </td>
+        <td>
+            <p>Пароль</p>
+        </td>
+        <td>
+            <p>Доп информация</p>
+        </td>
+    </tr>
+    <tr th:each="store : ${stores}">
+        <td>
+            <a th:href="'/store/' + ${store.id}">
+                <span th:text="${store.name}"></span>
+            </a>
+        </td>
+        <td>
+            <p th:text="${store.link}"></p>
+        </td>
+        <td>
+            <p th:text="${store.login}"></p>
+        </td>
+        <td>
+            <p th:text="${store.password}"></p>
+        </td>
+        <td>
+            <p th:text="${store.description}"></p>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
