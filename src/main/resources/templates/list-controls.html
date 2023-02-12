@@ -8,81 +8,91 @@
 <body>
     <div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
-
-        <table border="1">
-            <tr>
-                <td>ОФД</td>
-                <td>ФН</td>
-                <td>Техосблуживание</td>
-            </tr>
-            <tr>
-                <td >
-                    <table border="1">
-                        <tr>
-                            <td>Организация</td>
-                            <td>Касса</td>
-                            <td>Срок окончания ФН</td>
-                        </tr>
-                        <tr th:each="ofd : ${ofds}">
-                            <td>
-                                <a th:href="'/clients/' + ${ofd.product.user.id} + '/product/' + ${ofd.product.id}">
-                                    <span th:text="${ofd.product.user.requisite.organization.name} + ' ' + ${ofd.product.user.name}"></span>
-                                </a>
-                            </td>
-                            <td>
-                                <span th:text="${ofd.product.description.name}"></span>
-                            </td>
-                            <td>
-                                <span th:text="${ofd.dayEnd}"></span>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td >
-                    <table border="1">
-                        <tr>
-                            <td>Организация</td>
-                            <td>Касса</td>
-                            <td>Срок окончания ФН</td>
-                        </tr>
-                        <tr th:each="fn : ${fns}">
-                            <td>
-                                <a th:href="'/clients/' + ${fn.product.user.id} + '/product/' + ${fn.product.id}">
-                                    <span th:text="${fn.product.user.requisite.organization.name} + ' ' + ${fn.product.user.name}"></span>
-                                </a>
-                            </td>
-                            <td>
-                                <span th:text="${fn.product.description.name}"></span>
-                            </td>
-                            <td>
-                                <span th:text="${fn.dayEnd}"></span>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td >
-                    <table border="1">
-                        <tr>
-                            <td>Организация</td>
-                            <td>Касса</td>
-                            <td>Срок окончания ФН</td>
-                        </tr>
-                        <tr th:each="maintenance : ${maintenances}">
-                            <td>
-                                <a th:href="'/clients/' + ${maintenance.product.user.id} + '/product/' + ${maintenance.product.id}">
-                                    <span th:text="${maintenance.product.user.requisite.organization.name} + ' ' + ${maintenance.product.user.name}"></span>
-                                </a>
-                            </td>
-                            <td>
-                                <span th:text="${maintenance.product.description.name}"></span>
-                            </td>
-                            <td>
-                                <span th:text="${maintenance.dayEnd}"></span>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
+    <div class="alone__body">
+        <div class="alone__body__inner">
+            <table border="1">
+                <tr>
+                    <td>ОФД</td>
+                    <td>ФН</td>
+                    <td>Техосблуживание</td>
+                </tr>
+                <tr>
+                    <td >
+                        <table border="1">
+                            <tr>
+                                <td>Организация</td>
+                                <td>Касса</td>
+                                <td>Срок окончания ОФД</td>
+                            </tr>
+                            <tr th:each="ofd : ${ofds}">
+                                <td>
+                                    <a th:href="'/clients/' + ${ofd.product.user.id} + '/product/' + ${ofd.product.id}">
+                                    <span th:text="${ofd.product.user.name} + ' ' + ${ofd.product.user.lastName}
+                                    + ' ' + ${ofd.product.user.typeOfOrganization} + ' ' + ${ofd.product.user.nameOfOrganization}"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a th:href="'/clients/' + ${ofd.product.user.id} + '/product/' + ${ofd.product.id}">
+                                        <span th:text="${ofd.product.name}"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <span th:text="${ofd.dayEnd}"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td >
+                        <table border="1">
+                            <tr>
+                                <td>Организация</td>
+                                <td>Касса</td>
+                                <td>Срок окончания ФН</td>
+                            </tr>
+                            <tr th:each="fn : ${fns}">
+                                <td>
+                                    <a th:href="'/clients/' + ${fn.product.user.id} + '/product/' + ${fn.product.id}">
+                                    <span th:text="${fn.product.user.name} + ' ' + ${fn.product.user.lastName}
+                                    + ' ' + ${fn.product.user.typeOfOrganization} + ' ' + ${fn.product.user.nameOfOrganization}"></span>                                </a>
+                                </td>
+                                <td>
+                                    <a th:href="'/clients/' + ${fn.product.user.id} + '/product/' + ${fn.product.id}">
+                                        <span th:text="${fn.product.name}"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <span th:text="${fn.dayEnd}"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td >
+                        <table border="1">
+                            <tr>
+                                <td>Организация</td>
+                                <td>Касса</td>
+                                <td>Срок окончания техобслуживание</td>
+                            </tr>
+                            <tr th:each="maintenance : ${maintenances}">
+                                <td>
+                                    <a th:href="'/clients/' + ${maintenance.product.user.id} + '/product/' + ${maintenance.product.id}">
+                                    <span th:text="${maintenance.product.user.name} + ' ' + ${maintenance.product.user.lastName}
+                                    + ' ' + ${maintenance.product.user.typeOfOrganization} + ' ' + ${maintenance.product.user.nameOfOrganization}"></span>                                </a>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a th:href="'/clients/' + ${maintenance.product.user.id} + '/product/' + ${maintenance.product.id}">
+                                        <span th:text="${maintenance.product.name}"></span>
+                                    </a>                                 </td>
+                                <td>
+                                    <span th:text="${maintenance.dayEnd}"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </body>
 </html>

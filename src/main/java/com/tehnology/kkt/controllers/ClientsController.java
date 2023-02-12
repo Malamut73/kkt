@@ -2,6 +2,7 @@ package com.tehnology.kkt.controllers;
 
 import com.tehnology.kkt.models.User;
 import com.tehnology.kkt.models.Comment;
+import com.tehnology.kkt.models.enums.Status;
 import com.tehnology.kkt.services.OrganizationService;
 import com.tehnology.kkt.services.ProductService;
 import com.tehnology.kkt.services.UserService;
@@ -28,30 +29,26 @@ public class ClientsController {
     @GetMapping("/clients")
     public String clients(Model model) {
         model.addAttribute("clients", userService.findAllClients());
-        return "clients";
+        return "user/clients";
     }
 
     @PostMapping("/clients")
-    public String clients() {
-        return "clients";
+    public String clients(@RequestParam(name = "search", required = false) String search,
+                          @RequestParam(name = "text", required = false) String text, Model model) {
+        model.addAttribute("clients", userService.findAllClientsBy(text, search));
+        return "user/clients";
     }
 
     @GetMapping("/clients/create")
     public String createClient(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("organizations", organizationService.findAll());
-        return "create-client";
+        return "user/create-client";
     }
 
     @PostMapping("/clients/create")
     public String createClient(User user, Principal principal, Model model) {
-        SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
-        Date today = new Date();
-        Comment comment = Comment.builder()
-                .text(formater.format(today) + " " + principal.getName() + " создал клиента.")
-                .build();
-        user.getComments().add(comment);
-        user.getRequisite().setOrganization(organizationService.findById(user.getRequisite().getOrganization().getId()));
+        user.setStatus(Status.Новый);
         userService.saveClient(user);
         return "redirect:/clients";
     }
@@ -60,13 +57,42 @@ public class ClientsController {
     public String userInfo(@PathVariable Long clientid, Model model) {
         User user = userService.findById(clientid);
         model.addAttribute("user", user);
-        return "info-client";
+        return "user/info-client";
     }
 
     @GetMapping("/clients/sort")
     public String clientSort(@RequestParam("name") String name, Model model){
         model.addAttribute("clients", userService.findAllByName(name));
-        return "clients";
+        return "user/clients";
     }
+
+    @GetMapping("/clients/{clientid}/comment")
+    public String comment(@PathVariable("clientid") User user, Model model){
+        model.addAttribute("user", user);
+        return "user/comment";
+    }
+
+    @PostMapping("/clients/{clientid}/comment")
+    public String comment(@PathVariable("clientid") User user,
+                          @RequestParam("comment") String comment){
+        user.setComment(comment);
+        userService.saveClient(user);
+        return "redirect:/clients/{clientid}";
+    }
+
+    @GetMapping("/clients/{clientid}/edit")
+    public String editClient(@PathVariable("clientid") User user, Model model){
+        model.addAttribute("user", user);
+        model.addAttribute("statuses", Status.values());
+        model.addAttribute("organizations", organizationService.findAll());
+        return "user/edit-client";
+    }
+
+    @PostMapping("/clients/{clientid}/edit")
+    public String editClient(@PathVariable("clientid") User userFromDB, User user){
+        userService.updateUser(userFromDB, user);
+        return "redirect:/clients/{clientid}";
+    }
+
 
 }

@@ -6,53 +6,30 @@
 </head>
 <body>
 
-<div th:if="${ofdid} != null">
+<div>
     <form th:action="'/clients/' + ${clientid} + '/product/' + ${productid} + '/ofd/' + ${ofd.id} + '/edit'" th:object="${ofd}" th:method="post">
+        <input type="hidden" th:field="*{id}" th:value="*{id}">
         Контакты: <input type="text" th:field="*{contact}" th:value="*{contact}"><br>
         Пароль: <input type="text" th:field="*{pass}" th:value="*{pass}"><br>
         <div th:if="!${#lists.isEmpty(tariffs)}">
             <label for="ofd-tariff-edit-select">Тариф: </label>
-            <select id="ofd-tariff-edit-select"  th:field="*{tariff.id}">
-                <option th:each="tar : ${tariffs}" th:value="${tar.id}" th:selected="*{tariff.days}" th:text="${tar.days}"></option>
+            <select id="ofd-tariff-edit-select"  th:field="*{days}">
+                <option th:each="tar : ${tariffs}" th:value="${tar.days}" th:selected="*{days}" th:text="${tar.days}"></option>
             </select>
         </div>
-        <a th:href="'/tariffs/create/clients/' + ${clientid} + '/product/' + ${productid}"> Создать новый тариф.</a><br>
         <div th:if="!${#lists.isEmpty(operators)}">
             <label for="ofd-operator-edit-select">Тариф: </label>
-            <select id="ofd-operator-edit-select"  th:field="*{operator.id}">
-                <option th:each="oper : ${operators}" th:value="${oper.id}" th:selected="*{operator.name}" th:text="${oper.name}"></option>
+            <select id="ofd-operator-edit-select"  th:field="*{operator}">
+                <option th:each="oper : ${operators}" th:value="${oper.name}" th:selected="*{operator}" th:text="${oper.name}"></option>
             </select>
         </div>
-        <a th:href="'/operator/create/' + ${clientid} + '/product/' + ${productid}  + '/ofd'"> Создать нового оператора.</a><br>
         Дата начала: <input type="date" th:field="*{dateStart}"  th:value="*{dateStart}"><br><br>
         Дата окончания: <input type="date" th:field="*{dayEnd}"  th:value="*{dayEnd}"><br><br>
         <input type="submit" value="Добавить"><br><br>
 
     </form>
 </div>
-<div th:if="${ofdid} == null">
-    <form th:action="'/clients/' + ${clientid} + '/product/' + ${productid} + '/ofd'" th:object="${ofd}" th:method="post">
-        Контакты: <input type="text" th:field="*{contact}"><br>
-        Пароль: <input type="text" th:field="*{pass}"><br>
-        <div th:if="!${#lists.isEmpty(tariffs)}">
-            <label for="ofd-tariff-select">Тариф: </label>
-            <select id="ofd-tariff-select"  th:field="*{tariff.id}">
-                <option th:each="tar : ${tariffs}" th:value="${tar.id}" th:selected="*{tariff.days}" th:text="${tar.days}"></option>
-            </select>
-        </div>
-        <a th:href="'/tariffs/create/clients/' + ${clientid} + '/product/' + ${productid}"> Создать новый тариф.</a><br>
-        <div th:if="!${#lists.isEmpty(operators)}">
-            <label for="ofd-operator-select">Тариф: </label>
-            <select id="ofd-operator-select"  th:field="*{operator.id}">
-                <option th:each="oper : ${operators}" th:value="${oper.id}" th:selected="*{operator.name}" th:text="${oper.name}"></option>
-            </select>
-        </div>
-        <a th:href="'/operator/create/' + ${clientid} + '/product/' + ${productid}  + '/ofd'"> Создать нового оператора.</a><br>
-        Дата начала: <input type="date" th:field="*{dateStart}"><br><br>
-        <input type="submit" value="Добавить"><br><br>
 
-    </form>
-</div>
 
 
 </body>

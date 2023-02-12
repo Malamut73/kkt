@@ -26,6 +26,8 @@ public class OFD {
 
     private String contact;
     private String pass;
+    private String operator;
+    private int days;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -34,14 +36,6 @@ public class OFD {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dayEnd;
-
-    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "operator_id")
-    private Operator operator;
-
-    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "tariff_id")
-    private Tariff tariff;
 
     @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "ofd")
     private Product product;

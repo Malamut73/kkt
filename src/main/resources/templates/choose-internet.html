@@ -6,38 +6,17 @@
 </head>
 <body>
 
-<div th:if="${internet.id} != null">
-    <div th:if="${#lists.isEmpty(internets)}">
-        <p>Нету ни одного интернета, необходимо создать</p>
-        <form th:action="'/internets/create'">
-            <input type="submit" value="Создать интернет">
-        </form>
-    </div>
+<div>
     <div th:if="!${#lists.isEmpty(internets)}">
-        <form method="post" th:action="'/clients/' + ${clientid} + '/product/' + ${productid} + '/internet/' + ${internet.id} + '/edit'" th:object="${internet}">
+        <form method="post" th:action="'/clients/' + ${clientid} + '/product/' + ${productid} + '/internet/'">
             <div th:each="inter : ${internets}" >
-                <input th:id="${inter}" type="radio" th:field="*{id}" th:value="${inter.id}" th:selected="*{name}" th:text="${inter.name}" />
+                <input th:id="${inter}" type="radio" name="name" th:value="${inter.name}" th:text="${inter.name}" />
             </div>
             <input type="submit" value="save">
         </form>
     </div>
 </div>
-<div th:if="${internet.id} == null">
-    <div th:if="${#lists.isEmpty(internets)}">
-        <p>Нету ни одного интернета, необходимо создать</p>
-        <form th:action="'/internets/create'">
-            <input type="submit" value="Создать интернет">
-        </form>
-    </div>
-    <div th:if="!${#lists.isEmpty(internets)}">
-        <form method="post" th:action="'/clients/' + ${clientid} + '/product/' + ${productid} + '/internet'" th:object="${internet}">
-            <div th:each="inter : ${internets}" >
-                <input th:id="${inter}" type="radio" th:field="*{id}" th:value="${inter.id}" th:text="${inter.name}" />
-            </div>
-            <input type="submit" value="save">
-        </form>
-    </div>
-</div>
+
 
 </body>
 </html>

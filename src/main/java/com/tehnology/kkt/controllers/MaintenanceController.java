@@ -12,7 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
+import java.util.Date;
 import java.util.HashSet;
 
 @Controller
@@ -39,18 +42,19 @@ public class MaintenanceController {
     }
 
     @PostMapping("/clients/{clientid}/product/{productId}/maintenance")
-    public String createMaintenance(@PathVariable Long clientid,
-                                    @PathVariable Long productId, Maintenance maintenance) {
-        Product product = productService.findById(productId);
-        MaintenanceTariff maintenanceTariff = maintenanceTariffService.findByName(maintenance.getName());
-        for (int i = 1; i < maintenanceTariff.getMountTrip() + 1; i++) {
-            maintenance.getTrips().add(Trip.builder()
-                    .name(i)
-                    .build());
+    public String createMaintenance(@PathVariable Long clientid, @RequestParam(name="id", required = false) MaintenanceTariff maintenanceTariff,
+                                    @PathVariable("productId") Product product, Maintenance maintenance,
+                                    Principal principal) {
+        if(maintenanceTariff != null){
+            maintenance.setName(maintenanceTariff.getName());
+            for (int i = 1; i < maintenanceTariff.getMountTrip() + 1; i++) {
+                maintenance.getTrips().add(Trip.builder()
+                        .name(i)
+                        .build());
+            }
         }
-        maintenance.getComments().add(Comment.builder()
-                .text(maintenance.getComment())
-                .build());
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text("добавил техобслуживание").build());
         product.setMaintenance(maintenance);
         productService.saveProduct(product);
 
@@ -69,16 +73,23 @@ public class MaintenanceController {
     }
 
     @PostMapping("/clients/{clientid}/product/{productId}/maintenance/{maintenanceid}/edit")
-    public String editMaintenance(Maintenance maintenance){
-        maintenanceService.save(maintenance);
+    public String editMaintenance(@PathVariable("productId") Product product, Principal principal,
+                                  Maintenance maintenance){
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text(" отредактировал дату техобслуживания").build());
+        product.getMaintenance().setDateStart(maintenance.getDateStart());
+        product.getMaintenance().setDayEnd(maintenance.getDayEnd());
+        productService.saveProduct(product);
         return "redirect:/clients/{clientid}/product/{productId}/";
     }
 
     @PostMapping("/clients/{clientid}/product/{productId}/maintenance/{maintenanceid}/delete")
-    public String deleteMaintanance(@PathVariable Long clientid,
+    public String deleteMaintanance(@PathVariable Long clientid, Principal principal,
                                     @PathVariable Long productId,
                                     @PathVariable Long maintenanceid, Model model){
         Product product = productService.findById(productId);
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text("удалил заявку").build());
         product.setMaintenance(null);
         productService.saveProduct(product);
         maintenanceService.deleteById(maintenanceid);
@@ -101,28 +112,26 @@ public class MaintenanceController {
 
     @PostMapping("/clients/{clientid}/product/{productId}/maintenance/{maintenanceid}/edit/tariff")
     public String editTariff(@PathVariable("maintenanceid") Maintenance maintenance,
-                             MaintenanceTariff maintenanceTariff){
-        MaintenanceTariff maintenanceTariffFromDB = maintenanceTariffService.findById(maintenanceTariff.getId());
-        tripService.deleteAll(maintenance.getTrips());
-        maintenance.setTrips(new HashSet<>());
-
-        for (int i = 1; i < maintenanceTariffFromDB.getMountTrip() + 1; i++) {
-            maintenance.getTrips().
-                    add(Trip.builder()
-                    .name(i)
-                    .build());
+                             @PathVariable("productId") Product product, Principal principal,
+                             @RequestParam(name="id", required = false) MaintenanceTariff maintenanceTariff){
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text("отредактировал тариф техобслуживания").build());
+        if (maintenanceTariff != null){
+            tripService.deleteAll(maintenance.getTrips());
+            maintenance.setTrips(new HashSet<>());
+            for (int i = 1; i < maintenanceTariff.getMountTrip() + 1; i++) {
+                maintenance.getTrips().
+                        add(Trip.builder()
+                                .name(i)
+                                .build());
+            }
+            maintenance.setName(maintenanceTariff.getName());
+            maintenanceService.save(maintenance);
         }
-        maintenance.setName(maintenanceTariffFromDB.getName());
-        maintenanceService.save(maintenance);
         return "redirect:/clients/{clientid}/product/{productId}/";
     }
 
-    @PostMapping("/clients/{clientid}/product/{productId}/maintenance/{maintenanceid}/trip/{tripid}/delete")
-    public String editTrip(@PathVariable("tripid") Trip trip){
-        trip.setDateTrip(null);
-        tripService.save(trip);
-        return "redirect:/clients/{clientid}/product/{productId}/";
-    }
+
 
 
 }

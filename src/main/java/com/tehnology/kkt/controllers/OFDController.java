@@ -1,5 +1,6 @@
 package com.tehnology.kkt.controllers;
 
+import com.tehnology.kkt.models.Comment;
 import com.tehnology.kkt.models.Product;
 import com.tehnology.kkt.models.User;
 import com.tehnology.kkt.models.OFD;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
 import java.util.Calendar;
 
 @Controller
@@ -38,22 +40,17 @@ public class OFDController {
     }
 
     @PostMapping("/clients/{clientid}/product/{productid}/ofd")
-    public String addOFD(@PathVariable("clientid") User user,
+    public String addOFD(@PathVariable("clientid") User user, Principal principal,
                          @PathVariable("productid") Product product,
                          Model model, OFD ofd){
-//        Product product = productService.findById(productid);
-        System.out.println(ofd.getDateStart());
-            ofd.setTariff(tariffService.findById(ofd.getTariff().getId()));
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(ofd.getDateStart());
-            calendar.add(Calendar.MONTH, ofd.getTariff().getDays());
+            calendar.add(Calendar.MONTH, ofd.getDays());
             ofd.setDayEnd(calendar.getTime());
         product.setOfd(ofd);
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text("добавил офд").build());
         productService.saveProduct(product);
-//        ofd.setProduct(product);
-//        ofdService.saveOFD(ofd);
-
-
 
         return "redirect:/clients/{clientid}/product/{productid}";
     }
@@ -62,18 +59,20 @@ public class OFDController {
     public String deleteOFD(@PathVariable Long clientid,
                             @PathVariable Long productid,
                             @PathVariable Long ofdid,
-                            OFD ofd){
+                            OFD ofd, Principal principal){
 
 
         Product product = productService.findById(productid);
         product.setOfd(null);
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text("удалил офд").build());
         productService.saveProduct(product);
         ofdService.deleteOFDById(ofdid);
         return "redirect:/clients/{clientid}/product/{productid}";
     }
 
     @GetMapping("/clients/{clientid}/product/{productid}/ofd/{ofdid}/edit")
-    public String editLK(@PathVariable Long clientid,
+    public String editOfd(@PathVariable Long clientid,
                          @PathVariable Long productid,
                          @PathVariable Long ofdid,Model model){
         model.addAttribute("ofd", ofdService.findById(ofdid));
@@ -88,16 +87,13 @@ public class OFDController {
     }
 
     @PostMapping("/clients/{clientid}/product/{productid}/ofd/{ofdid}/edit")
-    public String editLK(@PathVariable Long clientid,
-                         @PathVariable Long productid,
-                         @PathVariable Long ofdid, OFD ofd, Model model){
-
-        Product product = productService.findById(productid);
+    public String editOfd(@PathVariable Long clientid, Principal principal,
+                         @PathVariable("productid") Product product,
+                         OFD ofd, Model model){
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text("изменил офд").build());
         product.setOfd(ofd);
         productService.saveProduct(product);
-        ofdService.deleteOFDById(ofdid);
-//        model.addAttribute("ofd", ofd);
-
         return "redirect:/clients/{clientid}/product/{productid}";
     }
 

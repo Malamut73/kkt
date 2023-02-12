@@ -6,12 +6,12 @@
 </head>
 <body>
 <form method="post" th:action="'/store/' + ${store.id}">
-    <input type="hidden" name="id" th:value="${store.id}">
-    Имя: <input type="text"name="name" th:value="${store.name}">
-    Ссылка: <input type="text" name="link" th:value="${store.link}">
-    Логин: <input type="text" name="login" th:value="${store.login}">
-    Пароль: <input type="text" name="password" th:value="${store.password}">
-    Доп информация: <input type="text" name="description" th:value="${store.description}">
+    <input type="hidden" name="id" th:value="${store.id}"><br>
+    Имя: <input type="text" name="name" th:value="${store.name}"><br>
+    Ссылка: <input type="text" name="link" th:value="${store.link}"><br>
+    Логин: <input type="text" name="login" th:value="${store.login}"><br>
+    Пароль: <input type="text" name="password" th:value="${store.password}"><br>
+    Доп информация: <input type="text" name="description" th:value="${store.description}"><br>
     <input type="submit" value="Добавить" >
 </form>
 

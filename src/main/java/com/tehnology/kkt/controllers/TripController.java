@@ -1,5 +1,8 @@
 package com.tehnology.kkt.controllers;
 
+import com.tehnology.kkt.models.Comment;
+import com.tehnology.kkt.models.Maintenance;
+import com.tehnology.kkt.models.Product;
 import com.tehnology.kkt.models.Trip;
 import com.tehnology.kkt.services.ProductService;
 import com.tehnology.kkt.services.TripService;
@@ -9,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,9 +35,22 @@ public class TripController {
     }
 
     @PostMapping("/clients/{clientid}/product/{productid}/maintenance/{maintenanceid}/trip/{tripid}")
-    public String editTrip(Trip trip){
+    public String editTrip(@PathVariable("productid") Product product,
+                           Principal principal, Trip trip){
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text("изменил поездку номер " + trip.getName()).build());
         tripService.save(trip);
         return "redirect:/clients/{clientid}/product/{productid}/";
+    }
+
+    @PostMapping("/clients/{clientid}/product/{productId}/maintenance/{maintenanceid}/trip/{tripid}/delete")
+    public String deleteTrip(@PathVariable("tripid") Trip trip, Principal principal,
+                             @PathVariable("productId") Product product ){
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text("удалил поезду номер " + trip.getName()).build());
+        trip.setDateTrip(null);
+        tripService.save(trip);
+        return "redirect:/clients/{clientid}/product/{productId}/";
     }
 
 

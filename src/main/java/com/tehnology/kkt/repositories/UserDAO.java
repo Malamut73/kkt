@@ -10,6 +10,8 @@ import java.util.List;
 public interface UserDAO extends JpaRepository<User, Long> {
     User findByEmail(String email);
     List<User> findUserByRoles(Role role);
+    List<User> findUserByRolesAndRoles(Role roleManager,Role roleAdministration);
+
 
     List<User> findAllByName(String name);
 
@@ -20,4 +22,6 @@ public interface UserDAO extends JpaRepository<User, Long> {
     List<User> findAllByRolesAndLastName(Role client, String text);
 
     User findUserByLastNameAndNameAndNameOfOrganization(String lastName, String name, String nameOfOrganization);
+
+    List<User> findAllByRolesAndNameOfOrganization(Role client, String text);
 }

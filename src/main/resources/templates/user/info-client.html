@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <title>Клиент</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+    <link rel="stylesheet" href="/styles/css/clients.css">
+
+
+
+
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="head">
+    <div class="button">
+        <a class="button__link" th:href="'/clients'">Назад к списку клиентов</a>
+    </div>
+    <div class="button">
+        <a class="button__link" th:href="'/clients/' + ${user.id} + '/product'">Добавить кассу</a>
+    </div>
+    <div class="button">
+        <a class="button__link" th:href="'/clients/' + ${user.id} + '/request'">Создать заявку</a>
+    </div>
+</div>
+
+<div class="body__client">
+    <div class="top">
+        <div class="top__left">
+            <span th:text="${user.status}"></span><br>
+            <span th:text="${user.lastName} + ' ' + ${user.name} + ' ' + ${user.patronymic} + ' ' + ${user.typeOfOrganization} + ' ' + ${user.nameOfOrganization}"></span><br>
+            <span th:text="${user.phoneNumber} + ' ' + ${user.email}"></span><br>
+            <span>ИНН: <span th:text="${user.inn}"></span></span>
+            <span>ОГРН: <span th:text="${user.ogrn}"></span></span>
+            <span>КПП: <span th:text="${user.kpp}"></span></span>
+            <form method="get" th:action="'/clients/' + ${user.id} + '/edit'">
+                <input type="submit" value="Редактировать">
+            </form>
+        </div>
+        <div class="top__center">
+            <span th:text="${user.comment}"></span><br>
+            <a th:href="'/clients/' + ${user.id} + '/comment'">Изменить коментарий</a>
+        </div>
+        <div class="top__right">
+            <span>ОФД: <span>Касса, дата</span></span><br>
+            <span>ФН: <span>Касса, дата</span></span><br>
+            <span>Тариф: <span>дата</span></span><br>
+        </div>
+    </div>
+    <hr>
+    <div class="down">
+        <div class="down__left">
+            <table border="1">
+                <tr>
+                    <td>Касса</td>
+                    <td>Личный кабинет</td>
+                    <td>ОФД</td>
+                    <td>ФН</td>
+                    <td>Техобслуживание</td>
+                </tr>
+                <tr th:each="product : ${user.products}">
+                    <td >
+                        <div>
+                            <a th:href="'/clients/' + ${user.id} + '/product/' + ${product.id}">
+                                <span th:text="${product.name}"></span>
+                            </a>
+                            <br>
+                            <span th:text="${product.address}"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div th:if="${product.lk} != null">
+                            <span th:text="${product.lk.contact}"></span><br>
+                            <span th:text="${product.lk.pass}"></span><br>
+                            <span th:text="${product.lk.codeAdministrator}"></span><br>
+                            <span th:text="${product.lk.linkAddress}"></span><br>
+                        </div>
+
+                    </td>
+                    <td>
+                        <div th:if="${product.ofd} != null">
+                            <div>
+                                <span>Тариф: </span><span th:text="${product.ofd.days}"></span><br>
+                                <span th:text="${product.ofd.dateStart}"></span><br>
+                                <span th:text="${product.ofd.dayEnd}"></span><br>
+                                <span th:text="${product.ofd.operator}"></span><br>
+                            </div>
+                        </div>
+                    </td>
+                    <td th:if="${product.fn} != null">
+                        <span th:text="${product.fn.dateStart}"></span><br>
+                        <span th:text="${product.fn.dayEnd}"></span><br>
+                    </td>
+                    <td th:if="${product.maintenance} != null">
+                        <span th:text="${product.maintenance.name}"></span><br>
+                        <span th:text="${product.maintenance.dateStart}"></span><br>
+                        <span th:text="${product.maintenance.dayEnd}"></span><br>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="down__right">
+            <table border="1">
+                <tr>
+                    <td>Дата создания заявки:</td>
+                    <td>Тема:</td>
+                    <td>ЭЦП:</td>
+                    <td>Контактное лицо</td>
+                    <td>Темы комментариев</td>
+                    <td>Дата закрытия заявки</td>
+                </tr>
+                <tr th:each="request : ${user.requests}">
+                    <td>
+                        <a th:href="'/clients/' + ${user.id} + '/request/' + ${request.id}">
+                            <span th:text="${request.dateOfCreated}"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <p th:text="${request.topic}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${request.etsp}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${request.nameOfContact}"></p>
+                        <p th:text="${request.phoneOfContact}"></p>
+                    </td>
+                    <td>
+                        <div th:each="comment : ${request.comments}">
+                            <span th:text="${comment.dateOfCreated} + ' ' + ${comment.text}"></span><br>
+                        </div>
+                    </td>
+                    <td>
+                        <div th:if="${request.active} == false">
+                            <p>Дата закрытия: <span th:text="${request.dateOfEnd}"></span></p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript" src="/javascript/js/hidden.js"></script>
+
+</body>
+</html>

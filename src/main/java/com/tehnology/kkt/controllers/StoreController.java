@@ -18,6 +18,12 @@ public class StoreController {
         model.addAttribute("stores", storesService.findAll());
         return "list-stores";
     }
+
+    @GetMapping("/store/add")
+    public String newStore(){
+        return "create-store";
+    }
+
     @PostMapping("/store/add")
     public String addStore(@ModelAttribute Store store){
         storesService.save(store);

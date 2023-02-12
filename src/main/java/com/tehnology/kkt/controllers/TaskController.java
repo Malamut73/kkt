@@ -34,9 +34,9 @@ public class TaskController {
     }
 
     @PostMapping("/tasks/create")
-    public String createTask(@ModelAttribute Task task){
-        task.getComments().add(Comment.builder()
-                        .text(task.getComment())
+    public String createTask(@ModelAttribute Task task, Principal principal){
+        task.getComments().add(Comment.builder().user(principal.getName())
+                        .text("создал задачу")
                         .build());
         taskService.save(task);
         return "redirect:/tasks";
@@ -49,17 +49,20 @@ public class TaskController {
     }
 
     @PostMapping("/tasks/{taskid}/addtask")
-    public String addTask(@ModelAttribute Comment comment,
-                          @PathVariable("taskid") Task task){
-        task.getComments().add(comment);
+    public String addComment(@RequestParam("text") String text, Principal principal,
+                             @PathVariable("taskid") Task task){
+        task.getComments().add(Comment.builder().user(principal.getName())
+                .text(text).build());
         taskService.save(task);
         return "redirect:/tasks/{taskid}/";
     }
 
     @PostMapping("/tasks/{taskid}/closetask")
-    public String closeTask(@PathVariable("taskid") Task task){
+    public String closeTask(@PathVariable("taskid") Task task, Principal principal){
         task.setActive(false);
         task.setDateOfEnd(new Date(new java.util.Date().getTime()));
+        task.getComments().add(Comment.builder().user(principal.getName())
+                .text("закрыл задачу").build());
         taskService.save(task);
         return "redirect:/tasks/";
 
@@ -89,26 +92,26 @@ public class TaskController {
         return "change-user";
     }
 
-    @GetMapping("/tasks/{taskid}/user/{userid}/product")
-    public String addProduct(@PathVariable("taskid") Task task, Model model){
-        model.addAttribute("task", task);
-        model.addAttribute("products", task.getUser().getProducts());
-        return "choose-products-task";
-    }
-
-    @PostMapping("/tasks/{taskid}/user/{userid}/product")
-    public String addProduct(@RequestParam("id")Product product,
-                             @PathVariable("taskid") Task task){
-        task.setProduct(product);
-        taskService.save(task);
-        return "redirect:/tasks/{taskid}";
-    }
-
-    @GetMapping("/tasks/{taskid}/user/{userid}/product/{productid}")
-    public String changeProduct(@PathVariable("taskid") Task task, Model model){
-        model.addAttribute("task", task);
-        return "change-product-task";
-    }
+//    @GetMapping("/tasks/{taskid}/user/{userid}/product")
+//    public String addProduct(@PathVariable("taskid") Task task, Model model){
+//        model.addAttribute("task", task);
+//        model.addAttribute("products", task.getUser().getProducts());
+//        return "choose-products-task";
+//    }
+//
+//    @PostMapping("/tasks/{taskid}/user/{userid}/product")
+//    public String addProduct(@RequestParam("id")Product product,
+//                             @PathVariable("taskid") Task task){
+//        task.setProduct(product);
+//        taskService.save(task);
+//        return "redirect:/tasks/{taskid}";
+//    }
+//
+//    @GetMapping("/tasks/{taskid}/user/{userid}/product/{productid}")
+//    public String changeProduct(@PathVariable("taskid") Task task, Model model){
+//        model.addAttribute("task", task);
+//        return "change-product-task";
+//    }
 
     @GetMapping("/task/{taskid}/remind")
     public String changeDateOfReminder(@PathVariable("taskid") Task task,
@@ -119,8 +122,10 @@ public class TaskController {
 
     @PostMapping("/task/{taskid}/remind")
     public String changeReminder(@RequestParam("dateOfReminder") Date dateOfReminder,
-                                 @PathVariable("taskid") Task task ){
+                                 @PathVariable("taskid") Task task, Principal principal ){
         task.setDateOfReminder(dateOfReminder);
+        task.getComments().add(Comment.builder().user(principal.getName())
+                .text("изменил время напоминания").build());
         taskService.save(task);
         return "redirect:/tasks/{taskid}";
     }

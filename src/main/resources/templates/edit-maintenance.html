@@ -6,11 +6,8 @@
 </head>
 <body>
     <form th:method="POST" th:action="'/clients/' + ${clientid} + '/product/' + ${productId} + '/maintenance/' + ${maintenanceid} + '/edit'" th:object="${maintenance}" >
-        <input type="hidden" th:field="*{id}" th:value="*{id}">
         Дата начала: <input type="date" th:field="*{dateStart}" th:value="*{dateStart}"><br><br>
         Дата окончания: <input type="date" th:field="*{dayEnd}" th:value="*{dayEnd}"><br><br>
-        <label for="edit-comment" >Коментарий:</label>
-        <textarea id="edit-comment" th:field="*{comment}"></textarea>
         <input type="submit" value="Добавить"><br><br>
     </form>
 </body>

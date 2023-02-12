@@ -36,11 +36,7 @@ public class Maintenance { //тех обслуживание
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Trip> trips = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Comment> comments = new HashSet<>();
-
     @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "maintenance")
-    @JoinColumn(name = "product_id")
     private Product product;
 
 

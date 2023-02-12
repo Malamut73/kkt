@@ -1,5 +1,6 @@
 package com.tehnology.kkt.controllers;
 
+import com.tehnology.kkt.models.Comment;
 import com.tehnology.kkt.models.Product;
 import com.tehnology.kkt.models.LK;
 import com.tehnology.kkt.services.LKService;
@@ -10,6 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,9 +33,12 @@ public class LKController {
     }
 
     @PostMapping("/clients/{clientid}/product/{productid}/lk")
-    public String addLK(@PathVariable Long clientid, @PathVariable Long productid, Model model, LK lk){
+    public String addLK(@PathVariable Long clientid, Principal principal,
+                        @PathVariable Long productid, Model model, LK lk){
         Product product = productService.findById(productid);
         product.setLk(lk);
+        product.getComments().add(Comment.builder()
+                .user(principal.getName()).text("добавил данные в личный кабинет").build());
         productService.saveProduct(product);
 
         return "redirect:/clients/{clientid}/product/{productid}";
@@ -39,12 +46,14 @@ public class LKController {
 
 
     @PostMapping("/clients/{clientid}/product/{productid}/lk/{lkid}/delete")
-    public String deleteLK(@PathVariable Long clientid,
+    public String deleteLK(@PathVariable Long clientid, Principal principal,
                            @PathVariable Long productid,
                            @PathVariable Long lkid, Model model){
         Product product = productService.findById(productid);
         LK lk = product.getLk();
         product.setLk(null);
+        product.getComments().add(Comment.builder()
+                .user(principal.getName()).text("удалил данные о личном кабинете").build());
         productService.saveProduct(product);
         lkService.deleteLk(lk);
 
@@ -64,16 +73,14 @@ public class LKController {
     }
 
     @PostMapping("/clients/{clientid}/product/{productid}/lk/{lkid}/edit")
-    public String editLK(@PathVariable Long clientid,
+    public String editLK(@PathVariable Long clientid, Principal principal,
                          @PathVariable Long productid,
-                         @PathVariable Long lkid, LK lk, Model model){
+                         LK lk, Model model){
         Product product = productService.findById(productid);
         product.setLk(lk);
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text("изменил данные личного кабинета").build());
         productService.saveProduct(product);
-        lkService.deleteLKById(lkid);
-
-//        model.addAttribute("lk", lk);
-
         return "redirect:/clients/{clientid}/product/{productid}";
     }
 

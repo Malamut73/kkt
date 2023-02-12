@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/product.css">
+    <link rel="stylesheet" href="/styles/css/clients.css">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Клиенты</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="head">
+    <div class="button">
+        <a class="button__link" href="/clients/create">Создать клиента</a>
+    </div>
+</div>
+
+<div class="body">
+    <div class="left__side">
+        <div class="left__side__inner">
+            <form method="post" action="/clients">
+                Введите название организации:
+                <br>
+                <input type="text" name="text">
+                <br>
+                <input type="radio" value="nameOfOrganization" name="search"> Название организации
+                <br>
+                <input type="radio" checked value="lastName" name="search"> Фамилия
+                <br>
+                <input class="inner__button" type="submit" name="Поиск">
+            </form>
+        </div>
+
+    </div>
+    <div class="right__side">
+        <div class="right__side__inner">
+            <table border="1">
+                <tr>
+                    <td>
+                        <p>Статус</p>
+                    </td>
+                    <td>
+                        <p>ФИО</p>
+                    </td>
+                    <td>
+                        <p>Название комании</p>
+                    </td>
+                    <td>
+                        <p>Контакты</p>
+                    </td>
+                    <td>
+                        <p>ИНН</p>
+                    </td>
+                    <td>
+                        <p>ОГРН</p>
+                    </td>
+                    <td>
+                        <p>КПП</p>
+                    </td>
+                </tr>
+                <tr th:each="user : ${clients}">
+                    <td>
+                        <p th:text="${user.status}"></p>
+                    </td>
+                    <td>
+                        <a th:href="'/clients/' + ${user.id}">
+                            <span th:text="${user.lastName} + ' ' + ${user.name} + ' ' + ${user.patronymic}"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <p th:text="${user.typeOfOrganization} + ' ' + ${user.nameOfOrganization}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${user.phoneNumber} + ' ' + ${user.email}"></p>
+                    </td>
+                    <td>
+                        <p>Инн: <span th:text="${user.inn}"></span></p>
+                    </td>
+                    <td>
+                        <p>ОГРН: <span th:text="${user.ogrn}"></span></p>
+                    </td>
+                    <td>
+                        <p>КПП: <span th:text="${user.kpp}"></span></p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

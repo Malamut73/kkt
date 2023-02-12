@@ -30,16 +30,15 @@ public class User implements UserDetails {
     private String phoneNumber;
     private boolean active;
     private String password;
+    private String typeOfOrganization;
+    private String inn;
+    private String ogrn;
+    private String kpp;
+    @Column(columnDefinition = "TEXT")
+    private String comment;
 
     @Enumerated(EnumType.STRING)
     private Status status;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "requisite_id")
-    private Requisite requisite;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Comment> comments = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Product> products = new HashSet<>();

@@ -25,16 +25,16 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
     private String address;
     private String number;
+    private String internet;
+    private String typeOfActivity;
+    private String taxation;
 
 
     @Enumerated(EnumType.STRING)
     private VAT vat;
-
-    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "internet_id")
-    private Internet internet;
 
     @Enumerated(EnumType.STRING)
     private Excise excise;
@@ -42,21 +42,12 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private Egais egais;
 
-    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "type_of_activity_id")
-    private TypeOfActivity typeOfActivity;
-
-    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "taxation_id")
-    private Taxation taxation;
-
-    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "description_id")
-    private Description description;
-
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Comment> comments = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Request> request = new HashSet<>();

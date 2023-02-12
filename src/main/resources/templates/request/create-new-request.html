@@ -11,14 +11,14 @@
 <form th:method="POST" th:action="'/request'" th:object="${request}">
     <label for="topic">Тема: </label>
     <select id="topic" th:field="*{topic}">
-        <option th:each="topic : ${topics}"   th:value="${topic.id}" th:text="${topic.name}"></option>
+        <option th:each="topic : ${topics}"   th:value="${topic.name}" th:text="${topic.name}"></option>
     </select>
 
     <div th:each="etsp : ${etsps}">
         <input type="radio"  th:value="${etsp}" th:text="${etsp}" th:field="*{etsp}" >
     </div>
 
-    <textarea th:field="*{comment}"></textarea>
+    <textarea name="comment"></textarea>
     <input type="submit" value="Добавить"><br><br>
 </form>
 

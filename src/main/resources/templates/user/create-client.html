@@ -7,11 +7,8 @@
 <body>
 
 <h3>Создать нового клиента</h3>
-<div th:if="${#lists.isEmpty(organizations)}">
-    <p>Нету ни одной формы юридического лица, необходимо создать</p>
-    <a th:href="'/organization/create/clients'"> Создать новую форму</a>
-</div>
-<div th:if="!${#lists.isEmpty(organizations)}">
+
+<div>
     <form th:method="POST" th:action="@{/clients/create}" th:object="${user}" >
         Фамилия<input type="text" th:field="*{lastName}"><br><br>
         Имя<input type="text" th:field="*{name}"><br><br>
@@ -22,15 +19,15 @@
 
         <!--    <div>-->
         <label for="organization-select">Форма собственности: </label>
-        <select id="organization-select" th:field="*{requisite.organization.id}">
-            <option th:each="organ : ${organizations}" th:value="${organ.id}" th:text="${organ.name}"></option>
+        <select id="organization-select" th:field="*{typeOfOrganization}">
+            <option th:each="organ : ${organizations}" th:value="${organ.name}" th:text="${organ.name}"></option>
         </select>
         <!--    </div>-->
 
         <br><br>
-        ИНН<input type="text" th:field="*{requisite.inn}"><br><br>
-        ОГРН<input type="text" th:field="*{requisite.ogrn}"><br><br>
-        КПП<input type="text" th:field="*{requisite.kpp}"><br><br>
+        ИНН<input type="text" th:field="*{inn}"><br><br>
+        ОГРН<input type="text" th:field="*{ogrn}"><br><br>
+        КПП<input type="text" th:field="*{kpp}"><br><br>
 
         <input type="submit" value="Добавить клиента"><br><br>
     </form>

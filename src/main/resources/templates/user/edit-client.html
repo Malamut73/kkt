@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Title</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div>
+    <form th:method="POST" th:action="'/clients/' + ${user.id} + '/edit'" th:object="${user}" >
+        <select th:field="*{status}" id="status">
+            <option th:each="status : ${statuses}" th:text="${status.name}" th:value="${status.name}"></option>
+        </select>
+        <br>
+        Фамилия<input type="text" th:field="*{lastName}" th:value="*{lastName}"><br><br>
+        Имя<input type="text" th:field="*{name}" th:value="*{name}"><br><br>
+        Отчество<input type="text" th:field="*{patronymic}" th:value="*{patronymic}"><br><br>
+        Название организации<input type="text" th:field="*{nameOfOrganization}" th:value="*{nameOfOrganization}"><br><br>
+        Почта<input type="email" th:field="*{email}" th:value="*{email}"><br><br>
+        Телефон<input type="text" th:field="*{phoneNumber}" th:value="*{phoneNumber}"><br><br>
+        <label for="organization-select">Форма собственности: </label>
+        <select id="organization-select" th:field="*{typeOfOrganization}">
+            <option th:each="organ : ${organizations}" th:value="${organ.name}" th:selected="${organ.name} == *{typeOfOrganization}" th:text="${organ.name}"></option>
+        </select>
+        <br><br>
+        ИНН<input type="text" th:field="*{inn}" th:value="*{inn}"><br><br>
+        ОГРН<input type="text" th:field="*{ogrn}" th:value="*{ogrn}"><br><br>
+        КПП<input type="text" th:field="*{kpp}" th:value="*{kpp}"><br><br>
+
+        <input type="submit" value="Добавить клиента"><br><br>
+    </form>
+</div>
+
+
+</body>
+</html>

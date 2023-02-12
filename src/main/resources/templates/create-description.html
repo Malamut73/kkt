@@ -8,20 +8,10 @@
 
 <h3>Создать описание</h3>
 
-<div th:if="${clientid} != null">
-    <form th:method="POST" th:action="'/descriptions/create/clients/' + ${clientid}" th:object="${description}" >
-        Название <input type="text" th:field="*{name}"><br><br>
-        <label for="description" >Какое-то описание:</label>
-        <textarea id="description" th:field="*{someDescription}"></textarea>
-        <input type="submit" value="Добавить"><br><br>
-    </form>
-</div>
 
-<div th:if="${clientid} == null">
+<div>
     <form th:method="POST" th:action="'/descriptions/create'" th:object="${description}" >
         Название <input type="text" th:field="*{name}"><br><br>
-        <label for="descriptionNull" >Какое-то описание:</label>
-        <textarea id="descriptionNull" th:field="*{someDescription}"></textarea>
         <input type="submit" value="Добавить"><br><br>
     </form>
 </div>

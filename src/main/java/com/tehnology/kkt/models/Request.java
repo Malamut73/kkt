@@ -32,8 +32,15 @@ public class Request { //заявка
     private String nameOfContact;
     private String phoneOfContact;
 
+    @Column(columnDefinition = "TEXT")
+    private String productEquipment;
+    @Column(columnDefinition = "TEXT")
+    private String productCondition;
+    @Column(columnDefinition = "TEXT")
+    private String productDescription;
+
     @Enumerated(EnumType.STRING)
-    private Etsp etsp; //электронно цифровая подпись
+    private Etsp etsp;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Comment> comments = new HashSet<>();

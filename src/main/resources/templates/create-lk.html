@@ -8,10 +8,11 @@
 
 <div th:if="${lkid} != null">
     <form th:action="'/clients/' + ${clientid} + '/product/' + ${productid} + '/lk/' + ${lkid} + '/edit'" th:object="${lk}" th:method="post">
+        <input type="hidden" th:field="*{id}" th:value="*{id}">
         Контакты: <input type="text" th:field="*{contact}" th:value="*{contact}"><br>
         Пароль: <input type="text" th:field="*{pass}" th:value="*{pass}"><br>
         Код администратора: <input type="text" th:field="*{codeAdministrator}" th:value="*{codeAdministrator}"><br>
-        Код администратора: <input type="text" th:field="*{codeEmployee}" th:value="*{codeEmployee}"><br>
+        Код сотрудника: <input type="text" th:field="*{codeEmployee}" th:value="*{codeEmployee}"><br>
         Ссылка на кабинет: <input type="text" th:field="*{linkAddress}" th:value="*{linkAddress}"><br>
         <input type="submit" value="Добавить"><br><br>
     </form>
@@ -21,7 +22,7 @@
         Контакты: <input type="text" th:field="*{contact}" th:value="*{contact}"><br>
         Пароль: <input type="text" th:field="*{pass}" th:value="*{pass}"><br>
         Код администратора: <input type="text" th:field="*{codeAdministrator}" th:value="*{codeAdministrator}"><br>
-        Код администратора: <input type="text" th:field="*{codeEmployee}" th:value="*{codeEmployee}"><br>
+        Код сотрудника: <input type="text" th:field="*{codeEmployee}" th:value="*{codeEmployee}"><br>
         Ссылка на кабинет: <input type="text" th:field="*{linkAddress}" th:value="*{linkAddress}"><br>
         <input type="submit" value="Добавить"><br><br>
     </form>

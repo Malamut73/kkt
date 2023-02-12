@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Title</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="head">
+    <div class="button">
+        <a class="button__link" href="/admin">Вернуться к своему профилю</a>
+    </div>
+    <div class="button">
+        <a class="button__link" href="/admin/create">Создать сотрудника</a>
+    </div>
+</div>
+
+<div class="table__center">
+    <table border="1">
+        <tr>
+            <td>Менеджеры</td>
+            <td>Администраторы</td>
+        </tr>
+        <tr>
+            <td>
+                <table border="1">
+                    <tr>
+                        <td>Имя</td>
+                        <td>Почта</td>
+                        <td>Телефон</td>
+                        <td>Активность</td>
+                    </tr>
+                    <tr th:each="manager : ${managers}">
+                        <td>
+                            <a th:href="'/admin/' + ${manager.id} + '/info'">
+                                <span th:text="${manager.lastName} + ' ' + ${manager.name}"></span>
+                            </a>
+                        </td>
+                        <td th:text="${manager.email}"></td>
+                        <td th:text="${manager.phoneNumber}"></td>
+                        <td th:text="${manager.active}"></td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table border="1">
+                    <tr>
+                        <td>Имя</td>
+                        <td>Почта</td>
+                        <td>Телефон</td>
+                        <td>Активность</td>
+                    </tr>
+                    <tr th:each="administrator : ${administrators}">
+                        <td>
+                            <a th:href="'/admin/' + ${administrator.id} + '/info'">
+                                <span th:text="${administrator.lastName} + ' ' + ${administrator.name}"></span>
+                            </a>
+                        </td>
+                        <td th:text="${administrator.email}"></td>
+                        <td th:text="${administrator.phoneNumber}"></td>
+                        <td th:text="${administrator.active}"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+
+</body>
+</html>

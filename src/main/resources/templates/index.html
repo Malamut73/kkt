@@ -8,10 +8,22 @@
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<div class="body__logo">
+    <div class="body__inner">
+        <div>
+            <img src="/imgs/test.png" alt="Картинка"/>
+        </div>
+        <div sec:authorize="!isAuthenticated()">
+            <div class="body__item bodyButton">
+                <a class="logo__link" href="/login">Войти</a>
+            </div>
+        </div>
+    </div>
 
-<a href="/clients">clients</a>
-<br>
-<a href="/catalog">catalogs</a>
+</div>
+
+
+
 
 
 

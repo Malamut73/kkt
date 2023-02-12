@@ -10,68 +10,64 @@
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
 <div class="head">
-    <div class="button">
-        <a class="button__link" href="/request">Создать заявку</a>
-    </div>
-    <div class="button">
-        <a class="button__link" href="/requests/true">Активные заявки</a>
-    </div>
-    <div class="button">
-        <a class="button__link" href="/requests/false">Не активные заявки</a>
-    </div>
-    <div class="button">
-        <a class="button__link" href="/requests/all">Все заявки заявки</a>
-    </div>
-
+        <div class="button">
+            <a class="button__link" href="/request">Создать заявку</a>
+        </div>
+        <div class="button">
+            <a class="button__link" href="/requests/true">Активные заявки</a>
+        </div>
+        <div class="button">
+            <a class="button__link" href="/requests/false">Не активные заявки</a>
+        </div>
+        <div class="button">
+            <a class="button__link" href="/requests/all">Все заявки заявки</a>
+        </div>
 </div>
 
+<div class="table__center">
+    <div class="table__center__inner">
+        <table border="1">
+            <tr>
+                <td>Дата создания заявки:</td>
+                <td>Тема:</td>
+                <td>Электронно цифрова подпись:</td>
+                <td>Клиент</td>
+                <td>Контактное лицо</td>
+                <td>Дата закрытия заявки</td>
+            </tr>
+            <tr th:each="request : ${requests}">
+                <td>
+                    <a th:href="'/request/' + ${request.id}">
+                        <span th:text="${request.dateOfCreated}"></span>
+                    </a>
+                </td>
+                <td>
+                    <p th:text="${request.topic}"></p>
+                </td>
+                <td>
+                    <div th:if="${request.etsp} != null">
+                        <p th:text="${request.etsp}"></p>
+                    </div>
+                </td>
+                <td>
+                    <div th:if="${request.client} != null">
+                        <p th:text="${request.client.lastName}"></p>
+                    </div>
+                </td>
+                <td>
+                    <p th:text="${request.nameOfContact}"></p>
+                    <p th:text="${request.phoneOfContact}"></p>
+                </td>
+                <td>
+                    <div th:if="${request.active} == false">
+                        <p>Дата закрытия: <span th:text="${request.dateOfEnd}"></span></p>
+                    </div>
+                </td>
 
-<table border="1">
-    <tr>
-        <td>Дата создания заявки:</td>
-        <td>Тема:</td>
-        <td>Электронно цифрова подпись:</td>
-        <td>Коментарии:</td>
-        <td>Клиент</td>
-        <td>Контактное лицо</td>
-        <td>Дата закрытия заявки</td>
-    </tr>
-    <tr th:each="request : ${requests}">
-        <td>
-            <a th:href="'/request/' + ${request.id}">
-                <span th:text="${request.dateOfCreated}"></span>
-            </a>
-        </td>
-        <td>
-                <p th:text="${request.topic}"></p>
-        </td>
-        <td>
-            <div th:if="${request.etsp} != null">
-                <p th:text="${request.etsp}"></p>
-            </div>
-        </td>
-        <td>
-            <div th:each="comment : ${request.comments}">
-                <span th:text="${comment.text}"></span>
-            </div>
-        </td>
-        <td>
-            <div th:if="${request.client} != null">
-                <p th:text="${request.client.lastName}"></p>
-            </div>
-        </td>
-        <td>
-            <p th:text="${request.nameOfContact}"></p>
-            <p th:text="${request.phoneOfContact}"></p>
-        </td>
-        <td>
-            <div th:if="${request.active} == false">
-                <p>Дата закрытия: <span th:text="${request.dateOfEnd}"></span></p>
-            </div>
-        </td>
-
-    </tr>
-</table>
+            </tr>
+        </table>
+    </div>
+</div>
 
 </body>
 </html>

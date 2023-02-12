@@ -1,15 +1,31 @@
-.wrapper{
+.top{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.top{
+    padding: 10px;
+}
+
+.top__left{
+    margin-left: 20px;
+}
+
+.top__right{
+    margin-right: 20px;
+}
+
+.down{
     display: grid;
-    grid-template-columns: 1fr 6fr;
-
+    grid-template-columns:40% 60%;
+    padding: 10px;
 }
 
-
-.left-side{
-    background: #689CD2;
-
+.down__left{
+    margin-left: 20px;
 }
 
-.right-side{
-
+.down__right{
+    margin-right: 20px;
 }

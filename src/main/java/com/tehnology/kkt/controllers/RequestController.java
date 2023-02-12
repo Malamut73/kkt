@@ -47,14 +47,24 @@ public class RequestController {
     }
 
     @PostMapping("/request")
-    public String createRequest(Request request){
+    public String createRequest(@RequestParam("comment") String newComment,
+                                Request request, Principal principal){
+
+        request.getComments().add(Comment.builder()
+                .text(newComment)
+                .user(principal.getName()).build());
         request.setActive(true);
+        Comment comment = Comment.builder()
+                .text("создал заявку")
+                .user(principal.getName()).build();
+        request.getComments().add(comment);
         requestService.saveRequest(request);
         return "redirect:/requests/true";
     }
 
     @GetMapping("/clients/{clientid}/request")
     public String createRequest(@PathVariable Long clientid, Model model){
+
         model.addAttribute("topics", topicService.findAll());
         model.addAttribute("request", new Request());
         model.addAttribute("clientid", clientid);
@@ -64,20 +74,28 @@ public class RequestController {
     }
 
     @PostMapping("/clients/{clientid}/request")
-    public String createRequest(@PathVariable("clientid") User user, Request request){
+    public String createRequest(@PathVariable("clientid") User user,
+                                @RequestParam("comment") String newComment,
+                                Request request, Principal principal){
         request.setActive(true);
         request.setClient(user);
         request.getComments().add(Comment.builder()
-                .text(request.getComment())
+                .text(newComment)
+                .user(principal.getName())
                 .build());
+        Comment comment = Comment.builder()
+                .text("создал заявку")
+                .user(principal.getName())
+                .build();
+        request.getComments().add(comment);
         requestService.saveRequest(request);
         return "redirect:/clients/{clientid}";
     }
 
     @GetMapping("/clients/{clientid}/request/{requestid}")
     public String requestInfo(@PathVariable("clientid") Long clientid,
-                              @PathVariable("requestid") Request request, Model model){
-
+                              @PathVariable("requestid") Long requestid, Model model){
+        Request request = requestService.findById(requestid);
         model.addAttribute("topics", topicService.findAll());
         model.addAttribute("request",request);
         model.addAttribute("clientid", clientid);
@@ -94,7 +112,12 @@ public class RequestController {
 
     @PostMapping("/request/{requestid}/addetsp")
     public String addEtsp(@PathVariable("requestid") Request request,
-                          @RequestParam(name = "etsp") String etsp){
+                          @RequestParam(name = "etsp") String etsp, Principal principal){
+        Comment comment = Comment.builder()
+                .text("изменил ецп на " + etsp)
+                .user(principal.getName())
+                .build();
+        request.getComments().add(comment);
         request.setEtsp(Etsp.valueOf(etsp));
         requestService.saveRequest(request);
         return "redirect:/request/{requestid}";
@@ -102,8 +125,12 @@ public class RequestController {
 
     @PostMapping("/request/{requestid}/addcomment")
     public String addComment(@PathVariable("requestid") Request request,
-                             @ModelAttribute("comment") Comment comment){
+                             @ModelAttribute("comment") Comment comment,
+                             Principal principal){
         request.getComments().add(comment);
+        request.getComments().add(Comment.builder()
+                .text("добавил коментарий")
+                .user(principal.getName()).build());
         requestService.saveRequest(request);
         return "redirect:/request/{requestid}";
     }
@@ -112,7 +139,8 @@ public class RequestController {
     public String closeRequest(@PathVariable("requestid") Request request,
                                Principal principal){
         Comment comment = Comment.builder()
-                .text(principal.getName() + " закрыл заявку")
+                .text("закрыл заявку")
+                .user(principal.getName())
                 .build();
         request.getComments().add(comment);
         request.setActive(false);
@@ -121,14 +149,9 @@ public class RequestController {
         return "redirect:/request/{requestid}";
     }
 
-    @PostMapping("/clients/{clientid}/request/{requestid}/delete")
-    public String deleteRequest(@PathVariable("requestid") Request request){
-        requestService.deleteRequest(request);
-        return "redirect:/clients/{clientid}";
-    }
-
     @GetMapping("/request/{requestid}")
-    public String requestInfo(@PathVariable("requestid") Request request, Model model){
+    public String requestInfo(@PathVariable("requestid") Long requestid, Model model){
+        Request request = requestService.findById(requestid);
         model.addAttribute("request", request);
         return "request/info-request";
     }
@@ -146,7 +169,6 @@ public class RequestController {
                                    @RequestParam(name = "text", required = false) String text,
                                    @RequestParam(name = "search", required = false) String search,
                                    Model model){
-
         model.addAttribute("clients", userService.findAllClientsBy(text, search));
         model.addAttribute("requestid", requestid);
         return "request/request-add-client";
@@ -154,7 +176,11 @@ public class RequestController {
 
     @GetMapping("/request/{requestid}/addClient/{clientid}")
     public String requestAddClient(@PathVariable("requestid") Request request,
-                                   @PathVariable("clientid") User user ){
+                                   @PathVariable("clientid") User user, Principal principal){
+        Comment comment = Comment.builder()
+                .text("добавил клиента " + user.getLastName())
+                .user(principal.getName()).build();
+        request.getComments().add(comment);
         request.setClient(user);
         requestService.saveRequest(request);
         return "redirect:/request/{requestid}";
@@ -162,10 +188,6 @@ public class RequestController {
 
     @GetMapping("/request/{requestid}/clients/create")
     public String requestCreateClient(@PathVariable("requestid") Long requestid, Model model){
-//        User user = new User();
-//        System.out.println("before new user");
-//        System.out.println(user.getId());
-//        model.addAttribute("user", user);
         model.addAttribute("organizations", organizationService.findAll());
         model.addAttribute("requestid", requestid);
         return "request/request-create-client";
@@ -174,28 +196,16 @@ public class RequestController {
     @PostMapping("/request/{requestid}/clients/create")
     public String requestCreateClient(
                                       @PathVariable("requestid") Request request,
-                                      @ModelAttribute User user, Model model){
-        System.out.println("before first user id");
-        System.out.println(user.getId());
-//        user.getRequisite().setOrganization(organization);
-        userService.saveClient(user);
+                                      @ModelAttribute User user, Model model, Principal principal){
 
-        User user2 = userService.findClientBy(
-                user.getLastName(), user.getName(), user.getNameOfOrganization()
-        );
-        System.out.println("before user id");
-        System.out.println(user2.getId());
-        System.out.println("after user id");
-
+        request.getComments().add(Comment.builder()
+                .text("добавил клиента " + user.getLastName())
+                .user(principal.getName()).build());
         request.setClient(userService.findClientBy(
                 user.getLastName(), user.getName(), user.getNameOfOrganization()
-                )
-        );
+                ));
         requestService.saveRequest(request);
-//        model.addAttribute("client", userService.findClientBy(
-//                user.getLastName(), user.getName(), user.getNameOfOrganization()
-//        ));
-//        model.addAttribute("requestid", request.getId());
+
         return "redirect:/request/{requestid}";
     }
 
@@ -209,7 +219,12 @@ public class RequestController {
 
     @PostMapping("/request/{requestid}/topic")
     public String changeTopic(@RequestParam(name = "topic", required = false) String topic,
-                              @PathVariable("requestid") Request request){
+                              @PathVariable("requestid") Request request, Principal principal){
+        Comment comment = Comment.builder()
+                .text("изменил тему на " + topic)
+                .user(principal.getName())
+                .build();
+        request.getComments().add(comment);
         request.setTopic(topic);
         requestService.saveRequest(request);
         return "redirect:/request/{requestid}";
@@ -225,10 +240,70 @@ public class RequestController {
     @PostMapping("/request/{requestid}/changeContactInfo")
     public String caveContactInfo(@RequestParam("nameOfContact") String nameOfContact,
                                   @RequestParam("phoneOfContact") String phoneOfContact,
-                                  @PathVariable("requestid") Request request){
+                                  @PathVariable("requestid") Request request, Principal principal){
+        request.getComments().add(Comment.builder()
+                .text("сохранил контактную информацию")
+                .user(principal.getName()).build());
         request.setNameOfContact(nameOfContact);
         request.setPhoneOfContact(phoneOfContact);
         requestService.saveRequest(request);
         return "redirect:/request/{requestid}";
     }
+
+    @GetMapping("/request/{requestid}/productEquipment")
+    public String addEquipment(@PathVariable("requestid") Request request, Model model){
+        model.addAttribute("request", request);
+        return "request/addProductEquipment";
+    }
+
+    @PostMapping("/request/{requestid}/productEquipment")
+    public String addEquipment(@RequestParam("productEquipment") String productEquipment,
+                               @PathVariable("requestid") Request request, Principal principal){
+        request.setProductEquipment(productEquipment);
+        request.getComments().add(Comment.builder().user(principal.getName())
+                .text("добавил оборудование").build());
+        requestService.saveRequest(request);
+        return "redirect:/request/{requestid}";
+    }
+
+    @GetMapping("/request/{requestid}/productCondition")
+    public String addCondition(@PathVariable("requestid") Request request, Model model){
+        model.addAttribute("request", request);
+        return "request/addProductCondition";
+    }
+
+    @PostMapping("/request/{requestid}/productCondition")
+    public String addCondition(@RequestParam("productCondition") String productCondition,
+                               @PathVariable("requestid") Request request, Principal principal){
+        request.setProductCondition(productCondition);
+        request.getComments().add(Comment.builder().user(principal.getName())
+                .text("добавил состояние оборудования").build());
+        requestService.saveRequest(request);
+        return "redirect:/request/{requestid}";
+    }
+
+    @GetMapping("/request/{requestid}/productDescription")
+    public String addDescription(@PathVariable("requestid") Request request, Model model){
+        model.addAttribute("request", request);
+        return "request/addProductDescription";
+    }
+
+    @PostMapping("/request/{requestid}/productDescription")
+    public String addDescription(@RequestParam("productDescription") String productDescription,
+                               @PathVariable("requestid") Request request, Principal principal){
+        request.setProductDescription(productDescription);
+        request.getComments().add(Comment.builder().user(principal.getName())
+                .text("добавил описание неисправности").build());
+        requestService.saveRequest(request);
+        return "redirect:/request/{requestid}";
+    }
+
+    @GetMapping("/remember/{requestid}")
+    public String remember(@PathVariable("requestid") Request request, Model model){
+        model.addAttribute("request", request);
+        return "remember";
+    }
+
+
+
 }

@@ -1,5 +1,6 @@
 package com.tehnology.kkt.controllers;
 
+import com.tehnology.kkt.models.Comment;
 import com.tehnology.kkt.models.Product;
 import com.tehnology.kkt.models.Request;
 import com.tehnology.kkt.models.User;
@@ -7,10 +8,9 @@ import com.tehnology.kkt.services.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,20 +25,21 @@ public class ProductController {
     private final MaintenanceService maintenanceService;
 
     @GetMapping("/clients/{clientid}/product")
-    public String crateProduct(@PathVariable Long clientid, Product product, Model model) {
+    public String crateProduct(@PathVariable Long clientid, Model model) {
         model.addAttribute("id", clientid);
         model.addAttribute("product", new Product());
         model.addAttribute("descriptions", descriptionService.findAll());
-        return "create-product";
+        return "product/create-product";
     }
 
     @PostMapping("/clients/{clientid}/product")
-    public String crateProduct(@PathVariable Long clientid, Product product) {
-        product.setUser(userService.findById(clientid));
-        product.setId(null);
-        product.setDescription(descriptionService.findById(product.getDescription().getId()));
+    public String crateProduct(@PathVariable("clientid") User user,
+                               @ModelAttribute Product product,
+                               Principal principal) {
+        product.getComments().add(Comment.builder()
+                .text("создал кассу").user(principal.getName()).build());
+        product.setUser(user);
         productService.saveProduct(product);
-
         return "redirect:/clients/{clientid}";
     }
 
@@ -51,7 +52,7 @@ public class ProductController {
     @GetMapping("/clients/{clientid}/product/{productid}")
     public String productInfo(@PathVariable Long productid, Model model){
             model.addAttribute("product", productService.findById(productid));
-            return "product-info";
+            return "product/product-info";
     }
 
     @GetMapping("/clients/{clientid}/product/{productid}/edit")
@@ -65,14 +66,16 @@ public class ProductController {
     }
 
     @PostMapping("/clients/{clientid}/product/{productid}/edit")
-    public String editProduct(@PathVariable Long clientid,
-                              @PathVariable Long productid, Product product, Model model){
-
-        product.setDescription(descriptionService.findById(product.getDescription().getId()));
-        product.setId(productid);
-        product.setUser(userService.findById(clientid));
+    public String editProduct(@RequestParam("name") String name, @RequestParam("address") String address,
+                              @RequestParam("number") String number, Principal principal,
+                              @PathVariable("productid") Product product, Model model){
+        product.getComments().add(Comment.builder()
+                .user(principal.getName())
+                .text("отредактировал описание товара").build());
+        product.setName(name);
+        product.setAddress(address);
+        product.setNumber(number);
         productService.saveProduct(product);
-        model.addAttribute("product", productService.findById(productid));
 
         return "redirect:/clients/{clientid}/product/{productid}";
     }
@@ -85,8 +88,12 @@ public class ProductController {
     }
 
     @PostMapping("/clients/{clientid}/product/{productid}/changeclient")
-    public String changeClient(@PathVariable Long productid, Product productFrom){
+    public String changeClient(@PathVariable Long productid, Product productFrom,
+                               Principal principal){
+
         Product product = productService.findById(productid);
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text("изменил клиента").build());
         product.setUser(userService.findById(productFrom.getUser().getId()));
         productService.saveProduct(product);
         return "redirect:/clients/" + productFrom.getUser().getId() + "/product/{productid}/";
@@ -104,7 +111,7 @@ public class ProductController {
     }
 
     @PostMapping("/clients/{clientid}/request/{requestid}/kassa")
-    public String addKassa(@RequestParam("id") Product product,
+    public String addKassa(@RequestParam("id") Product product, Principal principal,
                            @PathVariable("requestid") Request request ){
         request.setProduct(product);
         requestService.saveRequest(request);
@@ -120,13 +127,7 @@ public class ProductController {
         model.addAttribute("kassas", user.getProducts());
         return "change-kassa";
     }
-//    @PostMapping("/clients/{clientid}/request/{requestid}/kassa/{kassaid}")
-//    public String changeKassa(@RequestParam("id") Product product,
-//                              @PathVariable("requestid") Request request){
-//        request.setProduct(product);
-//        requestService.saveRequest(request);
-//        return "redirect:/clients/{clientid}/request/{requestid}";
-//    }
+
 
     @GetMapping("/controls")
     public String ofdList(Model model){

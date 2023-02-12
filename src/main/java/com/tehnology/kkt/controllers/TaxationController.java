@@ -1,5 +1,6 @@
 package com.tehnology.kkt.controllers;
 
+import com.tehnology.kkt.models.Comment;
 import com.tehnology.kkt.models.Product;
 import com.tehnology.kkt.models.catalog.Taxation;
 import com.tehnology.kkt.services.ProductService;
@@ -10,6 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -40,16 +44,17 @@ public class TaxationController {
     public String addTaxation(@PathVariable Long clientid,
                               @PathVariable Long productId,  Model model){
         model.addAttribute("taxations", taxationService.findAll());
-        model.addAttribute("taxation", new Taxation());
         model.addAttribute("clientid", clientid);
         model.addAttribute("productId", productId);
         return "choose-taxation";
     }
 
     @PostMapping("/clients/{clientid}/product/{productId}/taxation")
-    public String addTaxation(@PathVariable Long productId, Taxation taxation){
-        Product product = productService.findById(productId);
-        product.setTaxation(taxationService.findById(taxation.getId()));
+    public String addTaxation(@PathVariable("productId") Product product, @RequestParam("name")String name,
+                              Principal principal){
+        product.setTaxation(name);
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text("изменил налогооблажение").build());
         productService.saveProduct(product);
         return "redirect:/clients/{clientid}/product/{productId}";
 
@@ -70,15 +75,17 @@ public class TaxationController {
     @PostMapping("/clients/{clientid}/product/{productId}/taxation/{taxationid}/edit")
     public String editTaxation(@PathVariable Long productId, Taxation taxation){
         Product product = productService.findById(productId);
-        product.setTaxation(taxationService.findById(taxation.getId()));
+        product.setTaxation(taxation.getName());
         productService.saveProduct(product);
         return "redirect:/clients/{clientid}/product/{productId}";
 
     }
-    @PostMapping("/clients/{clientid}/product/{productId}/taxation/{taxationid}/delete")
-    public String deleteTaxation(@PathVariable Long productId){
+    @PostMapping("/clients/{clientid}/product/{productId}/taxation/delete")
+    public String deleteTaxation(@PathVariable Long productId, Principal principal){
         Product product = productService.findById(productId);
         product.setTaxation(null);
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text("удалил налогооблажение").build());
         productService.saveProduct(product);
         return "redirect:/clients/{clientid}/product/{productId}";
 

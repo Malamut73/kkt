@@ -8,90 +8,105 @@
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
-<table border="1">
-    <tr>
-        <td>Дата создания</td>
-        <td>Тема</td>
-        <td>Описание</td>
-        <td>Коментарии</td>
-        <td>Дата напоминания</td>
-        <td>Дата закрытия</td>
-        <td>Добавить клиента</td>
-        <td>Добавить кассу</td>
-    </tr>
-    <tr>
-        <td>
-            <p th:text="${task.dateOfCreated}"></p>
-        </td>
-        <td>
-           <p th:text="${task.name}"></p>
-        </td>
-        <td>
-            <p th:text="${task.description}"></p>
-        </td>
-        <td>
-            <div th:each="comment : ${task.comments}">
-                <p th:text="${comment.text}"></p>
-            </div>
-            <form method="post" th:action="'/tasks/' + ${task.id} + '/addtask'">
-                <textarea name="text"></textarea>
-                <br>
-                <input type="submit" value="Добавить новый коментарий">
-            </form>
-        </td>
-        <td>
-            <div th:if="!${task.dateOfReminder}">
-                <form th:action="'/task/' + ${task.id} + '/remind'">
-                    <input type="submit" value="Создать напоминание">
-                </form>
-            </div>
-            <div th:if="${task.dateOfReminder}">
-                <p th:text="${task.dateOfReminder}"></p>
-                <form method="get" th:action="'/task/' + ${task.id} + '/remind'">
-                    <input type="submit" value="Назначить новое напоминание">
-                </form>
-            </div>
+<div class="head">
+    <div class="button">
+        <a class="button__link" href="/tasks">Назад к списку задач</a>
+    </div>
+</div>
 
-        </td>
-        <td>
-            <p th:text="${task.dateOfEnd}"></p>
-            <form method="post" th:action="'/tasks/' + ${task.id} + '/closetask'">
-                <input type="submit" value="Закрыть задачу">
-            </form>
-        </td>
-        <td>
-            <div th:if="${task.user} != null">
-                <a th:href="'/clients/' + ${task.user.id}">
-                    <span th:text="${task.user.name}"></span>
-                </a>
-                <form method="get" th:action="'/tasks/' + ${task.id} + '/user/' + ${task.user.id}">
-                    <input type="submit" value="Сменить клиента">
-                </form>
-            </div>
-            <div th:if="${task.user} == null">
-                <form method="get" th:action="'/tasks/' + ${task.id} + '/adduser'">
-                    <input type="submit" value="Добавить клиента">
-                </form>
-            </div>
-        </td>
-        <td>
-            <div th:if="${task.product} != null">
-                <a th:href="'/clients/' + ${task.user.id} + '/product/' + ${task.product.id}">
-                    <span th:text="${task.product.description.name}"></span>
-                </a>
-                <form method="get" th:action="'/tasks/' + ${task.id} +'/user/' + ${task.user.id} + '/product/' + ${task.product.id}">
-                    <input type="submit" value="Сменить кассу">
-                </form>
-            </div>
-            <div th:if="${task.user} != null">
-                <div th:if="${task.product} == null">
-                    <form method="get" th:action="'/tasks/' + ${task.id} +'/user/' + ${task.user.id} + '/product'">
-                        <input type="submit" value="Добавить кассу">
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <table border="1">
+            <tr>
+                <td>Дата создания</td>
+                <td>Тема</td>
+                <td>Описание</td>
+                <td>Коментарии
+                    <form method="post" th:action="'/tasks/' + ${task.id} + '/addtask'">
+                        <textarea name="text"></textarea>
+                        <input type="submit" value="Добавить новый коментарий">
                     </form>
-                </div>
-            </div>
-        </td>
-    </tr>
-</table>
+                </td>
+                <td>Дата напоминания</td>
+                <td>Добавить клиента</td>
+                <td>Дата закрытия</td>
+<!--                <td>Добавить кассу</td>-->
+            </tr>
+            <tr>
+                <td>
+                    <p th:text="${task.dateOfCreated}"></p>
+                </td>
+                <td>
+                    <p th:text="${task.name}"></p>
+                </td>
+                <td>
+                    <p th:text="${task.description}"></p>
+                </td>
+                <td>
+                    <div th:each="comment : ${task.comments}">
+                        <span th:text="${comment.dateOfCreated} + ' ' +
+                         ${comment.user} + ' ' + ${comment.text}">
+                        </span><br>
+                    </div>
+                </td>
+                <td>
+                    <div th:if="!${task.dateOfReminder}">
+                        <form th:action="'/task/' + ${task.id} + '/remind'">
+                            <input type="submit" value="Создать напоминание">
+                        </form>
+                    </div>
+                    <div th:if="${task.dateOfReminder}">
+                        <p th:text="${task.dateOfReminder}"></p>
+                        <form method="get" th:action="'/task/' + ${task.id} + '/remind'">
+                            <input type="submit" value="Назначить новое напоминание">
+                        </form>
+                    </div>
+
+                </td>
+
+                <td>
+                    <div th:if="${task.user} != null">
+                        <a th:href="'/clients/' + ${task.user.id}">
+                            <span th:text="${task.user.name}"></span>
+                        </a>
+                        <form method="get" th:action="'/tasks/' + ${task.id} + '/user/' + ${task.user.id}">
+                            <input type="submit" value="Сменить клиента">
+                        </form>
+                    </div>
+                    <div th:if="${task.user} == null">
+                        <form method="get" th:action="'/tasks/' + ${task.id} + '/adduser'">
+                            <input type="submit" value="Добавить клиента">
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <p th:text="${task.dateOfEnd}"></p>
+                    <form method="post" th:action="'/tasks/' + ${task.id} + '/closetask'">
+                        <input type="submit" value="Закрыть задачу">
+                    </form>
+                </td>
+<!--                <td>-->
+<!--                    <div th:if="${task.product} != null">-->
+<!--                        <a th:href="'/clients/' + ${task.user.id} + '/product/' + ${task.product.id}">-->
+<!--                            <span th:text="${task.product.description.name}"></span>-->
+<!--                        </a>-->
+<!--                        <form method="get" th:action="'/tasks/' + ${task.id} +'/user/' + ${task.user.id} + '/product/' + ${task.product.id}">-->
+<!--                            <input type="submit" value="Сменить кассу">-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                    <div th:if="${task.user} != null">-->
+<!--                        <div th:if="${task.product} == null">-->
+<!--                            <form method="get" th:action="'/tasks/' + ${task.id} +'/user/' + ${task.user.id} + '/product'">-->
+<!--                                <input type="submit" value="Добавить кассу">-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </td>-->
+            </tr>
+        </table>
+    </div>
+</div>
+
 </body>
 </html>

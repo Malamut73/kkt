@@ -1,11 +1,15 @@
 package com.tehnology.kkt.services;
 
+import com.tehnology.kkt.models.Comment;
 import com.tehnology.kkt.models.Request;
 import com.tehnology.kkt.repositories.RequestDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +22,11 @@ public class RequestService {
     }
 
     public Request findById(Long requestid) {
+//        Request request = requestDAO.getReferenceById(requestid);
+//        List<Comment> comments = request.getComments().stream()
+//                .sorted(Comparator.comparing(Comment::getDateOfCreated))
+//                .collect(Collectors.toList());
+//        request.setComments(comments);
         return requestDAO.getReferenceById(requestid);
     }
 

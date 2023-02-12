@@ -23,6 +23,7 @@ public class Comment {
     private Long id;
 
     private String text;
+    private String user;
 
     @Column(updatable = false, columnDefinition="DATETIME")
     @Temporal(TemporalType.TIMESTAMP)

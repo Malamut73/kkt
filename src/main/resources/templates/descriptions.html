@@ -2,19 +2,24 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+    <title>Кассы</title>
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
-<div th:each="description : ${descriptions}">
-    <p>Название: <span th:text="${description.name}"></span></p>
-    <p>Описание:  <span th:text="${description.someDescription}"></span></p>
+<div class="head">
+    <div class="button">
+        <a class="button__link" href="/descriptions/create">Создать кассу</a>
+    </div>
 </div>
-<br>
-<form th:action="'/descriptions/create'" method="get">
-    <button type="submit">Создать товар</button>
-</form>
-<a href="/catalog">Назад</a>
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <div th:each="description : ${descriptions}">
+            <p>Название: <span th:text="${description.name}"></span></p>
+        </div>    </div>
+</div>
 
 </body>
 </html>

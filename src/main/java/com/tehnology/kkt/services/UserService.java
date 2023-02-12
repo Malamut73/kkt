@@ -1,7 +1,6 @@
 package com.tehnology.kkt.services;
 
 import com.tehnology.kkt.configuration.GeneratePassword;
-import com.tehnology.kkt.models.Product;
 import com.tehnology.kkt.models.User;
 import com.tehnology.kkt.models.enums.Role;
 import com.tehnology.kkt.repositories.UserDAO;
@@ -12,11 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -58,7 +53,7 @@ public class UserService implements UserDetailsService {
         return userDAO.findByEmail(email);
     }
 
-    public List<User> findAllManagers() {
+    public List<User> findAllManager() {
         return userDAO.findUserByRoles(Role.Manager);
     }
 
@@ -66,8 +61,14 @@ public class UserService implements UserDetailsService {
         return userDAO.findUserByRoles(Role.Administrator);
     }
 
-    public void editStaff(User user) {
-        userDAO.save(user);
+    public void editStaff(User userFromDB, User user) {
+        userFromDB.setName(user.getName());
+        userFromDB.setLastName(user.getLastName());
+        userFromDB.setPatronymic(user.getPatronymic());
+        userFromDB.setEmail(user.getEmail());
+        userFromDB.setPhoneNumber(user.getPhoneNumber());
+        userFromDB.setPassword(user.getPassword());
+        userDAO.save(userFromDB);
     }
 
     public void createManager(User user) {
@@ -85,9 +86,11 @@ public class UserService implements UserDetailsService {
         if (text.equals("")) return userDAO.findUserByRoles(Role.Client);
         switch (search){
             case "lastName" :
-                return userDAO.findAllByRolesAndName(Role.Client, text);
-            default:
                 return userDAO.findAllByRolesAndLastName(Role.Client, text);
+            case "nameOfOrganization":
+                return userDAO.findAllByRolesAndNameOfOrganization(Role.Client, text);
+            default:
+                return userDAO.findUserByRoles(Role.Client);
         }
     }
 
@@ -95,6 +98,25 @@ public class UserService implements UserDetailsService {
         return userDAO.findUserByLastNameAndNameAndNameOfOrganization(
                 lastName, name, nameOfOrganization
         );
+    }
+
+    public void updateUser(User userFromDB, User user) {
+        userFromDB.setLastName(user.getLastName());
+        userFromDB.setName(user.getName());
+        userFromDB.setPatronymic(user.getPatronymic());
+        userFromDB.setNameOfOrganization(user.getNameOfOrganization());
+        userFromDB.setEmail(user.getEmail());
+        userFromDB.setPhoneNumber(user.getPhoneNumber());
+        userFromDB.setTypeOfOrganization(user.getTypeOfOrganization());
+        userFromDB.setInn(user.getInn());
+        userFromDB.setOgrn(user.getOgrn());
+        userFromDB.setKpp(user.getKpp());
+        userFromDB.setStatus(user.getStatus());
+        userDAO.save(userFromDB);
+    }
+
+    public void saveStaff(User user) {
+        userDAO.save(user);
     }
 }
 

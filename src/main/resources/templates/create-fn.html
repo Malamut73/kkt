@@ -8,6 +8,7 @@
 
 <div th:if="${fnid} != null">
     <form th:action="'/clients/' + ${clientid} + '/product/' + ${productid} + '/fn/' + ${fn.id} + '/edit'" th:object="${fn}" method="post">
+        <input type="hidden" th:value="*{id}" th:field="*{id}">
         Дата начала: <input type="date" th:field="*{dateStart}" th:value="*{dateStart}"><br>
         Дата окончания: <input type="date" th:field="*{dayEnd}" th:value="*{dayEnd}"><br>
         <input type="submit" value="Создать">

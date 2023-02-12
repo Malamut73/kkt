@@ -1,5 +1,6 @@
 package com.tehnology.kkt.controllers;
 
+import com.tehnology.kkt.models.Comment;
 import com.tehnology.kkt.models.Product;
 import com.tehnology.kkt.models.FN;
 import com.tehnology.kkt.services.FNService;
@@ -10,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,8 +32,10 @@ public class FNController {
     }
 
     @PostMapping("/clients/{clientid}/product/{productid}/fn")
-    public String fn(@PathVariable Long productid, FN fn){
+    public String fn(@PathVariable Long productid, Principal principal, FN fn){
         Product product = productService.findById(productid);
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text("создал фн").build());
         product.setFn(fn);
         productService.saveProduct(product);
         return "redirect:/clients/{clientid}/product/{productid}";
@@ -49,19 +54,24 @@ public class FNController {
     }
 
     @PostMapping("/clients/{clientid}/product/{productid}/fn/{fnid}/edit")
-    public String editFN(@PathVariable Long fnid,
+    public String editFN(Principal principal,
                          @PathVariable Long clientid,
-                         @PathVariable Long productid, FN fn){
-        fn.setId(fnid);
-        fnService.save(fn);
+                         @PathVariable("productid") Product product, FN fn){
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text("отредактировал фн").build());
+        product.setFn(fn);
+        productService.saveProduct(product);
         return "redirect:/clients/{clientid}/product/{productid}";
     }
 
     @PostMapping("/clients/{clientid}/product/{productid}/fn/{fnid}/delete")
-    public String deleteFN(@PathVariable Long fnid,
+    public String deleteFN(@PathVariable Long fnid, Principal principal,
                            @PathVariable Long productid){
         Product product = productService.findById(productid);
         product.setFn(null);
+        product.getComments().add(Comment.builder().text("удалил фн")
+                .user(principal.getName()).build());
+        productService.saveProduct(product);
         fnService.deleteById(fnid);
         return "redirect:/clients/{clientid}/product/{productid}";
     }

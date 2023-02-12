@@ -1,6 +1,7 @@
 package com.tehnology.kkt.controllers;
 
 
+import com.tehnology.kkt.models.Comment;
 import com.tehnology.kkt.models.Product;
 import com.tehnology.kkt.models.catalog.TypeOfActivity;
 import com.tehnology.kkt.services.ProductService;
@@ -11,6 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -42,16 +46,18 @@ public class TypeOfActivityController {
     public String addTypeOfActivity(@PathVariable Long clientid,
                                     @PathVariable Long productId,  Model model){
         model.addAttribute("typeofactivities", typeOfActivityService.findAll());
-        model.addAttribute("typeofactivity", new TypeOfActivity());
         model.addAttribute("clientid", clientid);
         model.addAttribute("productId", productId);
         return "choose-typeofactivity";
     }
 
     @PostMapping("/clients/{clientid}/product/{productId}/typeofactivity")
-    public String addTypeOfActivity(@PathVariable Long productId, TypeOfActivity typeOfActivity){
+    public String addTypeOfActivity(@PathVariable Long productId, Principal principal,
+                                    @RequestParam("typeofactivity") String typeofactivity){
         Product product = productService.findById(productId);
-        product.setTypeOfActivity(typeOfActivityService.findById(typeOfActivity.getId()));
+        product.setTypeOfActivity(typeofactivity);
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text("изменил вид деятельности").build());
         productService.saveProduct(product);
         return "redirect:/clients/{clientid}/product/{productId}";
 
@@ -72,16 +78,18 @@ public class TypeOfActivityController {
     @PostMapping("/clients/{clientid}/product/{productId}/typeOfActivity/{typeofactivityid}/edit")
     public String editTypeOfActivity(@PathVariable Long productId, TypeOfActivity typeOfActivity){
         Product product = productService.findById(productId);
-        product.setTypeOfActivity(typeOfActivityService.findById(typeOfActivity.getId()));
+        product.setTypeOfActivity(typeOfActivity.getName());
         productService.saveProduct(product);
         return "redirect:/clients/{clientid}/product/{productId}";
 
     }
-    @PostMapping("/clients/{clientid}/product/{productId}/typeOfActivity/{typeofactivityid}/delete")
-    public String deleteTypeOfActivity(@PathVariable Long productId,
-                                       @PathVariable Long typeofactivityid){
+
+    @PostMapping("/clients/{clientid}/product/{productId}/typeofactivity/delete")
+    public String deleteTypeOfActivity(@PathVariable Long productId, Principal principal){
         Product product = productService.findById(productId);
         product.setTypeOfActivity(null);
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text("удалил вид деятельности").build());
         productService.saveProduct(product);
         return "redirect:/clients/{clientid}/product/{productId}";
 

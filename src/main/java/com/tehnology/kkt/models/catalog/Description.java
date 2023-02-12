@@ -20,9 +20,4 @@ public class Description {
 
     private String name;
 
-    @Column(columnDefinition = "TEXT")
-    private String someDescription;
-
-
-
 }

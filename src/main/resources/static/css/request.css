@@ -7,6 +7,9 @@
     background: #689CD2;
 
 }
+.request__left__side{
+    margin-left: 30px;
+}
 
 .head{
     display: flex;
@@ -31,3 +34,14 @@
     background-color: #FF9900;
     border-radius: 4px;
 }
+
+.request__left__side{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+
+

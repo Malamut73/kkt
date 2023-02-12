@@ -8,14 +8,10 @@
 </head>
 <body>
     <div th:insert="~{fragments/menu :: #nav-menu}"></div>
-    
-    <div class="head">
-
-    </div>
 
     <div class="body">
-        <div class="body__left">
-            <div class="body__left__inner">
+        <div class="left__side">
+            <div class="left__side__inner">
                 <form method="post" th:action="'/request/' + ${requestid} + '/addClient'">
                     Введите текст: <input type="text" name="text">
                     <br>
@@ -25,12 +21,15 @@
                 </form>
             </div>
         </div>
-        <div class="body__right">
-            <div th:each="client : ${clients}">
-                <a th:href="'/request/' + ${requestid} + '/addClient/' + ${client.id}">
-                    <span th:text="${client.lastName} + ' ' + ${client.name}"></span>
-                </a>
+        <div class="right__side">
+            <div class="right__side__inner">
+                <div th:each="client : ${clients}">
+                    <a th:href="'/request/' + ${requestid} + '/addClient/' + ${client.id}">
+                        <span th:text="${client.lastName} + ' ' + ${client.name}"></span>
+                    </a>
+                </div>
             </div>
+
         </div>
     </div>
 
