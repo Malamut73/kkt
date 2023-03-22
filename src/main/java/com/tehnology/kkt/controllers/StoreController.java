@@ -3,12 +3,14 @@ package com.tehnology.kkt.controllers;
 import com.tehnology.kkt.models.Store;
 import com.tehnology.kkt.services.StoresService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('Administrator')")
 public class StoreController {
 
     private final StoresService storesService;

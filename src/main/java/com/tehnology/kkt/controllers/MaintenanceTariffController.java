@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -34,20 +35,9 @@ public class MaintenanceTariffController {
         return "redirect:/maintenanceTariff";
     }
 
-//    @GetMapping("/maintenanceTariff/{maintenanceTariffid}/addtrip")
-//    public String maintenanceTariffInfo(@PathVariable Long maintenanceTariffid,  Model model){
-//        model.addAttribute("maintenanceTariff", maintenanceTariffService.findById(maintenanceTariffid));
-//        model.addAttribute("trip", new Trip());
-//        return "create-maintenance-addtrip";
-//    }
-//
-//    @PostMapping("/maintenanceTariff/{maintenanceTariffid}/addtrip")
-//    public String addTrip(@PathVariable Long maintenanceTariffid, Trip trip){
-//        System.out.println(trip.getName());
-//        MaintenanceTariff maintenanceTariff = maintenanceTariffService.findById(maintenanceTariffid);
-//        maintenanceTariff.getTrips().add(trip);
-//        maintenanceTariffService.save(maintenanceTariff);
-//        return "redirect:/maintenanceTariff/{maintenanceTariffid}/addtrip";
-//
-//    }
+    @GetMapping("/maintenanceTariff/{maintenanceTariffid}/delete")
+    public String deleteMaintenanceTariff(@PathVariable("maintenanceTariffid") MaintenanceTariff maintenanceTariff){
+        maintenanceTariffService.delete(maintenanceTariff);
+        return "redirect:/maintenanceTariff";
+    }
 }

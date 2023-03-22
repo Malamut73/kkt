@@ -2,27 +2,31 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Создать оператора</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
-<h3>Создать оператора</h3>
+
+<div class="table__center">
 
 <div th:if="${productid} != null">
     <form th:method="POST" th:action="'/operator/create/' + ${clientid} + '/product/' + ${productid} + '/ofd'" th:object="${operator}" >
         Название <input type="text" th:field="*{name}" th:value="*{name}"><br><br>
 
-        <input type="submit" value="Добавить"><br><br>
+        <button>Добавить</button>
     </form>
 </div>
 <div th:if="${productid} == null">
     <form th:method="POST" th:action="'/operator'" th:object="${operator}" >
         Название <input type="text" th:field="*{name}" th:value="*{name}"><br><br>
 
-        <input type="submit" value="Добавить"><br><br>
+        <button>Добавить</button>
     </form>
 </div>
-
+</div>
 
 
 </body>

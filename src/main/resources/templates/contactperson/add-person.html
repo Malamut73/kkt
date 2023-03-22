@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Добавить сотрудника</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<div class="table__center">
+
+<form  method="post" th:action="'/request/' + ${requestid} + '/contactPeople/'">
+    <label for="nameOfContact">Имя контакта</label>
+    <input type="text" id="nameOfContact" name="nameOfContact">
+    <br>
+    <label for="phoneOfContact">Телефон</label>
+    <input type="text" id="phoneOfContact" name="phoneOfContact">
+    <br>
+    <button>Сохранить</button>
+</form>
+</div>
+
+</body>
+</html>

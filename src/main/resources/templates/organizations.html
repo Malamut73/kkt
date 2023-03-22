@@ -2,14 +2,28 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+    <title>Тип организации</title>
 </head>
 <body>
-<div th:each="organization : ${organizations}">
-    <p>Название: <span th:text="${organization.name}"></span></p>
+
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="head">
+    <div class="button">
+        <a class="button__link" href="/organization/create">Создать тип организации</a>
+    </div>
 </div>
-<br>
-<a href="/organization/create">Создать тариф</a>
-<a href="/catalog">Назад</a>
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <div style="display:flex; align-items:center;" th:each="organization : ${organizations}">
+            <span>Название: <span th:text="${organization.name}"></span></span>
+            <div class="button__blue">
+                <a class="button__link__blue" th:href="'/organization/' + ${organization.id} + '/delete'">Удалить</a>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

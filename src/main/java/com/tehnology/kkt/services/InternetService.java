@@ -28,4 +28,8 @@ public class InternetService {
     public Internet findById(Long id) {
         return internetDAO.getReferenceById(id);
     }
+
+    public void delete(Internet internet) {
+        internetDAO.delete(internet);
+    }
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Выбрать оборудование</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <form method="post" th:action="'/request/' + ${request.id} + '/productEquipment'">
+            <div th:object="${request}" th:each="productEquipment : ${productEquipments}">
+                <label for="equipment" th:text="${productEquipment.name}"></label>
+                <input type="checkbox" id="equipment" th:checked="${#lists.contains(request.productEquipments, productEquipment.name)}" th:name="equip[]" th:value="${productEquipment.name}">
+            </div>
+            <button>Сохранить</button>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>

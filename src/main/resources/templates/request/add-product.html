@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Добавить кассу</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="table__center">
+<div th:each="product : ${products}">
+    <a th:href="'/request/' + ${requestid} + '/clients/' + ${product.user.id} + '/products/' + ${product.id}">
+        <span th:text="${product.name}"></span>
+    </a>
+</div>
+</div>
+
+</body>
+</html>

@@ -26,7 +26,7 @@
 
 <div class="table__center">
     <div class="table__center__inner">
-        <table border="1">
+        <table class="table">
             <tr>
                 <td>Дата создания заявки:</td>
                 <td>Тема:</td>
@@ -38,7 +38,9 @@
             <tr th:each="request : ${requests}">
                 <td>
                     <a th:href="'/request/' + ${request.id}">
-                        <span th:text="${request.dateOfCreated}"></span>
+                        <div class="date">
+                            <span th:text="${request.dateOfCreated}"></span>
+                        </div>
                     </a>
                 </td>
                 <td>
@@ -55,19 +57,21 @@
                     </div>
                 </td>
                 <td>
-                    <p th:text="${request.nameOfContact}"></p>
-                    <p th:text="${request.phoneOfContact}"></p>
+                    <div th:if="!${request.contactPeoples}" th:each="man : ${request.contactPeoples}" >
+                        <p th:text="${man.nameOfContact}"></p>
+                        <p th:text="${man.phoneOfContact}"></p>
+                    </div>
                 </td>
                 <td>
                     <div th:if="${request.active} == false">
                         <p>Дата закрытия: <span th:text="${request.dateOfEnd}"></span></p>
                     </div>
                 </td>
-
             </tr>
         </table>
     </div>
 </div>
+<script type="text/javascript" src="/javascript/js/date.js"></script>
 
 </body>
 </html>

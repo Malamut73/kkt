@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:form="http://www.springframework.org/tags/form">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Добавить кассу</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <div th:each="product : ${products}">
+            <a th:href="'/tasks/' + ${taskid} + '/product/' + ${product.id}">
+                <span th:text="${product.name} + ' ' + ${product.address}"></span>
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

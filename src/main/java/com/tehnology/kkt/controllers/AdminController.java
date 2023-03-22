@@ -8,9 +8,7 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -32,7 +30,6 @@ public class AdminController {
     @GetMapping("/admin/list")
     public String listStaff(Model model){
         model.addAttribute("managers", userService.findAllManager());
-        model.addAttribute("administrators", userService.findAllAdministrator());
         return "admin/list-staff";
     }
 
@@ -40,7 +37,6 @@ public class AdminController {
     @GetMapping("/admin/{managerid}/info")
     public String managerInfo(@PathVariable("managerid") User user, Model model){
         model.addAttribute("user", user);
-        model.addAttribute("roles", Role.values());
         return "admin/info-manager";
     }
 
@@ -64,24 +60,60 @@ public class AdminController {
     @PreAuthorize("hasAuthority('Administrator')")
     @GetMapping("/admin/create")
     public String createManager(Model model){
-        model.addAttribute("user", new User());
-        model.addAttribute("roles", Role.values());
-
         return "admin/create-manager";
     }
 
     @PreAuthorize("hasAuthority('Administrator')")
-    @PostMapping("/admin/edit")
-    public String managerSave(User user){
-        userService.saveStaff(user);
+    @PostMapping("/admin/{userid}/edit")
+    public String managerSave(@PathVariable("userid") User userFromDB, User user){
+        userFromDB.setName(user.getName());
+        userFromDB.setLastName(user.getLastName());
+        userFromDB.setPatronymic(user.getPatronymic());
+        userFromDB.setEmail(user.getEmail());
+        userFromDB.setPhoneNumber(user.getPhoneNumber());
+        userFromDB.setActive(user.isEnabled());
+        userService.saveStaff(userFromDB);
         return "redirect:/admin/list";
     }
 
     @PreAuthorize("hasAuthority('Administrator')")
     @PostMapping("/admin/create")
-    public String createManager(User user){
+    public String createManager(@ModelAttribute User user){
+        user.getRoles().add(Role.Manager);
         userService.createManager(user);
         return "redirect:/admin/list";
 
+    }
+
+    @PreAuthorize("hasAuthority('Administrator')")
+    @GetMapping("/admin/{managerid}/pass")
+    public String sendPass(@PathVariable("managerid") User user){
+        userService.createManager(user);
+        return "redirect:/admin/list";
+    }
+
+    @PostAuthorize("isAuthenticated() and #user.email == authentication.principal.username")
+    @GetMapping("/admin/{managerid}/newPass")
+    public String changePass(@PathVariable("managerid") User user, Model model){
+        model.addAttribute("managerid", user.getId());
+        return "admin/new-pass";
+    }
+
+    @PostAuthorize("isAuthenticated() and #user.email == authentication.principal.username")
+    @PostMapping("/admin/{managerid}/newPass")
+    public String changePass(@RequestParam("pass") String pass, Model model,
+                             @RequestParam("repeatPass") String repeatPass,
+                             @PathVariable("managerid") User user){
+        String finalMessage = null;
+        if (pass.equals(repeatPass)){
+            user.setPassword(pass);
+            userService.changePass(user);
+            finalMessage = "Пароль успешно сохранен";
+        }else{
+            finalMessage = "Пароли не совпадают";
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("result", finalMessage);
+        return "admin/result-change-pass";
     }
 }

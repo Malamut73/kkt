@@ -24,4 +24,8 @@ public class TaxationService {
     public Taxation findById(Long id) {
         return taxationDAO.getReferenceById(id);
     }
+
+    public void delete(Taxation taxation) {
+        taxationDAO.delete(taxation);
+    }
 }

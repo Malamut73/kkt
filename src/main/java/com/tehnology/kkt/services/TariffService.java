@@ -24,4 +24,8 @@ public class TariffService {
     public Tariff findById(Long id) {
         return tariffDAO.getReferenceById(id);
     }
+
+    public void delete(Tariff tariff) {
+        tariffDAO.delete(tariff);
+    }
 }

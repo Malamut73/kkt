@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <title>Клиент</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="table__center">
+
+<form method="post" th:action="'/tasks/' + ${taskid} + '/adduser'">
+    <div>
+        <label for="clients"> Клиенты: </label>
+        <select name="id" id="clients">
+            <option  th:each="client : ${clients}" th:value="${client.id}" th:text="${client.name}"></option>
+        </select>
+    </div>
+    <button>Сохранить</button>
+</form>
+</div>
+</body>
+</html>

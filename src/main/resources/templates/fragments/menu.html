@@ -18,12 +18,13 @@
                 <a class="menu__link" href="/requests/true">Заявки</a>
             </div>
             <div class="header__item headerButton">
-                <a class="menu__link" href="/controls">Продукты</a>
+                <a class="menu__link" href="/controls/maintenances">Продукты</a>
             </div>
             <div class="header__item headerButton">
-                <a class="menu__link" href="/tasks">Задачи</a>
+                <a class="menu__link" href="/task/true">Задачи</a>
             </div>
-            <div class="header__item headerButton">
+
+            <div sec:authorize="hasAnyAuthority('Administrator')" class="header__item headerButton">
                 <a class="menu__link" href="/store">Хранилище</a>
             </div>
             <div class="header__item headerButton dropdown">
@@ -32,15 +33,17 @@
                     <a class="menu__link" href="/descriptions">Кассы</a>
                     <a class="menu__link" href="/operator">Операторы</a>
                     <a class="menu__link" href="/tariffs">Тарифы</a>
-                    <a class="menu__link" href="/topics">Задачи</a>
-                    <a class="menu__link" href="/etsp">ЕЦП</a>
                     <a class="menu__link" href="/organization">Тип организации</a>
-                    <a class="menu__link" href="/internets">Интернет</a>
+                    <a class="menu__link" href="/internets">Сим-карта</a>
                     <a class="menu__link" href="/maintenanceTariff">Тарифы тех обслуживания</a>
                     <a class="menu__link" href="/typeofactivity">Виды деятельности</a>
                     <a class="menu__link" href="/taxations">Налогооблажение</a>
                     <a class="menu__link" href="/topics">Темы заявок</a>
-                    <a class="menu__link" href="/accounts">Счета</a>
+                    <a class="menu__link" href="/vats">Ставка НДС</a>
+                    <a class="menu__link" href="/lkSites">Личный кабинет</a>
+                    <a class="menu__link" href="/equipments">Оборудование</a>
+                    <a class="menu__link" href="/marks">Маркировка</a>
+
                 </div>
             </div>
         </div>

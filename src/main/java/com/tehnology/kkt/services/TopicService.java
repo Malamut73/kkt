@@ -25,4 +25,8 @@ public class TopicService {
     public Topic findById(Long id) {
         return topicDAO.getReferenceById(id);
     }
+
+    public void delete(Topic topic) {
+        topicDAO.delete(topic);
+    }
 }

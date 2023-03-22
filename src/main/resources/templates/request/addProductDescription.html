@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/styles/css/index.css">
 
-    <title>Title</title>
+    <title>Описание</title>
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<div class="table__center">
+
 <form th:object="${request}" method="post" th:action="'/request/' + ${request.id} + '/productDescription'">
     <input style="width: 600px; height: 20px;" type="text" name="productDescription" th:value="*{productDescription}">
-    <input type="submit" value="Сохранить">
+    <button>Сохранить</button>
 </form>
+</div>
 
 </body>
 </html>

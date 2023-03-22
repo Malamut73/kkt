@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Разное</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <form method="post" th:action="'/fill/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/addvat'">
+            <label for="vat">Ставка НДС</label>
+            <select name="vat" id="vat">
+                <option th:each="vat : ${vats}" th:value="${vat.name}" th:text="${vat.name}"></option>
+            </select>
+
+            <div th:each="type : ${taxations}">
+                <input type="radio" name="name" th:value="${type.name}"  th:text="${type.name}" >
+            </div>
+
+            <div>
+                <span>Акцизы:</span>
+                <label >Да</label>
+                <input type="radio" name="excise" value="Да">
+
+                <label >Нет</label>
+                <input type="radio" name="excise" value="Нет">
+            </div>
+
+            <div>
+                <span>ЕГАИС:</span>
+                <label >Да</label>
+                <input type="radio" name="egais" value="Да">
+
+                <label >Нет</label>
+                <input type="radio" name="egais" value="Нет">
+            </div>
+
+
+
+            <button>Сохранить</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

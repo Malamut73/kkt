@@ -2,20 +2,27 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Редактировать тариф</title>
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
-<div>
-    <form method="post" th:object="${MaintenanceTariff}" th:action="'/clients/' + ${clientid} + '/product/' + ${productId} + '/maintenance/' + ${maintenanceid} + '/edit/tariff'">
-        <div>
-            <label for="maintenancetariff-edit-select">Тариф: </label>
-            <select id="maintenancetariff-edit-select"  name="id">
-                <option th:each="main : ${maintenancetariffs}" th:value="${main.id}" th:select="*{name}" th:text="${main.name}"></option>
-            </select>
-        </div>
-        <input type="submit" value="Сохранить">
-    </form>
+<div class="table__center">
+    <div class="table__center__inner">
+        <form method="post" th:object="${MaintenanceTariff}" th:action="'/clients/' + ${clientid} + '/product/' + ${productId} + '/maintenance/' + ${maintenanceid} + '/edit/tariff'">
+            <div>
+                <label for="maintenancetariff-edit-select">Тариф: </label>
+                <select id="maintenancetariff-edit-select"  name="id">
+                    <option th:each="main : ${maintenancetariffs}" th:value="${main.id}" th:select="*{name}" th:text="${main.name}"></option>
+                </select>
+            </div>
+            <label for="text">Комментарий</label><br>
+            <textarea name="text" id="text" cols="30" rows="10"></textarea>
+            <button>Сохранить</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>

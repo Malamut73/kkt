@@ -2,27 +2,43 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:form="http://www.springframework.org/tags/form">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Создать ФН</title>
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
-<div th:if="${fnid} != null">
-    <form th:action="'/clients/' + ${clientid} + '/product/' + ${productid} + '/fn/' + ${fn.id} + '/edit'" th:object="${fn}" method="post">
-        <input type="hidden" th:value="*{id}" th:field="*{id}">
-        Дата начала: <input type="date" th:field="*{dateStart}" th:value="*{dateStart}"><br>
-        Дата окончания: <input type="date" th:field="*{dayEnd}" th:value="*{dayEnd}"><br>
-        <input type="submit" value="Создать">
-    </form>
+<div class="table__center">
+    <div class="table__center__inner">
+        <<div th:if="${fnid} != null">
+        <form th:action="'/clients/' + ${clientid} + '/product/' + ${productid} + '/fn/' + ${fn.id} + '/edit'" th:object="${fn}" method="post">
+            <input type="hidden" th:value="*{id}" th:field="*{id}">
+            Дата начала: <input type="date" th:field="*{dateStart}" th:value="*{dateStart}"><br>
+            Дата окончания: <input type="date" th:field="*{dayEnd}" th:value="*{dayEnd}"><br>
+            <div th:if="!${#lists.isEmpty(tariffs)}">
+                <label for="ofd-tariff-edit-select">Тариф: </label>
+                <select id="ofd-tariff-edit-select"  th:field="*{days}">
+                    <option th:each="tar : ${tariffs}" th:value="${tar.days}" th:selected="*{days}" th:text="${tar.days}"></option>
+                </select>
+            </div>
+            <button>Создать</button>
+        </form>
+    </div>
+        <div th:if="${fnid} == null">
+            <form th:action="'/clients/' + ${clientid} + '/product/' + ${productid} + '/fn'" th:object="${fn}" method="post">
+                Дата начала: <input type="date" th:field="*{dateStart}"><br>
+                Дата окончания: <input type="date" th:field="*{dayEnd}"><br>
+                <div th:if="!${#lists.isEmpty(tariffs)}">
+                    <label for="ofd-tariff-edit">Тариф: </label>
+                    <select id="ofd-tariff-edit"  th:field="*{days}">
+                        <option th:each="tar : ${tariffs}" th:value="${tar.days}" th:selected="*{days}" th:text="${tar.days}"></option>
+                    </select>
+                </div>
+                <button>Создать</button>
+            </form>
+        </div>
+    </div>
 </div>
-<div th:if="${fnid} == null">
-    <form th:action="'/clients/' + ${clientid} + '/product/' + ${productid} + '/fn'" th:object="${fn}" method="post">
-        Дата начала: <input type="date" th:field="*{dateStart}"><br>
-        Дата окончания: <input type="date" th:field="*{dayEnd}"><br>
-        <input type="submit" value="Создать">
-    </form>
-</div>
-
-
-
 </body>
 </html>

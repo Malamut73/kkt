@@ -25,4 +25,8 @@ public class TypeOfActivityService {
     public TypeOfActivity findById(Long id) {
         return typeOfActivityDAO.getReferenceById(id);
     }
+
+    public void delete(TypeOfActivity typeOfActivity) {
+        typeOfActivityDAO.delete(typeOfActivity);
+    }
 }

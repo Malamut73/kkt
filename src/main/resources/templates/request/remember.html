@@ -2,10 +2,116 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
     <title>Памятка</title>
 </head>
-<body>
-<h1>Памятка для регистрации</h1>
-<p>1. Наименование организации <span th:text="${request.}"></span> </p>
+<div class="media" th:insert="~{fragments/menu :: #nav-menu}"></div>
+<div class="head media">
+    <div class="button">
+        <a class="button__link" th:href="'/clients/' + ${request.client.id} + '/request/' + ${request.id}">Назад</a>
+    </div>
+</div>
+
+
+<body style="background-color: #ffffff;">
+<div style="text-align: center; font-size: 100%; line-height: 60%;" >
+    <div style="display: flex; justify-content: space-between;">
+        <div>
+            <img style="position: relative; left: 40px; top: 10px; z-index: 10;" width="70" height="70" src="/imgs/kkt.png" alt="Картинка"/>
+        </div>
+        <div >
+            <h1>"Кассовые технологии"</h1>
+            <h2>г.Ульяновск, ул.Рылеева 21а, тел: 22-92-08</h2>
+        </div>
+        <div></div>
+    </div>
+    <hr>
+<!--    <p>__________________________________________________________________________________</p>-->
+    <h2>Памятка для регистрации ККТ</h2>
+</div>
+
+
+    <ol>
+        <li>Наименование организации: <span th:if="${request.client} != null" th:text="${request.client.nameOfOrganization}"></span></li>
+        <li>ОГРН(ИП): <span th:if="${request.client} != null" th:text="${request.client.ogrn}"></span></li>
+        <li>ИНН: <span th:if="${request.client} != null" th:text="${request.client.inn}"></span></li>
+        <li>Налогооблажение: <span th:if="${request.product} != null" th:text="${request.product.taxation}"></span></li>
+        <li>Ставка НДС : <span th:if="${request.product} != null" th:text="${request.product.vat}"></span></li>
+        <li>Регистрация с помощью: <span th:text="${request.etsp}"></span></li>
+        <li>Вид деятельности:
+            <div th:if="${request.product} != null">
+                <div th:each="typeOfActivity : ${request.product.typeOfActivities}">
+                    <span th:text="${typeOfActivity}"></span><br>
+                </div>
+            </div>
+        </li>
+        <li>Акцизный товар: <span th:if="${request.product} != null" th:text="${request.product.excise}"></span></li>
+        <li>Маркировка/ЕГАИС/Меркурий: <span th:if="${request.product} != null" th:text="${request.product.egais}"></span></li>
+        <li>Название торговой точки: <span th:if="${request.client} != null" th:text="${request.client.nameOfOrganization}"></span></li>
+        <li>Интернет связь: <span th:if="${request.product} != null" th:text="${request.product.simCard.name}"></span></li>
+        <li>Список номенклатуры: </li>
+        <li>Ответственное лицо:
+                <select style="border: none;outline: none; background-color: #ffffff" name="" id="" >
+                    <option th:each="man : ${request.contactPeoples}" value="" th:text="${man.nameOfContact} + ' ' + ${man.phoneOfContact}"></option>
+                </select>
+        <li>Адрес установки: не меняется <span th:if="${request.product} != null" th:text="${request.product.address}"></span></li>
+        <li>Номер сотового телефона ИП/Директора: <span th:if="${request.client} != null" th:text="${request.client.phoneNumber}"></span></li>
+        <li>
+            Модель ККТ:
+            <span th:if="${request.product} != null">
+                    <span th:text="${request.product.condit}"></span>
+                    <span th:text="${request.product.name}"></span>
+                    <span th:text="${request.product.number}"></span>
+            </span>
+        </li>
+        <li>Фискальный накопитель: <span th:if="${request.product} != null" th:text="${request.product.fn.days}"></span></li>
+        <li>ОФД: <span th:if="${request.product} != null" th:text="${request.product.ofd.days}"></span></li>
+        <li>Доп. Оборудование: </li>
+        <li>Коментарий: </li>
+        <li>Комплектация:
+            <div th:if="${request.productEquipments} != null">
+                <div th:each="equip : ${request.productEquipments}">
+                    <span th:text="${equip}"></span>
+                </div>
+            </div>
+        </li>
+        <li>Состояние: <span th:text="${request.productCondition}"></span></li>
+
+
+    </ol>
+    <span> <spam>ВНИМАНИЕ:</spam> Проверяйте все данные внимательно ! Проверив и подписав памятку –
+    Вы даёте согласие на регистрацию контрольно-кассовой техники и фискального накопителя по данным реквизитам.
+    Если регистрация пройдет по неверным данным (влечет потерю фискального накопителя), ответственность несёт лицо, подписавшее памятку.
+</span><br><br>
+    <span>Ответственное лицо подтверждает, что кассовый аппарат
+    <span>НЕ СНЯТ В УФНС В ОДНОСТОРОННЕМ ПОРЯДКЕ</span> и предупрежден, что в противном случае происходит регистрация онлайн кассы на несуществующий регистрационный номер,
+    что влечет за собой потерю фискального накопителя.
+    В этом случае ответственность несет лицо, подписавшее памятку.
+</span>
+<br><br>
+    <div style="display: flex; justify-content: space-between;">
+        <div><span>Подпись ответственного лица:</span></div>
+        <div><span>/</span></div>
+        <div><span>/</span></div>
+        <div></div>
+    </div>
+
+    <p>ДАТА:______________ ______г.</p>
+    <p>М.П.</p>
+
+    <span>Менеджер: <span th:text="${user.name}"></span></span><br>
+    <span>Заполняется  клиентом   при   получении   оборудования: </span><br>
+    <span>Оборудование и услуги произведены и оказаны в срок. Комплектация проверена. Претензий не имею.</span>
+    <br><br>
+    <span>ДАТА: </span>
+    <br><br>
+    <div style="display: flex; justify-content: space-between;">
+        <div><span>Подпись :</span></div>
+        <div><span>/</span></div>
+        <div><span>/</span></div>
+        <div></div>
+    </div>
+</div>
 </body>
 </html>

@@ -29,4 +29,25 @@ public class TaskService {
     public List<Task> findAllByOrderByDateOfReminderDesc() {
         return taskDAO.findAllByOrderByDateOfReminderAsc();
     }
+
+    public List<Task> findByTasksIsNull() {
+        return taskDAO.findAllByProductIsNull();
+    }
+
+    public Task saveRedirect(Task task) {
+        Task newTask = taskDAO.saveAndFlush(task);
+        System.out.println(task.getId());
+        return newTask;
+    }
+
+    public List<Task> findAllByActiveOrderByDateOfReminderDesc(String value) {
+        switch (value){
+            case "true":
+                return taskDAO.findAllByActiveOrderByDateOfReminderDesc(true);
+            case "false":
+                return taskDAO.findAllByActiveOrderByDateOfReminderDesc(false);
+            default:
+                return taskDAO.findAllByOrderByDateOfReminderDesc();
+        }
+    }
 }

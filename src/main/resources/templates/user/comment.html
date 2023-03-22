@@ -2,14 +2,20 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Коментарий</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="table__center">
 
 <form method="post" th:object="${user}" th:action="'/clients/' + ${user.id} + '/comment'">
     <input style="width: 600px; height: 20px;" type="text" th:value="*{comment}" name="comment">
-    <input type="submit" value="Сохранить">
+    <button>Сохранить</button>
 </form>
+</div>
 
 </body>
 </html>

@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/styles/css/index.css">
 
-    <title>Title</title>
+    <title>Архив</title>
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="table__center">
 
 <form method="post" action="/store/add">
     Имя: <input type="text" name="name"><br>
@@ -15,8 +17,9 @@
     Логин: <input type="text" name="login"><br>
     Пароль: <input type="text" name="password"><br>
     Доп информация: <input type="text" name="description"><br>
-    <input type="submit" value="Добавить" >
+    <button>Добавить</button>
 </form>
+</div>
 
 </body>
 </html>

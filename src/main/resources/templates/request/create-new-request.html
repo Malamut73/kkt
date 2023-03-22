@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/styles/css/index.css">
 
-    <title>Title</title>
+    <title>Новая заявка</title>
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<div class="table__center">
+
 <form th:method="POST" th:action="'/request'" th:object="${request}">
     <label for="topic">Тема: </label>
     <select id="topic" th:field="*{topic}">
@@ -19,8 +21,8 @@
     </div>
 
     <textarea name="comment"></textarea>
-    <input type="submit" value="Добавить"><br><br>
+    <button>Добавить</button>
 </form>
-
+</div>
 </body>
 </html>

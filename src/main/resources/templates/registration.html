@@ -2,32 +2,24 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="table__center">
 
 <form method="post" th:action="@{/registration}" th:object="${user}"  >
 
-<!--    <label for="name">Имя пользователя:</label>-->
-<!--    <input type="text" th:field="*{name}" id="name">-->
-<!--    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>-->
+
     <label for="email">Эл. почта:</label>
     <input type="email" th:field="*{email}" id="email">
-<!--    <label for="phoneNumber">Номер телефона:</label>-->
-<!--    <input type="tel" th:field="*{phoneNumber}" id="phoneNumber">-->
     <label for="password">Пароль:</label>
     <input type="password" th:field="*{password}" id="password">
-<!--    <label for="matchPassword">Повторить пароль:</label>-->
-<!--    <input type="password" th:field="*{matchPassword}" id="matchPassword">-->
-
-    <!--    Имя пользователя: <input type="text" field="*{name}" ><br><br>-->
-    <!--    Эл. почта: <input type="email" field="*{email}"><br><br>-->
-    <!--    Номер телефона: <input type="text" field="*{phoneNumber}"><br><br>-->
-    <!--    Пароль: <input type="password" field="*{password}"><br><br>-->
-    <!--    Повторить пароль: <input type="password" field="*{matchPassword}"><br><br>-->
-    <!--    <button type="submit">Save</button>-->
-    <input type="submit" value="Зарегистрироваться">
+    <button>Зарегистрироваться</button>
 </form>
-
+</div>
 </body>
 </html>

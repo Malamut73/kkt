@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+    <title>Техобслуживание</title>
+</head>
+<body>
+    <div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+    <div class="head">
+
+        <div class="button">
+            <a class="button__link" href="/controls/maintenances">Сортировать по техлбслуживанию</a>
+        </div>
+        <div class="button">
+            <a class="button__link" href="/controls/ofds">Сортировать по ОФД</a>
+        </div>
+        <div class="button">
+            <a class="button__link" href="/controls/fns">Сортировать по ФН</a>
+        </div>
+    </div>
+
+    <div class="table__center">
+
+        <div class="alone__body">
+            <div class="alone__body__inner">
+                <table class="table">
+                                <tr>
+                                    <td>Организация</td>
+                                    <td>Касса</td>
+                                    <td>Срок окончания техобслуживание</td>
+                                    <td>Срок окончания ОФД</td>
+                                    <td>Срок окончания ФН</td>
+                                </tr>
+                                <tr th:each="maintenance : ${maintenances}">
+                                    <td>
+                                        <a th:href="'/clients/' + ${maintenance.product.user.id} + '/product/' + ${maintenance.product.id}">
+                                        <span th:text="${maintenance.product.user.name} + ' ' + ${maintenance.product.user.lastName}
+                                        + ' ' + ${maintenance.product.user.typeOfOrganization} + ' ' + ${maintenance.product.user.nameOfOrganization}"></span>                                </a>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a th:href="'/clients/' + ${maintenance.product.user.id} + '/product/' + ${maintenance.product.id}">
+                                            <span th:text="${maintenance.product.name}"></span>
+                                        </a>                                 </td>
+                                    <td>
+                                        <span th:text="${maintenance.dayEnd}"></span>
+                                    </td>
+                                    <td>
+                                        <span th:text="${maintenance.product.ofd.dayEnd}"></span>
+                                    </td>
+                                    <td>
+                                        <span th:text="${maintenance.product.fn.dayEnd}"></span>
+                                    </td>
+                                </tr>
+                            </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

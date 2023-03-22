@@ -2,16 +2,23 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Тема</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="table__center">
+
 <form  method="post" th:action="'/request/' + ${requestid} + '/topic/'">
     <label for="topic">Тема заявки: </label>
     <select id="topic"  name="topic">
         Тема: <option th:each="topic : ${topics}"  th:value="${topic.name}"  th:text="${topic.name}"></option>
     </select>
-    <input type="submit" value="Изменить">
-</form>
+    <button>Изменить</button>
 
+</form>
+</div>
 </body>
 </html>

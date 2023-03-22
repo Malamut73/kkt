@@ -29,4 +29,7 @@ public class MaintenanceTariffService {
         return maintenanceTariffDAO.findByName(name);
     }
 
+    public void delete(MaintenanceTariff maintenanceTariff) {
+        maintenanceTariffDAO.delete(maintenanceTariff);
+    }
 }

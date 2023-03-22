@@ -17,8 +17,10 @@
 }
 
 .down{
+    /*display: flex;*/
     display: grid;
-    grid-template-columns:40% 60%;
+    /*grid-template-columns:40% 60%;*/
+    grid-template-columns: 1fr 1fr;
     padding: 10px;
 }
 
@@ -29,3 +31,4 @@
 .down__right{
     margin-right: 20px;
 }
+

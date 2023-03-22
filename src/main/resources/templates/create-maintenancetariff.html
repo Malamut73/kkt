@@ -2,16 +2,22 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Название тарифа</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<div class="table__center">
+
     <p>Введите название тарифа</p>
     <form th:action="'/maintenanceTariff/create'" method="post" th:object="${maintenanceTariff}">
         Название тарифа: <input type="text" th:field="*{name}">
         <br>
         Колиество поездок: <input type="tel" th:field="*{mountTrip}">
         <br>
-        <input type="submit" value="Создать">
+        <button>Создать</button>
     </form>
+</div>
 </body>
 </html>

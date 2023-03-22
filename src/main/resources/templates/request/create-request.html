@@ -2,12 +2,14 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Новая заявка</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+
 </head>
 <body>
-<h3>Создать заявку</h3>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
-<div>
+<div class="table__center">
     <form th:method="POST" th:action="'/clients/' + ${clientid} + '/request'" th:object="${request}">
 
         <label for="topic">Тема: </label>
@@ -20,7 +22,7 @@
         </div>
 
         <textarea name="comment"></textarea>
-        <input type="submit" value="Добавить"><br><br>
+        <button>Добавить</button>
     </form>
 
 </div>

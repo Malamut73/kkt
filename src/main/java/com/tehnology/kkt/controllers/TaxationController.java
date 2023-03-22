@@ -91,4 +91,10 @@ public class TaxationController {
 
     }
 
+    @GetMapping("/taxations/{descriptionid}/delete")
+    public String deleteTaxation(@PathVariable("descriptionid") Taxation taxation){
+        taxationService.delete(taxation);
+        return "redirect:/taxations";
+    }
+
 }

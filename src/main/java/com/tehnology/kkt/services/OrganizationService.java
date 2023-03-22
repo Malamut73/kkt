@@ -25,4 +25,8 @@ public class OrganizationService {
     public Organization findById(Long id) {
         return organizationDAO.getReferenceById(id);
     }
+
+    public void delete(Organization organization) {
+        organizationDAO.delete(organization);
+    }
 }

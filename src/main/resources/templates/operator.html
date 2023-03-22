@@ -2,18 +2,27 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+    <title>Операторы</title>
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
-
-<div th:each="operator : ${operators}">
-    <p>Название: <span th:text="${operator.name}"></span></p>
-
+<div class="head">
+    <div class="button">
+        <a class="button__link" href="/operator/create">Создать оператора</a>
+    </div>
 </div>
-<br>
-<a href="/operator/create">Создать тариф</a>
-<a href="/catalog">Назад</a>
 
+<div class="table__center">
+    <div class="table__center__inner">
+        <div style="display:flex; align-items:center;" th:each="operator : ${operators}">
+            <span>Название: <span th:text="${operator.name}"></span></span>
+            <div class="button__blue">
+                <a class="button__link__blue" th:href="'/operator/' + ${operator.id} + '/delete'">Удалить</a>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

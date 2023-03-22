@@ -2,9 +2,14 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Архив</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<div class="table__center">
+
 <form method="post" th:action="'/store/' + ${store.id}">
     <input type="hidden" name="id" th:value="${store.id}"><br>
     Имя: <input type="text" name="name" th:value="${store.name}"><br>
@@ -12,8 +17,8 @@
     Логин: <input type="text" name="login" th:value="${store.login}"><br>
     Пароль: <input type="text" name="password" th:value="${store.password}"><br>
     Доп информация: <input type="text" name="description" th:value="${store.description}"><br>
-    <input type="submit" value="Добавить" >
+    <button>Добавить</button>
 </form>
-
+</div>
 </body>
 </html>

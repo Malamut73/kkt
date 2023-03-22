@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+    <title>Подробная информация о задачи</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="head">
+    <div class="button">
+        <a class="button__link" href="/task/true">Назад к списку задач</a>
+    </div>
+</div>
+
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <table class="table">
+            <tr>
+                <td>Дата создания</td>
+                <td>Тема</td>
+                <td>Описание</td>
+                <td>Коментарии
+                    <form method="post" th:action="'/tasks/' + ${task.id} + '/addtask'">
+                        <textarea name="text"></textarea>
+                        <button>Добавить новый коментарий</button>
+
+                    </form>
+                </td>
+                <td>Дата напоминания</td>
+                <td>Касса</td>
+                <td>Дата закрытия</td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="date">
+                        <p th:text="${task.dateOfCreated}"></p>
+                    </div>
+                </td>
+                <td>
+                    <p th:text="${task.name}"></p>
+                </td>
+                <td>
+                    <p th:text="${task.description}"></p>
+                </td>
+                <td>
+                    <div class="parent">
+                        <div th:each="comment : ${task.comments}">
+                            <div class="comment">
+                                <span th:text="${comment.dateOfCreated} + ' ' +
+                                ${comment.user} + ' ' + ${comment.text}">
+                                </span><br>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+                <td>
+                    <div th:if="!${task.dateOfReminder}">
+                        <form th:action="'/task/' + ${task.id} + '/remind'">
+                            <button>Создать</button>
+                        </form>
+                    </div>
+                    <div th:if="${task.dateOfReminder}">
+                        <p th:text="${task.dateOfReminder}"></p>
+                        <form method="get" th:action="'/task/' + ${task.id} + '/remind'">
+                            <button>Назначить новое напоминание</button>
+
+                        </form>
+                    </div>
+
+                </td>
+                <td>
+                    <div th:if="${task.product} != null">
+                        <a th:href="'/clients/' + ${task.product.user.id} + '/product/' + ${task.product.id}">
+                            <span th:text="${task.product.name}"></span>
+                        </a>
+                        <form method="post" th:action="'/tasks/' + ${task.id} + '/product/' + ${task.product.id} + '/delete'">
+                            <button>Убрать кассу</button>
+
+                        </form>
+                    </div>
+                    <form method="get" th:action="'/tasks/' + ${task.id} + '/product'">
+                        <button>Изменить кассу</button>
+
+                    </form>
+                </td>
+                <td>
+                    <p th:text="${task.dateOfEnd}"></p>
+                    <form method="post" th:action="'/tasks/' + ${task.id} + '/closetask'">
+                        <button>Закрыть задачу</button>
+
+                    </form>
+                </td>
+<!--                    <div th:if="${task.user} != null">-->
+<!--                        <a th:href="'/clients/' + ${task.user.id}">-->
+<!--                            <span th:text="${task.user.name}"></span>-->
+<!--                        </a>-->
+<!--                        <form method="get" th:action="'/tasks/' + ${task.id} + '/user/' + ${task.user.id}">-->
+<!--                            <input type="submit" value="Сменить клиента">-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                    <div th:if="${task.user} == null">-->
+<!--                        <form method="get" th:action="'/tasks/' + ${task.id} + '/adduser'">-->
+<!--                            <input type="submit" value="Добавить клиента">-->
+<!--                        </form>-->
+<!--                    </div>-->
+            </tr>
+        </table>
+    </div>
+</div>
+<script type="text/javascript" src="/javascript/js/sort.js"></script>
+<script type="text/javascript" src="/javascript/js/date.js"></script>
+
+</body>
+</html>

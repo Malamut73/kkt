@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Маркировка</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="head">
+    <div class="button">
+        <a class="button__link" href="/marks/create">Создать маркировку</a>
+    </div>
+</div>
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <div style="display:flex; align-items:center;" th:each="mark : ${marks}">
+            <span>Название: </span><span th:text="${mark.name}"></span>
+            <div class="button__blue">
+                <a class="button__link__blue" th:href="'/marks/' + ${mark.id} + '/delete'">Удалить</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

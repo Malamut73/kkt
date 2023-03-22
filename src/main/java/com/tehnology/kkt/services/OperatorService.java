@@ -25,5 +25,9 @@ public class OperatorService {
     public Operator findById(Long id) {
         return operatorDAO.getReferenceById(id);
     }
+
+    public void delete(Operator operator) {
+        operatorDAO.delete(operator);
+    }
 }
 

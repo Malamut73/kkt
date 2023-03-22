@@ -10,4 +10,9 @@ public interface TaskDAO extends JpaRepository<Task, Long> {
     List<Task> findTaskByUser(User user);
     List<Task> findAllByOrderByDateOfReminderAsc();
 
+    List<Task> findAllByProductIsNull();
+
+    List<Task> findAllByActiveOrderByDateOfReminderDesc(boolean active);
+
+    List<Task> findAllByOrderByDateOfReminderDesc();
 }

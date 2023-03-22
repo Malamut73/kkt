@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 
@@ -36,9 +37,11 @@ public class TripController {
 
     @PostMapping("/clients/{clientid}/product/{productid}/maintenance/{maintenanceid}/trip/{tripid}")
     public String editTrip(@PathVariable("productid") Product product,
-                           Principal principal, Trip trip){
+                           @RequestParam("text") String comment, Principal principal, Trip trip){
         product.getComments().add(Comment.builder().user(principal.getName())
                 .text("изменил поездку номер " + trip.getName()).build());
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text(comment).build());
         tripService.save(trip);
         return "redirect:/clients/{clientid}/product/{productid}/";
     }

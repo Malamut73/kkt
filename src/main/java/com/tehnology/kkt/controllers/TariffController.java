@@ -61,4 +61,10 @@ public class TariffController {
 
     }
 
+    @GetMapping("/tariffs/{tariffid}/delete")
+    public String deleteTariff(@PathVariable("tariffid") Tariff tariff){
+        tariffService.delete(tariff);
+        return "redirect:/tariffs";
+    }
+
 }

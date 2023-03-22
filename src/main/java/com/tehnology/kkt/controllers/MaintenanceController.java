@@ -44,7 +44,7 @@ public class MaintenanceController {
     @PostMapping("/clients/{clientid}/product/{productId}/maintenance")
     public String createMaintenance(@PathVariable Long clientid, @RequestParam(name="id", required = false) MaintenanceTariff maintenanceTariff,
                                     @PathVariable("productId") Product product, Maintenance maintenance,
-                                    Principal principal) {
+                                    @RequestParam("text") String comment, Principal principal) {
         if(maintenanceTariff != null){
             maintenance.setName(maintenanceTariff.getName());
             for (int i = 1; i < maintenanceTariff.getMountTrip() + 1; i++) {
@@ -55,6 +55,8 @@ public class MaintenanceController {
         }
         product.getComments().add(Comment.builder().user(principal.getName())
                 .text("добавил техобслуживание").build());
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text(comment).build());
         product.setMaintenance(maintenance);
         productService.saveProduct(product);
 
@@ -74,9 +76,11 @@ public class MaintenanceController {
 
     @PostMapping("/clients/{clientid}/product/{productId}/maintenance/{maintenanceid}/edit")
     public String editMaintenance(@PathVariable("productId") Product product, Principal principal,
-                                  Maintenance maintenance){
+                                  @RequestParam("text") String comment, Maintenance maintenance){
         product.getComments().add(Comment.builder().user(principal.getName())
                 .text(" отредактировал дату техобслуживания").build());
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text(comment).build());
         product.getMaintenance().setDateStart(maintenance.getDateStart());
         product.getMaintenance().setDayEnd(maintenance.getDayEnd());
         productService.saveProduct(product);
@@ -112,10 +116,13 @@ public class MaintenanceController {
 
     @PostMapping("/clients/{clientid}/product/{productId}/maintenance/{maintenanceid}/edit/tariff")
     public String editTariff(@PathVariable("maintenanceid") Maintenance maintenance,
+                             @RequestParam("text") String comment,
                              @PathVariable("productId") Product product, Principal principal,
                              @RequestParam(name="id", required = false) MaintenanceTariff maintenanceTariff){
         product.getComments().add(Comment.builder().user(principal.getName())
                 .text("отредактировал тариф техобслуживания").build());
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text(comment).build());
         if (maintenanceTariff != null){
             tripService.deleteAll(maintenance.getTrips());
             maintenance.setTrips(new HashSet<>());

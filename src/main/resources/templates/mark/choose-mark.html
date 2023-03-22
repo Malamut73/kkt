@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Выбрать маркировку</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <div style="display:flex; align-items:center;" >
+            <form  method="post" th:action="'/clients/' + ${clientid} + '/product/' + ${product.id} + '/productMark'">
+                <div th:object="${product}" th:each="mark : ${marks}">
+                    <label for="mark" th:text="${mark.name}"></label>
+                    <input type="checkbox" id="mark" th:value="${mark.name}" th:name="marks[]" th:checked="${#lists.contains(product.productMark, mark.name)}">
+                </div>
+                <button>Сохранить</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -22,9 +22,11 @@ public class Task {
 
     private String name;
 
-    @Column(updatable = false)
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+//    @Column(updatable = false)
+//    @Temporal(TemporalType.DATE)
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(updatable = false, columnDefinition="DATETIME")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfCreated;
 
     private boolean active;

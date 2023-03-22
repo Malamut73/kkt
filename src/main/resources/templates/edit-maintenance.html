@@ -2,13 +2,24 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Редактировать тех обслуживание</title>
 </head>
 <body>
-    <form th:method="POST" th:action="'/clients/' + ${clientid} + '/product/' + ${productId} + '/maintenance/' + ${maintenanceid} + '/edit'" th:object="${maintenance}" >
-        Дата начала: <input type="date" th:field="*{dateStart}" th:value="*{dateStart}"><br><br>
-        Дата окончания: <input type="date" th:field="*{dayEnd}" th:value="*{dayEnd}"><br><br>
-        <input type="submit" value="Добавить"><br><br>
-    </form>
+
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <form th:method="POST" th:action="'/clients/' + ${clientid} + '/product/' + ${productId} + '/maintenance/' + ${maintenanceid} + '/edit'" th:object="${maintenance}" >
+            Дата начала: <input type="date" th:field="*{dateStart}" th:value="*{dateStart}"><br><br>
+            Дата окончания: <input type="date" th:field="*{dayEnd}" th:value="*{dayEnd}"><br><br>
+            <label for="text">Комментарий</label><br>
+            <textarea name="text" id="text" cols="30" rows="10"></textarea>
+            <button>Добавить</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>

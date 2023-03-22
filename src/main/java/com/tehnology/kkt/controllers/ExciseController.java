@@ -3,7 +3,6 @@ package com.tehnology.kkt.controllers;
 import com.tehnology.kkt.models.Comment;
 import com.tehnology.kkt.models.Product;
 import com.tehnology.kkt.models.enums.Excise;
-import com.tehnology.kkt.models.enums.VAT;
 import com.tehnology.kkt.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

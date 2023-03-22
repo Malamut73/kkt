@@ -1,11 +1,14 @@
 package com.tehnology.kkt.controllers;
 
+import com.tehnology.kkt.models.Product;
 import com.tehnology.kkt.models.Request;
 import com.tehnology.kkt.models.User;
 import com.tehnology.kkt.models.catalog.Organization;
 import com.tehnology.kkt.models.catalog.Topic;
+import com.tehnology.kkt.models.enums.Condit;
 import com.tehnology.kkt.models.enums.Etsp;
 import com.tehnology.kkt.models.Comment;
+import com.tehnology.kkt.models.enums.Status;
 import com.tehnology.kkt.services.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.parameters.P;
@@ -29,6 +32,8 @@ public class RequestController {
     private final UserService userService;
     private final RequestService requestService;
     private final OrganizationService organizationService;
+    private final DescriptionService descriptionService;
+    private final ProductEquipmentService productEquipmentService;
 
     @GetMapping("/requests/{value}")
     public String requests(@PathVariable(name = "value", required = false) String value,
@@ -194,10 +199,10 @@ public class RequestController {
     }
 
     @PostMapping("/request/{requestid}/clients/create")
-    public String requestCreateClient(
-                                      @PathVariable("requestid") Request request,
+    public String requestCreateClient(@PathVariable("requestid") Request request,
                                       @ModelAttribute User user, Model model, Principal principal){
-
+        user.setStatus(Status.Новый);
+        userService.saveClient(user);
         request.getComments().add(Comment.builder()
                 .text("добавил клиента " + user.getLastName())
                 .user(principal.getName()).build());
@@ -207,6 +212,34 @@ public class RequestController {
         requestService.saveRequest(request);
 
         return "redirect:/request/{requestid}";
+    }
+
+    @GetMapping("/request/{requestid}/clients/{clientid}/products/create")
+    public String requestCreateProduct(@PathVariable("requestid") Long requestid,
+                                       @PathVariable("clientid") Long clientid, Model model){
+        model.addAttribute("descriptions", descriptionService.findAll());
+        model.addAttribute("requestid", requestid);
+        model.addAttribute("clientid", clientid);
+        model.addAttribute("conditions", Condit.values());
+        return "request/request-create-product";
+    }
+
+    @PostMapping("/request/{requestid}/clients/{clientid}/products/create")
+    public String requestCreateProduct(@PathVariable("requestid") Request request, Model model,
+                                       @PathVariable("clientid") User user,
+                                       @ModelAttribute Product product, Principal principal){
+        product.setUser(user);
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text("создал кассу").build());
+
+        request.getComments().add(Comment.builder()
+                .text("добавил кассу " + product.getName())
+                .user(principal.getName()).build());
+        request.setClient(user);
+        request.setProduct(productService.SvaAndFlush(product));
+        requestService.saveRequest(request);
+        return "redirect:/request/{requestid}";
+
     }
 
     @GetMapping("/request/{requestid}/topic")
@@ -231,40 +264,21 @@ public class RequestController {
 
     }
 
-    @GetMapping("/request/{requestid}/changeContactInfo")
-    public String changeContactInfo(@PathVariable("requestid") Request request,  Model model){
-        model.addAttribute("request", request);
-        return "request/edit-contact-info";
-    }
-
-    @PostMapping("/request/{requestid}/changeContactInfo")
-    public String caveContactInfo(@RequestParam("nameOfContact") String nameOfContact,
-                                  @RequestParam("phoneOfContact") String phoneOfContact,
-                                  @PathVariable("requestid") Request request, Principal principal){
-        request.getComments().add(Comment.builder()
-                .text("сохранил контактную информацию")
-                .user(principal.getName()).build());
-        request.setNameOfContact(nameOfContact);
-        request.setPhoneOfContact(phoneOfContact);
-        requestService.saveRequest(request);
-        return "redirect:/request/{requestid}";
-    }
-
-    @GetMapping("/request/{requestid}/productEquipment")
-    public String addEquipment(@PathVariable("requestid") Request request, Model model){
-        model.addAttribute("request", request);
-        return "request/addProductEquipment";
-    }
-
-    @PostMapping("/request/{requestid}/productEquipment")
-    public String addEquipment(@RequestParam("productEquipment") String productEquipment,
-                               @PathVariable("requestid") Request request, Principal principal){
-        request.setProductEquipment(productEquipment);
-        request.getComments().add(Comment.builder().user(principal.getName())
-                .text("добавил оборудование").build());
-        requestService.saveRequest(request);
-        return "redirect:/request/{requestid}";
-    }
+//    @GetMapping("/request/{requestid}/productEquipment")
+//    public String addEquipment(@PathVariable("requestid") Request request, Model model){
+//        model.addAttribute("request", request);
+//        return "request/addProductEquipment";
+//    }
+//
+//    @PostMapping("/request/{requestid}/productEquipment")
+//    public String addEquipment(@RequestParam("productEquipment") String productEquipment,
+//                               @PathVariable("requestid") Request request, Principal principal){
+//        request.setProductEquipment(productEquipment);
+//        request.getComments().add(Comment.builder().user(principal.getName())
+//                .text("добавил оборудование").build());
+//        requestService.saveRequest(request);
+//        return "redirect:/request/{requestid}";
+//    }
 
     @GetMapping("/request/{requestid}/productCondition")
     public String addCondition(@PathVariable("requestid") Request request, Model model){
@@ -299,11 +313,36 @@ public class RequestController {
     }
 
     @GetMapping("/remember/{requestid}")
-    public String remember(@PathVariable("requestid") Request request, Model model){
+    public String remember(@PathVariable("requestid") Request request, Model model,
+                            Principal principal){
         model.addAttribute("request", request);
-        return "remember";
+        model.addAttribute("user", userService.findByEmail(principal.getName()));
+        return "request/remember";
     }
 
+    @GetMapping("/request/{requestid}/clients/{clientid}/products/addProduct")
+    public String addProduct(@PathVariable("clientid") User user, Model model,
+                             @PathVariable("requestid") Long requestid){
+        model.addAttribute("requestid", requestid);
+        model.addAttribute("products", productService.findByUser(user));
+        return "request/add-product";
+    }
+
+    @GetMapping("/request/{requestid}/clients/{clientid}/products/{productid}")
+    public String addProduct(@PathVariable("requestid") Request request, Principal principal,
+                             @PathVariable("productid") Product product){
+        request.setProduct(product);
+        request.getComments().add(Comment.builder().user(principal.getName())
+                .text("добавил кассу").build());
+        requestService.saveRequest(request);
+        return "redirect:/request/{requestid}";
+    }
+
+    @GetMapping("/act/{requestid}")
+    public String act(@PathVariable("requestid") Request request, Model model){
+        model.addAttribute("request", request);
+        return "request/act";
+    }
 
 
 }

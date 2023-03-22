@@ -43,55 +43,26 @@ public class TypeOfActivityController {
     }
 
     @GetMapping("/clients/{clientid}/product/{productId}/typeofactivity")
-    public String addTypeOfActivity(@PathVariable Long clientid,
+    public String addTypeOfActivity(@PathVariable Long clientid, @PathVariable("productId") Product product,
                                     @PathVariable Long productId,  Model model){
         model.addAttribute("typeofactivities", typeOfActivityService.findAll());
+        model.addAttribute("product", product);
         model.addAttribute("clientid", clientid);
         model.addAttribute("productId", productId);
-        return "choose-typeofactivity";
+        return "typeofactivity/choose-typeofactivity";
     }
 
     @PostMapping("/clients/{clientid}/product/{productId}/typeofactivity")
-    public String addTypeOfActivity(@PathVariable Long productId, Principal principal,
-                                    @RequestParam("typeofactivity") String typeofactivity){
-        Product product = productService.findById(productId);
-        product.setTypeOfActivity(typeofactivity);
-        product.getComments().add(Comment.builder().user(principal.getName())
-                .text("изменил вид деятельности").build());
-        productService.saveProduct(product);
+    public String addTypeOfActivity(@RequestParam(name = "typeof[]") String[] typeof,
+                                    @PathVariable("productId") Product product, Principal principal){
+        productService.setTypeOfActivity(product, typeof, principal);
         return "redirect:/clients/{clientid}/product/{productId}";
-
     }
 
-    @GetMapping("/clients/{clientid}/product/{productId}/typeOfActivity/{typeofactivityid}/edit")
-    public String editTypeOfActivity(@PathVariable Long typeofactivityid,
-                                     @PathVariable Long clientid,
-                                     @PathVariable Long productId, Model model){
-        model.addAttribute("typeOfActivity", typeOfActivityService.findById(typeofactivityid));
-        model.addAttribute("typeofactivityid", typeofactivityid);
-        model.addAttribute("clientid", clientid);
-        model.addAttribute("productId", productId);
-        model.addAttribute("typeofactivities", typeOfActivityService.findAll());
-        return "choose-typeofactivity";
+    @GetMapping("/typeofactivity/{typeofactivitiyid}/delete")
+    public String deleteTypeOfActivity(@PathVariable("typeofactivitiyid") TypeOfActivity typeOfActivity){
+        typeOfActivityService.delete(typeOfActivity);
+        return "redirect:/typeofactivity";
     }
 
-    @PostMapping("/clients/{clientid}/product/{productId}/typeOfActivity/{typeofactivityid}/edit")
-    public String editTypeOfActivity(@PathVariable Long productId, TypeOfActivity typeOfActivity){
-        Product product = productService.findById(productId);
-        product.setTypeOfActivity(typeOfActivity.getName());
-        productService.saveProduct(product);
-        return "redirect:/clients/{clientid}/product/{productId}";
-
-    }
-
-    @PostMapping("/clients/{clientid}/product/{productId}/typeofactivity/delete")
-    public String deleteTypeOfActivity(@PathVariable Long productId, Principal principal){
-        Product product = productService.findById(productId);
-        product.setTypeOfActivity(null);
-        product.getComments().add(Comment.builder().user(principal.getName())
-                .text("удалил вид деятельности").build());
-        productService.saveProduct(product);
-        return "redirect:/clients/{clientid}/product/{productId}";
-
-    }
 }

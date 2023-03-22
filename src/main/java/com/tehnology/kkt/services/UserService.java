@@ -67,7 +67,6 @@ public class UserService implements UserDetailsService {
         userFromDB.setPatronymic(user.getPatronymic());
         userFromDB.setEmail(user.getEmail());
         userFromDB.setPhoneNumber(user.getPhoneNumber());
-        userFromDB.setPassword(user.getPassword());
         userDAO.save(userFromDB);
     }
 
@@ -116,6 +115,11 @@ public class UserService implements UserDetailsService {
     }
 
     public void saveStaff(User user) {
+        userDAO.save(user);
+    }
+
+    public void changePass(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDAO.save(user);
     }
 }

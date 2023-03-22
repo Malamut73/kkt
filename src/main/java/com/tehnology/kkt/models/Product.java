@@ -1,9 +1,5 @@
 package com.tehnology.kkt.models;
 
-import com.tehnology.kkt.models.catalog.Description;
-import com.tehnology.kkt.models.catalog.Internet;
-import com.tehnology.kkt.models.catalog.Taxation;
-import com.tehnology.kkt.models.catalog.TypeOfActivity;
 import com.tehnology.kkt.models.enums.*;
 
 import javax.persistence.*;
@@ -28,16 +24,14 @@ public class Product {
     private String name;
     private String address;
     private String number;
-    private String internet;
-    private String typeOfActivity;
     private String taxation;
-
-
-    @Enumerated(EnumType.STRING)
-    private VAT vat;
+    private String vat;
 
     @Enumerated(EnumType.STRING)
     private Excise excise;
+
+    @Enumerated(EnumType.STRING)
+    private Condit condit;
 
     @Enumerated(EnumType.STRING)
     private Egais egais;
@@ -51,6 +45,19 @@ public class Product {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Request> request = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Task> tasks = new HashSet<>();
+
+    @ElementCollection(targetClass=String.class)
+    private Set<String> productMark;
+
+    @ElementCollection(targetClass=String.class)
+    private Set<String> typeOfActivities;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "simCard_id")
+    private SimCard simCard;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "maintenance_id")

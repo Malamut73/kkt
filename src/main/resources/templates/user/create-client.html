@@ -2,13 +2,16 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Новый клиент</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
-<h3>Создать нового клиента</h3>
 
-<div>
+<div class="table__center">
+
     <form th:method="POST" th:action="@{/clients/create}" th:object="${user}" >
         Фамилия<input type="text" th:field="*{lastName}"><br><br>
         Имя<input type="text" th:field="*{name}"><br><br>
@@ -29,7 +32,8 @@
         ОГРН<input type="text" th:field="*{ogrn}"><br><br>
         КПП<input type="text" th:field="*{kpp}"><br><br>
 
-        <input type="submit" value="Добавить клиента"><br><br>
+        <button>Добавить клиента</button>
+
     </form>
 </div>
 </body>

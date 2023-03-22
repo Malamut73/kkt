@@ -13,11 +13,12 @@
         <a class="button__link" th:href="'/admin/' + ${user.email}">Редактировать профиль</a>
     </div>
     <div class="button">
+        <a class="button__link" th:href="'/admin/' + ${user.id} + '/newPass'">Сменить пароль</a>
+    </div>
+    <div sec:authorize="hasAnyAuthority('Administrator')" class="button">
         <a class="button__link" href="/admin/list">Список сотрудников</a>
     </div>
 </div>
-
-
 
 <div class="table__center">
 
@@ -29,6 +30,7 @@
         Телефон: <span  th:text="*{phoneNumber}"></span><br><br>
     </div>
 </div>
+
 
 </body>
 </html>

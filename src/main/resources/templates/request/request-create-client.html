@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/styles/css/index.css">
 
-    <title>Title</title>
+    <title>Новый клиент</title>
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
-<h3>Создать нового клиента</h3>
-<div>
+<div class="table__center">
     <form th:method="POST" th:action="'/request/' + ${requestid} + '/clients/create'" th:object="${user}" >
         Фамилия<input type="text" name="lastName"><br><br>
         Имя<input type="text" name="name"><br><br>
@@ -30,10 +29,9 @@
         ИНН<input type="text" name="inn"><br><br>
         ОГРН<input type="text" name="ogrn"><br><br>
         КПП<input type="text" name="kpp"><br><br>
+        <button>Добавить клиента</button>
 
-        <input type="submit" value="Добавить клиента"><br><br>
     </form>
 </div>
-
 </body>
 </html>

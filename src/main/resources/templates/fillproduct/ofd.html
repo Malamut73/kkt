@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:form="http://www.springframework.org/tags/form">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Создать ОФД</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <form th:action="'/fill/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/ofd/'" th:method="post">
+            Контакты: <input type="text" name="contact" ><br>
+            Пароль: <input type="text" name="pass" ><br>
+            <div th:if="!${#lists.isEmpty(tariffs)}">
+                <label for="ofd-tariff-edit-select">Тариф: </label>
+                <select id="ofd-tariff-edit-select"  name="days">
+                    <option th:each="tar : ${tariffs}" th:value="${tar.days}"  th:text="${tar.days}"></option>
+                </select>
+            </div>
+            <div th:if="!${#lists.isEmpty(operators)}">
+                <label for="ofd-operator-edit-select">Тариф: </label>
+                <select id="ofd-operator-edit-select"  name="operator">
+                    <option th:each="oper : ${operators}" th:value="${oper.name}" th:text="${oper.name}"></option>
+                </select>
+            </div>
+            Дата начала: <input type="date" name="dateStart" ><br><br>
+            Дата окончания: <input type="date" name="dayEnd" ><br><br>
+            <button>Далее</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

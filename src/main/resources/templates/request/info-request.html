@@ -19,25 +19,19 @@
             <a class="button__link" th:href="'/remember/' + ${request.id}">Распечатать памятку для регистрации</a>
         </div>
         <div class="button">
-<!--            <a class="button__link" href="/"></a>-->
+            <a class="button__link" th:href="'/act/'  + ${request.id}">Распечатать акт приема/передачи оборудования в ремонт</a>
         </div>
     </div>
     <div class="table__center">
         <div class="table__center__inner">
-            <table border="1">
+            <table class="table">
                 <tr>
                     <td>Дата создания заявки:</td>
                     <td>Тема:</td>
                     <td>Электронно цифрова подпись:</td>
                     <td>Клиент</td>
+                    <td>Касса</td>
                     <td>Контактные данные</td>
-                    <td >Коментарии:
-                        <div>
-                            <form method="post" th:action="'/request/' + ${request.id} + '/addcomment'">
-                                <textarea name="text"></textarea>
-                                <input type="submit" value="Добавить новый коментарий">
-                            </form>
-                        </div></td>
                     <td>Состояние оборудования</td>
                     <td>Комплектация</td>
                     <td>Описание неисправности</td>
@@ -45,24 +39,29 @@
                 </tr>
                 <tr>
                     <td>
-                        <p th:text="${request.dateOfCreated}"></p>
+                        <div class="date">
+                            <p th:text="${request.dateOfCreated}"></p>
+                        </div>
                     </td>
                     <td>
                         <p th:text="${request.topic}"></p>
                         <form th:action="'/request/' + ${request.id} + '/topic'">
-                            <input type="submit" value="Изменить тему заявки">
+                            <button>Изменить тему заявки</button>
+
                         </form>
                     </td>
                     <td>
                         <div th:if="${request.etsp} != null">
                             <p th:text="${request.etsp}"></p>
                             <form method="get" th:action="'/request/' + ${request.id} + '/addetsp'">
-                                <input type="submit" value="Изменить ЕЦП">
+                                <button>Изменить ЕЦП</button>
+
                             </form>
                         </div>
                         <div th:if="${request.etsp} == null">
                             <form method="get" th:action="'/request/' + ${request.id} + '/addetsp'">
-                                <input type="submit" value="Добавить ЭЦП">
+                                <button>Добавить ЕЦП</button>
+
                             </form>
                         </div>
                     </td>
@@ -72,28 +71,55 @@
                                 <span th:text="${request.client.lastName}"></span>
                             </a>
                             <form method="get" th:action="'/request/' + ${request.id} + '/addClient'">
-                                <input type="submit" value="Изменить клиента">
+                                <button>Изменить клиента</button>
+
                             </form>
                         </div>
                         <div th:if="${request.client} == null">
                             <form method="get" th:action="'/request/' + ${request.id} + '/addClient'">
-                                <input type="submit" value="Добавить клиента">
+                                <button>Добавить клиента</button>
+
                             </form>
                             <form method="get" th:action="'/request/' + ${request.id} + '/clients/create'">
-                                <input type="submit" value="Создать клиента">
+                                <button>Создать</button>
                             </form>
                         </div>
                     </td>
                     <td>
-                        <p th:text="${request.nameOfContact}"></p>
-                        <p th:text="${request.phoneOfContact}"></p>
-                        <form method="get" th:action="'/request/' + ${request.id} + '/changeContactInfo'">
-                            <input type="submit" value="Изменить котактные данные">
-                        </form>
+                        <div th:if="${request.client} != null">
+                            <div th:if="${request.product} != null">
+                                <a th:href="'/clients/' + ${request.client.id} + '/product/' + ${request.product.id}">
+                                    <span th:text="${request.product.name}"></span>
+                                </a>
+                                <form method="get" th:action="'/request/' + ${request.id} + '/clients/' + ${request.client.id} + '/products/addProduct'">
+                                    <button>Изменить кассу</button>
+
+                                </form>
+                            </div>
+                            <div th:if="${request.product} == null">
+                                <form method="get" th:action="'/request/' + ${request.id} + '/clients/' + ${request.client.id} + '/products/addProduct'">
+                                    <button>Добавить кассу</button>
+
+                                </form>
+                                <form method="get" th:action="'/request/' + ${request.id} + '/clients/' + ${request.client.id} + '/products/create'">
+                                    <button>Создать</button>
+                                </form>
+                            </div>
+                        </div>
                     </td>
-                    <td  class="comments">
-                        <div style="width: 400px;" th:each="comment : ${request.comments}" >
-                            <span th:text="${comment.dateOfCreated} + ' ' + ${comment.user} + ' ' + ${comment.text}"></span>
+                    <td>
+                        <div th:if="${request.contactPeoples}" th:each="man : ${request.contactPeoples}">
+                            <a th:href="'/request/' + ${request.id} + '/contactPeople/' + ${man.id}">
+                                <span th:text="${man.nameOfContact}"></span>
+                            </a>
+                            <br>
+                            <span th:text="${man.phoneOfContact}"></span>
+                        </div>
+                        <div>
+                            <form method="get" th:action="'/request/' + ${request.id} + '/contactPeople/'">
+                                <button>Добавить контактные данные</button>
+
+                            </form>
                         </div>
                     </td>
                     <td>
@@ -106,12 +132,14 @@
                         </div>
                     </td>
                     <td>
-                        <div th:if="${request.productEquipment} != null">
-                            <span th:text="${request.productEquipment}"></span><br>
+                        <div th:if="${request.productEquipments} != null" >
+                            <div th:each="productEquipment : ${request.productEquipments}">
+                                <span th:text="${productEquipment}"></span><br>
+                            </div>
                             <a th:href="'/request/' + ${request.id} + '/productEquipment'">Изменить комплектацию</a>
                         </div>
-                        <div th:if="${request.productEquipment} == null">
-                            <a th:href="'/request/' + ${request.id} + '/productEquipment'">Создать комплектацию</a>
+                        <div th:if="${request.productEquipments} == null">
+                            <a th:href="'/request/' + ${request.id} + '/productEquipment'">Добавить комплектацию</a>
                         </div>
                     </td>
                     <td>
@@ -129,14 +157,35 @@
                         </div>
                         <div th:if="${request.active} == true">
                             <form method="post" th:action="'/request/' + ${request.id} + '/closerequest'">
-                                <input type="submit" value="Закрыть заявку">
+                                <button>Закрыть заявку</button>
+
                             </form>
+                        </div>
+                    </td>
+                </tr>
+                <tr >
+                    <td colspan="10">
+                        <div>
+                            <form method="post" th:action="'/request/' + ${request.id} + '/addcomment'">
+                                <textarea name="text"></textarea>
+                                <button>Добавить новый коментарий</button>
+
+                            </form>
+                        </div>
+                        <div class="parent">
+                            <div th:each="comment : ${request.comments}" >
+                                <div class="comment">
+                                    <span th:text="${comment.dateOfCreated} + ' ' + ${comment.user} + ' ' + ${comment.text}"></span>
+                                </div>
+                            </div>
                         </div>
                     </td>
                 </tr>
             </table>
         </div>
     </div>
+    <script type="text/javascript" src="/javascript/js/sort.js"></script>
+    <script type="text/javascript" src="/javascript/js/date.js"></script>
 
 </body>
 </html>

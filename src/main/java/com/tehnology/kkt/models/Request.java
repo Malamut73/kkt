@@ -29,11 +29,7 @@ public class Request { //заявка
     private String comment;
     private boolean active;
     private String topic;
-    private String nameOfContact;
-    private String phoneOfContact;
 
-    @Column(columnDefinition = "TEXT")
-    private String productEquipment;
     @Column(columnDefinition = "TEXT")
     private String productCondition;
     @Column(columnDefinition = "TEXT")
@@ -41,6 +37,12 @@ public class Request { //заявка
 
     @Enumerated(EnumType.STRING)
     private Etsp etsp;
+
+    @ElementCollection(targetClass=String.class)
+    private Set<String> productEquipments;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<ContactPerson> contactPeoples = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Comment> comments = new HashSet<>();

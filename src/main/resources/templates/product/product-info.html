@@ -19,6 +19,7 @@
     <div class="body__product">
         <div class="wrapper">
             <div class="one">
+                <p th:text="${product.condit}"></p>
                 <p>Собственник: <span th:text="${product.user.name} + ' ' + ${product.user.lastName}"></span></p>
                 <p>Название: <span th:text="${product.name}"></span></p>
                 <p>Заводской номер: <span th:text="${product.number}"></span></p>
@@ -115,7 +116,7 @@
                     <p>Пароль: </p>
                     <p>Код администратора: </p>
                     <p>Код сотрудника: </p>
-                    <p>Электронная почта: </p>
+                    <p>Ссылка на личный кабинет: </p>
                     <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/lk'" method="get">
                         <button type="submit">Добавить личный кабинет</button>
                     </form>
@@ -124,6 +125,7 @@
             <div class="five">
                 <div th:if="${product.fn} != null">
                     <p>ФН</p>
+                    <p>Тариф: <span th:text="${product.fn.dateStart}"></span></p>
                     <p>Дата начала: <span th:text="${product.fn.dateStart}"></span></p>
                     <p>Дата окончания: <span th:text="${product.fn.dayEnd}"></span></p>
                     <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/fn/' + ${product.fn.id} + '/edit'">
@@ -143,89 +145,36 @@
                 </div>
             </div>
             <div class="six">
-                <div class="six__top">
-                    <div class="six-one">
-                        <div th:if="${product.internet} != null">
-                            <p >Интернет: </p>
-                            <p th:text="${product.internet}"></p>
-                            <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/internet/delete'" method="post">
-                                <input type="submit" value="Удалить">
-                            </form>
-                            <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/internet/edit'" method="get">
-                                <input type="submit" value="Редактировать">
-                            </form>
-                        </div>
-                        <div th:if="${product.internet} == null">
-                            <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/internet'" method="get" th:object="${product}">
-                                <input type="submit" value="Добавить нтернет">
-                            </form>
-                        </div>
-                    </div>
-                    <div class="six-two">
-                        <div th:if="${product.typeOfActivity} != null">
-                            <div>
-                                <p>Вид деятельности:</p>
-                                <p th:text="${product.typeOfActivity}"></p>
-                            </div>
-                            <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/typeofactivity/delete'" method="post">
-                                <input type="submit" value="Удалить">
-                            </form>
-                            <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/typeofactivity'">
-                                <input type="submit" value="Редактировать">
-                            </form>
-                        </div>
-                        <div th:if="${product.typeOfActivity} == null">
-                            <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/typeofactivity'">
-                                <input type="submit" value="Добавить вид деятельности">
-                            </form>
-                        </div>
-                    </div>
-                    <div class="six-three">
-                        <div th:if="${product.taxation} != null">
-                            <div>
-                                <p>Налогооблажение:</p>
-                                <p th:text="${product.taxation}"></p>
-                            </div>
-                            <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/taxation/delete'" method="post">
-                                <input type="submit" value="Удалить">
-                            </form>
-                            <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/taxation/'">
-                                <input type="submit" value="Редактировать">
-                            </form>
-                        </div>
-                        <div th:if="${product.taxation} == null">
-                            <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/taxation'">
-                                <input type="submit" value="Добавить налогооблажение">
-                            </form>
-                        </div>
-                    </div>
-                </div>
                 <div class="six__down">
                     <div class="six-four">
                         <p>НДС</p>
-                        <div th:if="${product.vat} == null">
-                            <form method="post" th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/addvat'">
-                                <input type="submit" value="Добавить НДС">
-                            </form>
-                        </div>
-                        <div th:if="${product.vat} != null">
+                        <div>
                             <p th:text="${product.vat}"></p>
-                            <form method="post" th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/deletevat'">
-                                <input type="submit" value="Удалить НДС">
+                            <form method="get" th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/addvat'">
+                                <button>Изменить НДС</button>
+
                             </form>
+                            <div th:if="${product.vat} != null">
+                                <form method="post" th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/deletevat'">
+                                    <button>Удалить НДС</button>
+
+                                </form>
+                            </div>
+
                         </div>
                     </div>
                     <div class="six-five">
                         <p>Акцизы</p>
                         <div th:if="${product.excise} == null">
                             <form method="post" th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/addexcise'">
-                                <input type="submit" value="Добавить акцизы">
+                                <button>Добавить акцизы</button>
                             </form>
                         </div>
                         <div th:if="${product.excise} != null">
                             <p th:text="${product.excise}"></p>
                             <form method="post" th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/deleteexcise'">
-                                <input type="submit" value="Удалить акцизы">
+                                <button>Удалить акцизы</button>
+
                             </form>
                         </div>
                     </div>
@@ -233,13 +182,37 @@
                         <p>Егаис</p>
                         <div th:if="${product.egais} == null">
                             <form method="post" th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/addegais'">
-                                <input type="submit" value="Добавить егаис">
+                                <button>Добавить егаис</button>
+
                             </form>
                         </div>
                         <div th:if="${product.egais} != null">
                             <p th:text="${product.egais}"></p>
                             <form method="post" th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/deleteegais'">
-                                <input type="submit" value="Удалить егаис">
+                                <button>Удалить егаис</button>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="six-three">
+                        <p>Налогооблажение:</p>
+                        <div th:if="${product.taxation} != null">
+                            <div>
+
+                                <p th:text="${product.taxation}"></p>
+                            </div>
+                            <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/taxation/'">
+                                <button>Редактировать</button>
+                            </form>
+                            <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/taxation/delete'" method="post">
+                                <button>Удалить</button>
+
+                            </form>
+                        </div>
+                        <div th:if="${product.taxation} == null">
+                            <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/taxation'">
+                                <button>Добавить налогооблажение</button>
+
                             </form>
                         </div>
                     </div>
@@ -247,14 +220,94 @@
             </div>
             <div class="seven">
                 <div class="seven__inner">
-                    <div th:each="comment : ${product.comments}" >
-                        <span th:text="${comment.dateOfCreated} + ' ' +${comment.user} + ' ' + ${comment.text}"></span><br>
+                    <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/addComment'">
+                        <textarea name="text" id="" cols="80" rows="3"></textarea>
+                        <br>
+                        <button>Добавить коментарий</button>
+                    </form>
+                    <div class="parent">
+                        <div th:each="comment : ${product.comments}" >
+                            <div class="comment">
+                                <span th:text="${comment.dateOfCreated} + ' ' +${comment.user} + ' ' + ${comment.text}"></span>
+                            </div>
+                        </div>
                     </div>
+
+                </div>
+            </div>
+            <div class="eight">
+                <div>
+                    <div th:if="${product.simCard} != null">
+                        <p >Сим-карта: </p>
+                        Название: <span th:text="${product.simCard.name}"></span><br>
+                        Лицевой счет: <span th:text="${product.simCard.personalAccount}"></span><br>
+                        Номер сим-карты: <span th:text="${product.simCard.numberCard}"></span><br>
+                        <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/internet/' + ${product.simCard.id} + '/delete'" method="post">
+                            <button>Удалить</button>
+                        </form>
+                        <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/internet/edit'" method="get">
+                            <button>Редактировать</button>
+
+                        </form>
+                    </div>
+                    <div th:if="${product.simCard} == null">
+                        <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/internet'" method="get" th:object="${product}">
+                            <button>Добавить сим-карту</button>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="nine">
+                <div th:if="${product.typeOfActivities} != null">
+                    <p>Вид деятельности:</p>
+                    <div th:each="typeOfActivity : ${product.typeOfActivities}">
+                        <p th:text="${typeOfActivity}"></p>
+                    </div>
+                    <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/typeofactivity'">
+                        <button>Изменить вид деятельности</button>
+
+                    </form>
+                </div>
+            </div>
+            <div class="ten">
+                <div th:if="${product.productMark} != null">
+                    <p>Маркировка:</p>
+                    <div th:each="mark : ${product.productMark}">
+                        <p th:text="${mark}"></p>
+                    </div>
+                    <form th:action="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/productMark'">
+                        <button>Изменить маркировку</button>
+
+                    </form>
+                </div>
+            </div>
+            <div class="eleven">
+                <div th:if="${product.tasks} != null" th:each="task : ${product.tasks}">
+                    <a th:href="'/tasks/' + ${task.id}">
+                        <span  th:text="${task.dateOfCreated}"></span>
+                    </a>
+                    <span th:text="${task.name}"></span>
+                    <a th:href="'/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/task/' + ${task.id} + '/delete'">
+                        <span>Удалить</span>
+                    </a>
+                </div>
+                <div>
+                    <form th:method="get" th:action="'/clients/'+ ${product.user.id} + '/product/' + ${product.id} + '/addTask'">
+                        <button>Добавить задачу</button>
+                    </form>
+                </div>
+                <div>
+                    <form method="get" th:action="'/clients/'+ ${product.user.id} + '/product/' + ${product.id} + '/task'">
+                        <button>Создать задачу</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 
+    <script type="text/javascript" src="/javascript/js/sort.js"></script>
 
 </body>
 </html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+    <title>ОФД</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<div class="head">
+
+    <div class="button">
+        <a class="button__link" href="/controls/maintenances">Сортировать по техлбслуживанию</a>
+    </div>
+    <div class="button">
+        <a class="button__link" href="/controls/ofds">Сортировать по ОФД</a>
+    </div>
+    <div class="button">
+        <a class="button__link" href="/controls/fns">Сортировать по ФН</a>
+    </div>
+</div>
+
+<div class="table__center">
+
+
+    <div class="alone__body">
+        <div class="alone__body__inner">
+            <table class="table">
+                <tr>
+                    <td>Организация</td>
+                    <td>Касса</td>
+                    <td>Срок окончания техобслуживание</td>
+                    <td>Срок окончания ОФД</td>
+                    <td>Срок окончания ФН</td>
+                </tr>
+                <tr th:each="ofd : ${ofds}">
+                    <td>
+                        <a th:href="'/clients/' + ${ofd.product.user.id} + '/product/' + ${ofd.product.id}">
+                                    <span th:text="${ofd.product.user.name} + ' ' + ${ofd.product.user.lastName}
+                                    + ' ' + ${ofd.product.user.typeOfOrganization} + ' ' + ${ofd.product.user.nameOfOrganization}"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a th:href="'/clients/' + ${ofd.product.user.id} + '/product/' + ${ofd.product.id}">
+                            <span th:text="${ofd.product.name}"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <span th:text="${ofd.product.maintenance.dayEnd}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${ofd.dayEnd}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${ofd.product.fn.dayEnd}"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

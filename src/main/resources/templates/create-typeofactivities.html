@@ -2,14 +2,19 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Вид деятельности</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<div class="table__center">
+
 <p>Введите вид деятельности</p>
 <form th:action="'/typeofactivity/create'" method="post" th:object="${typeofactivity}">
     Название: <input type="text" th:field="*{name}">
-    <input type="submit" value="Создать">
+    <button>Создать</button>
 </form>
-
+</div>
 </body>
 </html>

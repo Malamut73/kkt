@@ -2,13 +2,18 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Тема</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<div class="table__center">
+
     <form th:action="'/topics/create'" th:method="post" th:object="${topic}">
         Название: <input type="text" th:field="*{name}"><br>
-        <input type="submit" value="Добавить"><br><br>
+        <button>Добавить</button>
     </form>
-
+</div>
 </body>
 </html>

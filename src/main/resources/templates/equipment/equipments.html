@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Оборудования</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="head">
+    <div class="button">
+        <a class="button__link" href="/equipments/create">Создать оборудование</a>
+    </div>
+</div>
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <div style="display:flex; align-items:center;" th:each="equipment : ${equipments}">
+            <span>Название: </span><span th:text="${equipment.name}"></span>
+            <div class="button__blue">
+                <a class="button__link__blue" th:href="'/equipments/' + ${equipment.id} + '/delete'">Удалить</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

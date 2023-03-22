@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Выбрать сим-карту</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <div th:if="!${#lists.isEmpty(internets)}">
+            <form method="post" th:action="'/fill/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/internet/'">
+
+                <div th:each="inter : ${internets}" >
+                    <input th:id="${inter}" type="radio" name="name" th:value="${inter.name}" th:text="${inter.name}" />
+                </div>
+                <label for="personalAccount" >Лицевой счет</label>
+                <input type="text" id="personalAccount" name="personalAccount">
+                <br>
+                <label for="numberCard" >Номер карты</label>
+                <input type="text" id="numberCard" name="numberCard">
+                <br>
+                <button>Далее</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

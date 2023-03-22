@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Контактное лицо</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<div class="table__center">
+
+<form th:object="${person}" method="post" th:action="'/request/' + ${requestid} + '/contactPeople/' + ${person.id}">
+    <input th:if="${person}" type="hidden" th:value="${person.id}" name="id">
+    <br>
+    <label for="nameOfContact">Имя контакта</label>
+    <input type="text" id="nameOfContact" th:value="${person.nameOfContact}" name="nameOfContact">
+    <br>
+    <label for="phoneOfContact">Телефон</label>
+    <input type="text" id="phoneOfContact"  th:value="${person.phoneOfContact}" name="phoneOfContact">
+    <br>
+    <label for="main">Выбрать главным контактным лицом</label>
+    <select name="main" id="main">
+        <option value="true">Да</option>
+        <option value="false" selected>Нет</option>
+    </select>
+    <button>Сохранить</button>
+</form>
+<form method="post" th:action="'/request/' + ${requestid} + '/contactPeople/' + ${person.id} + '/delete'">
+    <button>Удалить</button>
+</form>
+</div>
+
+
+</body>
+</html>

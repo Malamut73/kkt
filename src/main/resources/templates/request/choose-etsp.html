@@ -2,17 +2,23 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>ЕЦП</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<div class="table__center">
+
 <form th:object="${request}" th:method="POST" th:action="'/request/' + ${requestid} + '/addetsp'" >
 
     <div th:each="etsp : ${etsps}">
         <input type="radio"  th:value="${etsp}" checked th:text="${etsp}" name="etsp">
     </div>
 
-    <input type="submit" value="Добавить"><br><br>
+    <button>Добавить</button>
 </form>
+</div>
 
 </body>
 </html>

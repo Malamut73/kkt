@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title th:text="${result}"></title>
+</head>
+<body>
+
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="head">
+    <div class="button">
+        <a class="button__link" href="/admin">Вернуться к своему профилю</a>
+    </div>
+    <div class="button">
+        <a class="button__link" th:href="'/admin/' + ${user.email}">Редактировать профиль</a>
+    </div>
+    <div class="button">
+        <a class="button__link" th:href="'/admin/' + ${user.id} + '/newPass'">Сменить пароль</a>
+    </div>
+
+</div>
+<div class="table__center">
+
+<p th:text="${result}"></p>
+</div>
+
+
+</body>
+</html>

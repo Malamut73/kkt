@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -48,6 +49,12 @@ public class OrganizationController {
         model.addAttribute("user", new User());
         model.addAttribute("organizations", organizationService.findAll());
         return "redirect:/clients/create";
+    }
+
+    @GetMapping("/organization/{organizationid}/delete")
+    public String deleteOrganization(@PathVariable("organizationid") Organization organization){
+        organizationService.delete(organization);
+        return "redirect:/organization";
     }
 
 }

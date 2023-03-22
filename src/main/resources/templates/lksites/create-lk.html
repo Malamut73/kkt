@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:form="http://www.springframework.org/tags/form">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Создать личный кабинет</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <div style="display:flex; align-items:center;">
+            <div th:if="${lkid} != null">
+                <form th:action="'/clients/' + ${clientid} + '/product/' + ${productid} + '/lk/' + ${lkid} + '/edit'" th:object="${lk}" th:method="post">
+                    <input type="hidden" th:field="*{id}" th:value="*{id}">
+                    Контакты: <input type="text" th:field="*{contact}" th:value="*{contact}"><br>
+                    Пароль: <input type="text" th:field="*{pass}" th:value="*{pass}"><br>
+                    Код администратора: <input type="text" th:field="*{codeAdministrator}" th:value="*{codeAdministrator}"><br>
+                    Код сотрудника: <input type="text" th:field="*{codeEmployee}" th:value="*{codeEmployee}"><br>
+                    <br>
+                    <label for="linkAddress2">Ссылка на кабинет:</label>
+                    <select name="linkAddress" id="linkAddress2">
+                        <option th:each="lksite : ${lksites}" th:value="${lksite.name}" th:text="${lksite.name}"></option>
+                    </select>
+                    <br>
+                    <button>Добавить</button>
+                </form>
+            </div>
+            <div th:if="${lk} == null">
+                <form th:action="'/clients/' + ${clientid} + '/product/' + ${productid} + '/lk'" th:object="${lk}" th:method="post">
+                    Контакты: <input type="text" name="contact"><br>
+                    Пароль: <input type="text" name="pass" ><br>
+                    Код администратора: <input type="text" name="codeAdministrator"><br>
+                    Код сотрудника: <input type="text" name="codeEmployee"><br>
+                    <br>
+                    <label for="linkAddress">Ссылка на кабинет:</label>
+                    <select name="linkAddress" id="linkAddress">
+                        <option th:each="lksite : ${lksites}" th:value="${lksite.name}" th:text="${lksite.name}"></option>
+                    </select>
+                    <br>
+                    <button>Добавить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

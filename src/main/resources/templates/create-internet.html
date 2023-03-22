@@ -2,15 +2,19 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Создать сим-карту</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
-<p>Создать интернет</p>
+<div class="table__center">
 <form th:action="'/internets/create'" method="post" th:object="${internet}">
     Имя: <input type="text" th:field="*{name}">
-    <input type="submit" th:value="Создать">
+    <button>Создать</button>
 </form>
+</div>
 
 </body>
 </html>

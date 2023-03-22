@@ -34,5 +34,11 @@ public class TopicController {
         return"redirect:/topics";
     }
 
+    @GetMapping("/topics/{topicid}/delete")
+    public String deleteTopic(@PathVariable("topicid") Topic topic){
+        topicService.delete(topic);
+        return "redirect:/topics";
+    }
+
 
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Создать вид деятельности</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <div th:if="!${#lists.isEmpty(typeofactivities)}">
+            <form  method="post"  th:action="'/fill/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/typeofactivity'">
+                <div th:each="type : ${typeofactivities}">
+                    <label for="id" th:text="${type.name}"></label>
+                    <input id="id" type="checkbox" th:name="typeof[]" th:value="${type.name}" >
+                </div>
+                <button>Далее</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

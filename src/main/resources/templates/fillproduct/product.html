@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:form="http://www.springframework.org/tags/form">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Создать кассу</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <form th:method="POST" th:action="'/fill/clients/' + ${clientid} + '/product'" >
+
+            <label for="kassa-select">Касса: </label>
+            <select id="kassa-select"  name="name">
+                <option th:each="des : ${descriptions}" th:value="${des.name}" th:text="${des.name}"></option>
+            </select>
+            <br>
+            <label for="condition">Состояние</label>
+            <select name="condit" id="condition">
+                <option th:each="con : ${conditions}" th:value="${con}" th:text="${con}"></option>
+            </select>
+            <br>
+            Заводской номер<input type="text" name="number"><br><br>
+            Адрес<input type="text" name="address"><br><br>
+
+            <button>Далее</button>
+        </form>
+    </div>
+</div>
+
+
+
+</body>
+</html>

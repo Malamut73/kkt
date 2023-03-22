@@ -1,14 +1,14 @@
 package com.tehnology.kkt.services;
 
 import com.tehnology.kkt.models.Comment;
+import com.tehnology.kkt.models.Product;
 import com.tehnology.kkt.models.Request;
 import com.tehnology.kkt.repositories.RequestDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.security.Principal;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,11 +22,7 @@ public class RequestService {
     }
 
     public Request findById(Long requestid) {
-//        Request request = requestDAO.getReferenceById(requestid);
-//        List<Comment> comments = request.getComments().stream()
-//                .sorted(Comparator.comparing(Comment::getDateOfCreated))
-//                .collect(Collectors.toList());
-//        request.setComments(comments);
+
         return requestDAO.getReferenceById(requestid);
     }
 
@@ -47,5 +43,14 @@ public class RequestService {
             default:
                 return requestDAO.findAllByOrderByDateOfCreatedAsc();
         }
+    }
+
+    public void setProductEquipment(Request request, String[] equip, Principal principal) {
+        Set<String> equipments = new HashSet<>(Arrays.asList(equip));
+        request.setProductEquipments(equipments);
+        request.getComments().add(Comment.builder().user(principal.getName())
+                .text("изменил список оборудования").build());
+        requestDAO.save(request);
+
     }
 }

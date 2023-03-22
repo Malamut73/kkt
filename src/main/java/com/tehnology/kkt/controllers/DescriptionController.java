@@ -52,6 +52,12 @@ public class DescriptionController {
         return "redirect:/clients/{clientid}/product";
     }
 
+    @GetMapping("/descriptions/{descriptionid}/delete")
+    public String deleteDescription(@PathVariable("descriptionid") Description description){
+        descriptionService.delete(description);
+        return "redirect:/descriptions";
+    }
+
 
 
 

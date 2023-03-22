@@ -2,18 +2,27 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+    <title>Сим-карта</title>
 </head>
 <body>
-    <div th:each="internet : ${internets}">
-        <p th:text="${internet.name}"></p>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="head">
+    <div class="button">
+        <a class="button__link" href="/internets/create">Создать сим-карту</a>
     </div>
-    <form th:action="'/internets/create'">
-        <input type="submit" value="Создать интернет">
-    </form>
-    <br>
-    <form th:action="'/catalog'">
-        <input type="submit" value="Назад">
-    </form>
+</div>
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <div style="display:flex; align-items:center;" th:each="internet : ${internets}">
+            <span>Название: <span th:text="${internet.name}"></span></span>
+            <div class="button__blue">
+                <a class="button__link__blue" th:href="'/internets/' + ${internet.id} + '/delete'">Удалить</a>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

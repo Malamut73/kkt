@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:form="http://www.springframework.org/tags/form">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Создать личный кабинет</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <div style="display:flex; align-items:center;">
+            <form th:action="'/fill/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/lk'" th:object="${lk}" th:method="post">
+                Контакты: <input type="text" name="contact"><br>
+                Пароль: <input type="text" name="pass" ><br>
+                Код администратора: <input type="text" name="codeAdministrator"><br>
+                Код сотрудника: <input type="text" name="codeEmployee"><br>
+                <br>
+                <label for="linkAddress">Ссылка на кабинет:</label>
+                <select name="linkAddress" id="linkAddress">
+                    <option th:each="lksite : ${lksites}" th:value="${lksite.name}" th:text="${lksite.name}"></option>
+                </select>
+                <br>
+                <button>Далее</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

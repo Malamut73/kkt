@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Создать техобслуживание</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <form th:method="POST" th:action="'/fill/clients/' + ${product.user.id} + '/product/' + ${product.id} + '/maintenance'"  >
+            Дата начала: <input type="date" name="dateStart"><br><br>
+            Дата окончания: <input type="date" name="dayEnd"><br><br>
+            <div th:if="!${#lists.isEmpty(maintenancetariffs)}">
+                <label for="maintenancetariff-select">Тариф: </label>
+                <select id="maintenancetariff-select"  name="maintenanceTariff">
+                    <option th:each="main : ${maintenancetariffs}" th:value="${main.id}" th:text="${main.name}"></option>
+                </select>
+            </div>
+            <label for="text">Комментарий</label><br>
+            <textarea name="text" id="text" cols="30" rows="10"></textarea>
+            <br>
+            <button>Далее</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

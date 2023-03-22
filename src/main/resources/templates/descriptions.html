@@ -16,9 +16,13 @@
 
 <div class="table__center">
     <div class="table__center__inner">
-        <div th:each="description : ${descriptions}">
-            <p>Название: <span th:text="${description.name}"></span></p>
-        </div>    </div>
+        <div style="display:flex; align-items:center;" th:each="description : ${descriptions}">
+            <span>Название: <span th:text="${description.name}"></span></span>
+            <div class="button__blue">
+                <a class="button__link__blue" th:href="'/descriptions/' + ${description.id} + '/delete'">Удалить</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>

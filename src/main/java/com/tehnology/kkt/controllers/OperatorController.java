@@ -66,4 +66,10 @@ public class OperatorController {
         return "redirect:/clients/{clientid}/product/{productid}/ofd";
     }
 
+    @GetMapping("/operator/{operatorid}/delete")
+    public String deleteOperator(@PathVariable("operatorid") Operator operator){
+        operatorService.delete(operator);
+        return "redirect:/operator";
+    }
+
 }

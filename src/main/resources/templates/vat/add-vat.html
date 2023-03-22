@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+    <title>Добавить НДС</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <form method="post" th:action="'/clients/' + ${clientid} + '/product/' + ${productId} + '/addvat'">
+            <label for="vat">Ставка НДС</label>
+            <select name="vat" id="vat">
+                <option th:each="vat : ${vats}" th:value="${vat.name}" th:text="${vat.name}"></option>
+            </select>
+            <br>
+            <button>Сохранить</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

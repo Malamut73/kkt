@@ -25,4 +25,8 @@ public class DescriptionService {
     public Description findById(Long id) {
         return descriptionDAO.getReferenceById(id);
     }
+
+    public void delete(Description description) {
+        descriptionDAO.delete(description);
+    }
 }

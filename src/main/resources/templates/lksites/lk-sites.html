@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<div class="head">
+    <div class="button">
+        <a class="button__link" th:href="'/lkSites/new'">Создать личный кабинет</a>
+    </div>
+</div>
+
+<div class="table__center">
+    <div class="table__center__inner">
+        <div style="display:flex; align-items:center;" th:each="lkSite : ${lkSites}">
+            <span>Название: <span th:text="${lkSite.name}"></span></span>
+            <div class="button__blue">
+                <a class="button__link__blue" th:href="'/lkSites/' + ${lkSite.id} + '/delete'">Удалить</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

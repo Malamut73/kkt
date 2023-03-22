@@ -2,21 +2,27 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+    <title>Вид деятельности</title>
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
-<div th:each="typeofactivitiy : ${typeofactivities}">
-    <p>Название: <span th:text="${typeofactivitiy.name}"></span></p>
+<div class="head">
+    <div class="button">
+        <a class="button__link" href="/typeofactivity/create">Создать вид деятельности</a>
+    </div>
 </div>
 
-<form th:action="'/typeofactivity/create'">
-    <input type="submit" value="Создать вид деятельности">
-</form>
-<br>
-<form th:action="'/catalog'">
-    <input type="submit" value="Назад">
-</form>
-
+<div class="table__center">
+    <div class="table__center__inner">
+        <div style="display:flex; align-items:center;" th:each="typeofactivitiy : ${typeofactivities}">
+            <span>Название: <span th:text="${typeofactivitiy.name}"></span></span>
+            <div class="button__blue">
+                <a class="button__link__blue" th:href="'/typeofactivity/' + ${typeofactivitiy.id} + '/delete'">Удалить</a>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

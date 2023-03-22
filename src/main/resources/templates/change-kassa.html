@@ -2,18 +2,22 @@
 <html lang="en"  xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml ">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Изменить кассу</title>
+    <link rel="stylesheet" href="/styles/css/index.css">
+
 </head>
 <body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<div class="table__center">
+
 <form method="post" th:action="'/clients/' + ${clientid} + '/request/' + ${request.id} + '/kassa'">
     <label for="kassa">Касса: </label>
-    <p th:text="${request.id}"></p>
-    <p th:text="${clientid}"></p>
     <select name="id" id="kassa" >
         <option th:each="kassa : ${kassas}" th:selected="${kassa} == ${request.product}" th:value="${kassa.id}" th:text="${kassa.description.name}"></option>
     </select>
-    <input type="submit" value="Сохранить">
+    <button>Сохранить</button>
 </form>
+</div>
 
 </body>
 </html>

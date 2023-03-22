@@ -1,9 +1,7 @@
 package com.tehnology.kkt.controllers;
 
-import com.tehnology.kkt.models.Comment;
-import com.tehnology.kkt.models.Product;
-import com.tehnology.kkt.models.Request;
-import com.tehnology.kkt.models.User;
+import com.tehnology.kkt.models.*;
+import com.tehnology.kkt.models.enums.Condit;
 import com.tehnology.kkt.services.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -23,12 +21,14 @@ public class ProductController {
     private final OFDService ofdService;
     private final FNService fnService;
     private final MaintenanceService maintenanceService;
+    private final TaskService taskService;
 
     @GetMapping("/clients/{clientid}/product")
     public String crateProduct(@PathVariable Long clientid, Model model) {
         model.addAttribute("id", clientid);
         model.addAttribute("product", new Product());
         model.addAttribute("descriptions", descriptionService.findAll());
+        model.addAttribute("conditions", Condit.values());
         return "product/create-product";
     }
 
@@ -62,13 +62,16 @@ public class ProductController {
         model.addAttribute("descriptions", descriptionService.findAll());
         model.addAttribute("clientid", clientid);
         model.addAttribute("productid", productid);
-        return "edit-product";
+        model.addAttribute("conditions", Condit.values());
+        return "product/edit-product";
     }
 
     @PostMapping("/clients/{clientid}/product/{productid}/edit")
     public String editProduct(@RequestParam("name") String name, @RequestParam("address") String address,
                               @RequestParam("number") String number, Principal principal,
-                              @PathVariable("productid") Product product, Model model){
+                              @PathVariable("productid") Product product, Model model,
+                              @RequestParam("condit") Condit condit){
+        product.setCondit(condit);
         product.getComments().add(Comment.builder()
                 .user(principal.getName())
                 .text("отредактировал описание товара").build());
@@ -135,6 +138,36 @@ public class ProductController {
         model.addAttribute("fns", fnService.findAllByOrderByDayEndDesc());
         model.addAttribute("maintenances", maintenanceService.findAllByOrderByDayEndDesc());
         return "list-controls";
+    }
+
+    @GetMapping("/clients/{clientid}/product/{productid}/addComment")
+    public String addComment(@RequestParam("text") String text, Principal principal,
+                             @PathVariable("productid") Product product){
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text(text).build());
+        productService.saveProduct(product);
+        return "redirect:/clients/{clientid}/product/{productid}";
+
+    }
+
+    @GetMapping("/clients/{clientid}/product/{productid}/addTask")
+    public String addTask(@PathVariable("clientid") Long clientid, Model model,
+                          @PathVariable("productid") Long productid){
+        model.addAttribute("clientid", clientid);
+        model.addAttribute("productid", productid);
+        model.addAttribute("tasks", taskService.findByTasksIsNull());
+        return "product/add-task";
+    }
+
+    @GetMapping("/clients/{clientid}/product/{productid}/task/{taskid}")
+    public String addTask(@PathVariable("clientid") Long clientid, Principal principal,
+                          @PathVariable("productid") Product product, @PathVariable("taskid") Task task){
+        product.getTasks().add(task);
+        product.getComments().add(Comment.builder().user(principal.getName())
+                .text("добавил задачу").build());
+        task.setProduct(product);
+        productService.saveProduct(product);
+        return "redirect:/clients/{clientid}/product/{productid}";
     }
 
 
