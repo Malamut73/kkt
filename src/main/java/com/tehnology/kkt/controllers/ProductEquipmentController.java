@@ -53,9 +53,9 @@ public class ProductEquipmentController {
     }
 
     @PostMapping("/request/{requestid}/productEquipment")
-    public String addTypeOfActivity(@RequestParam(name = "equip[]") String[] equip,
+    public String addTypeOfActivity(@RequestParam(name = "equip[]", required = false) String[] equip,
                                     @PathVariable("requestid") Request request, Principal principal){
-        requestService.setProductEquipment(request, equip, principal);
+        if(equip != null) requestService.setProductEquipment(request, equip, principal);
         return "redirect:/request/{requestid}";
     }
 
